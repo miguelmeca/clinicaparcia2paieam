@@ -1,5 +1,77 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<persistence version="2.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
-	<persistence-unit name="Clinica_JPA">
+<persistence version="2.0"
+	xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+	<persistence-unit name="Clinica_JPA" transaction-type="RESOURCE_LOCAL">
+		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+
+		<class>com.torresquintero.oncologos.entidades.Persona</class>
+		<class>com.torresquintero.oncologos.entidades.Paciente</class>
+		<class>com.torresquintero.oncologos.entidades.Telefono</class>
+		<class>com.torresquintero.oncologos.entidades.EPS</class>
+		<class>com.torresquintero.oncologos.entidades.Acudiente</class>
+		<class>com.torresquintero.oncologos.entidades.Medico</class>
+		<class>com.torresquintero.oncologos.entidades.Especialidad</class>
+<!-- 		<class>com.torresquintero.oncologos.entidades.IPS</class> -->
+		<class>com.torresquintero.oncologos.entidades.Procedimiento</class>
+		<class>com.torresquintero.oncologos.entidades.Consulta</class>
+		<class>com.torresquintero.oncologos.entidades.OrdenMedica</class>
+<!-- 		<class>com.torresquintero.oncologos.entidades.Servicio</class> -->
+		<class>com.torresquintero.oncologos.entidades.DetalleOrdenMedica</class>
+		<class>com.torresquintero.oncologos.entidades.FormulaMedica</class>
+		<class>com.torresquintero.oncologos.entidades.Articulo</class>
+<!-- 		<class>com.torresquintero.oncologos.entidades.Proveedor</class> -->
+<!-- 		<class>com.torresquintero.oncologos.entidades.Laboratorio</class> -->
+<!-- 		<class>com.torresquintero.oncologos.entidades.Fabricante</class> -->
+		<class>com.torresquintero.oncologos.entidades.Medicamento</class>
+<!-- 		<class>com.torresquintero.oncologos.entidades.DetalleProveedor</class> -->
+<!-- 		<class>com.torresquintero.oncologos.entidades.DetalleFabricante</class> -->
+		<class>com.torresquintero.oncologos.entidades.DetalleFormulaMedica</class>
+		<class>com.torresquintero.oncologos.entidades.Inventario</class>
+		<class>com.torresquintero.oncologos.entidades.Funcionario</class>
+<!-- 		<class>com.torresquintero.oncologos.entidades.Rol</class> -->
+<!-- 		<class>com.torresquintero.oncologos.entidades.DetalleRol</class> -->
+		<class>com.torresquintero.oncologos.entidades.HistoriaClinica</class>
+		<class>com.torresquintero.oncologos.entidades.ExamenFisico</class>
+		<class>com.torresquintero.oncologos.entidades.DetalleHistoriaClinica</class>
+		<class>com.torresquintero.oncologos.entidades.DetalleComentarioSistema</class>
+<!-- 		<class>com.torresquintero.oncologos.entidades.Egreso</class> -->
+<!-- 		<class>com.torresquintero.oncologos.entidades.FormaDePago</class> -->
+<!-- 		<class>com.torresquintero.oncologos.entidades.ItemPagar</class> -->
+<!-- 		<class>com.torresquintero.oncologos.entidades.FormaDePagoCheque</class> -->
+<!-- 		<class>com.torresquintero.oncologos.entidades.FormaDePagoConsignacion</class> -->
+<!-- 		<class>com.torresquintero.oncologos.entidades.Banco</class> -->
+<!-- 		<class>com.torresquintero.oncologos.entidades.DescuentoEgreso</class> -->
+<!-- 		<class>com.torresquintero.oncologos.entidades.CuentaPorPagar</class> -->
+<!-- 		<class>com.torresquintero.oncologos.entidades.ImagenDiagnosticaHistoriaClinica</class> -->
+		<class>com.torresquintero.oncologos.entidades.Remision</class>
+		<class>com.torresquintero.oncologos.entidades.AuditoriaHistoriaClinica</class>
+		<class>com.torresquintero.oncologos.entidades.Factura</class>
+<!-- 		<class>com.torresquintero.oncologos.entidades.ItemFactura</class> -->
+<!-- 		<class>com.torresquintero.oncologos.entidades.ReciboCaja</class> -->
+		<class>com.torresquintero.oncologos.entidades.Ciudad</class>
+		<class>com.torresquintero.oncologos.entidades.Antecedente</class>
+<!-- 		<class>com.torresquintero.oncologos.entidades.AntecedentesGinecologicos</class> -->
+<!-- 		<class>com.torresquintero.oncologos.entidades.ResolucionFActuraDian</class> -->
+<!-- 		<class>com.torresquintero.oncologos.entidades.Diagnostico</class> -->
+		<class>com.torresquintero.oncologos.entidades.DetalleDiagnosticoHistoriaClinica</class>
+<!-- 		<class>com.torresquintero.oncologos.enumeraciones.RevisionSistemaEnum</class> -->
+<!-- 		<class>com.torresquintero.oncologos.entidades.DetalleComentarioRevision</class> -->
+<!-- 		<class>com.torresquintero.oncologos.entidades.AuditoriaCitas</class> -->
+
+		<properties>
+			<!-- valores posible:update,create,create-drop si es create o create-drop 
+				ejecuta un archivo import.sql que este en el src. este archivo es util para 
+				inicializar la BD. -->
+			<property name="hibernate.hbm2ddl.auto" value="create" />
+			<property name="hibernate.show_sql" value="true" />
+			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect" />
+			<property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver" />
+			<property name="hibernate.connection.username" value="root" />
+			<property name="hibernate.connection.password" value="" />
+			<property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/test" />
+		</properties>
+
+
 	</persistence-unit>
 </persistence>
