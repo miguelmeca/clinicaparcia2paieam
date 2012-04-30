@@ -1,0 +1,646 @@
+@charset "utf-8";
+/* - - - - - - - - - - - - - - - - - - - - -
+Estructura Formularios App PIT
+- - - - - - - - - - - - - - - - - - - - - */
+/* ----- SUBTITULO ----- */
+
+div.subtitulo {
+	font:1em "Lucida Grande","Lucida Sans Unicode",Tahoma,sans-serif;
+	display:inline-block; 
+	clear:both;
+	margin:0 0 15px 0;
+	padding:0 1% 0 1%;
+	border-bottom:1px dotted #ccc;
+	display:block;
+}
+div.subtitulo h2{
+	font-weight:normal;
+	font-size:160%;
+	margin:20px 0 5px 0;
+	clear:left;
+	color:#437182 !important;
+}
+
+div.subtitulo h3{
+	font-weight:normal;
+	font-size:120%;
+	margin:20px 0 5px 0;
+	clear:left;
+	color:#437182 !important;
+}
+
+/* ----- Field Structure ----- */
+
+ul.formLayout {
+	margin:0;
+	padding:0;
+	list-style-type:none;
+}
+* html ul.formLayout { /* IE6 Margin Percent Bug for Halves/Thirds */
+	width:99%;
+	zoom:1;
+}
+li.complex, 
+li.leftHalf, li.rightHalf, 
+li.leftThird, li.middleThird, li.rightThird, 
+li.leftFourth, li.middleFourth, li.rightFourth {
+	margin:0;
+	padding:6px 1% 9px 1%;
+	clear:both;
+	background-color:transparent;
+	position:relative; /* Makes Instructs z-index stay on top in IE. */
+	-webkit-transition: background-color 350ms ease-out;
+	   -moz-transition: background-color 350ms ease-out;
+	     -o-transition: background-color 350ms ease-out;
+	        transition: background-color 350ms ease-out;
+}
+
+li.otherLayout {
+	padding-top: 10px;
+}
+
+ul.formLayout:after, li.complex:after, 
+li.leftHalf:after, li.rightHalf:after, 
+li.leftThird:after, li.middleThird:after, li.rightThird:after, 
+li.leftFourth:after, li.middleFourth:after, li.rightFourth:after {
+	content:"."; 
+	display:block;
+	height:0; 
+	clear:both; 
+	visibility:hidden;
+}
+
+* html li.complex, 
+* html li.leftHalf, * html li.rightHalf, 
+* html li.leftThird, * html li.middleThird, * html li.rightThird, 
+* html li.leftFourth, * html li.middleFourth, * html li.rightFourth {height: 1%;margin-bottom:-3px;}
+
+*+html li.complex, 
+*+html li.leftHalf, *+html li.rightHalf, 
+*+html li.leftThird, *+html li.middleThird, *+html li.rightThird, 
+*+html li.leftFourth, *+html li.middleFourth, *+html li.rightFourth {height: 1%;margin-bottom:-3px;}
+
+* html li.complex div, 
+* html li.leftHalf div, * html li.rightHalf div, 
+* html li.leftThird div, * html li.middleThird div, * html li.rightThird div, 
+* html li.leftFourth div, * html li.middleFourth div, * html li.rightFourth div {display:inline-block;} 
+
+*+html li.complex div, 
+*+html li.leftHalf div, *+html li.rightHalf div, 
+*+html li.leftThird div, *+html li.middleThird div, *+html li.rightThird div, 
+*+html li.leftFourth div, *+html li.middleFourth div, *+html li.rightFourth div {display:inline-block;} 
+
+*+html ul.formLayout {display:inline-block;}
+
+li.complex span, 
+li.leftHalf span, li.rightHalf span, 
+li.leftThird span, li.middleThird span, li.rightThird span, 
+li.leftFourth span, li.middleFourth span, li.rightFourth span {
+	margin:0 .3em 0 0;
+	padding:0;
+	float:left;
+}
+
+/* ----- Location Field Structures ----- */
+
+li.complex {
+	padding-bottom:0;
+}
+li.complex div span {
+	width:auto;
+	margin:0 .3em 0 0;
+}
+li.complex div span.full{
+	margin:0;
+}
+li.complex div span.left, 
+li.complex div span.right{
+	margin:0;
+	width:48%;
+}
+li.complex div span.full input, 
+li.complex div span.full select, 
+li.complex div span.left input, 
+li.complex div span.right input,
+li.complex div span.left select,
+li.complex div span.half input,
+li.complex div.half select,
+li.complex div span.right select
+li.complex span.left div.full input{
+	width:60%;
+}
+select {
+	width:63%;
+}
+li.complex div span.half div li{padding:0 !important; font-size:1.2em}
+
+/* ----- FLOATS ----- */
+
+.left{
+	float:left;
+}
+.right{
+	float:right;
+}
+.clear{
+	clear:both !important;
+}
+label span, .section span, p span, .likert span{
+	display:inline !important;
+	float:none !important;
+}
+
+
+/* ----- LABELS ----- */
+
+li div label, li span label{
+	margin:0;
+	padding-top:3px;
+	font-size:85%;
+	line-height:160%;
+	color:#444;
+	display:block;
+}
+
+fieldset{
+	display:block;
+	border:none;
+	margin:0;
+	padding:0;
+}
+
+label.desc, legend.desc{
+	font-size:1em;
+	font-weight:bold;
+	color:#222;
+	line-height:150%;
+	margin:0;
+	padding:0 0 3px 0;
+	border:none;
+	display:block;
+	white-space: normal;
+	width:100%;
+	line-height: 15px;
+}
+
+label.choice{
+	display:block;
+	font-size:100%;
+	line-height:150%;
+	margin:-17px 0 0 0px;
+	padding:0 0 5px 0;
+	color:#222;
+}
+
+.safari label.choice{
+	margin-top:-16px;
+}
+
+form.rightLabel .desc{
+	padding-top:2px;
+}
+
+span.symbol{
+	font-size:120%;
+	line-height:135%;
+}
+
+
+/* ----- REQUIRED ----- */
+
+span.req, span.req-error {
+	display:inline;
+	float:none;
+	color:red !important;
+	font-weight:bold;
+	margin:0;
+	padding:0;
+}
+
+span.req-error { 
+	clear:both; display:block !important;
+}
+
+div span.inf, span span.inf  {
+	display: inline;
+	float: none; 
+	padding-left: 4px
+}
+	
+/* ----- FIELDS ----- */
+
+input.text, input.search, input.file, textarea.textarea, select.select{
+	font-family:"Lucida Grande", Tahoma, Arial, sans-serif;
+	font-size:100%;
+	color:#333;
+	margin:0;
+	padding:2px 0;
+}
+
+input.text, input.search, textarea.textarea{
+	border-top:1px solid #7c7c7c;
+	border-left:1px solid #c3c3c3;
+	border-right:1px solid #c3c3c3;
+	border-bottom:1px solid #ddd;
+	background:#fff url(../img/images/fieldbg.gif) repeat-x top;
+}
+input.nospin::-webkit-inner-spin-button,
+input.nospin::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+select.select{
+	padding:1px 0 0 0;
+}
+
+input.search{
+	-webkit-border-radius:10px;
+	-moz-border-radius:10px;
+	border-radius:10px;
+	padding-left:6px;
+}
+
+input.checkbox, input.radio{
+	display:block;
+	margin:4px 0 0 0;
+	padding:0;
+	width:13px;
+	height:13px;
+}
+
+input.other{
+	margin:0 0 8px 25px;
+}
+
+.safari select.select{
+	font-size:120% !important;
+	margin:0 0 1px 0;
+}
+
+* html select.select{
+	margin:1px 0;
+}
+
+*+html select.select{
+	margin:1px 0;
+}
+
+li.time select.select{
+	margin-left:5px;
+}
+
+li.price .right{
+	text-align:right;
+}
+
+/* ----- SIZES ----- */
+
+.third{
+	width:30% !important;
+}
+.half{
+	width:58% !important;
+}
+.full{
+	width:100% !important;
+}
+input.small, select.small{
+	width:25% !important;
+}
+input.medium, select.medium{
+	width:50% !important;
+}
+input.large, select.large{
+	width:100% !important;
+}
+
+.msie[class] select.ieSelectFix{
+	width:auto;
+}
+.msie[class] select.ieSelectFix.small{
+	min-width:25%;
+}
+.msie[class] select.ieSelectFix.medium{
+	min-width:50%;
+}
+.msie[class] select.ieSelectFix.large{
+	width:100%;
+}
+textarea.textarea{
+	width:293px;
+	min-width:100%; /* IE8 Textarea Scroll Bug */
+	max-width:100%;
+}
+textarea.small{
+	height:5.5em;
+}
+textarea.medium{
+	height:10em;
+}
+textarea.large{
+	height:20em;
+}
+
+/* ----- BUTTONS ----- */
+
+li.buttons{
+	width:98% !important;
+	position:relative;
+	clear:both;
+    margin:10px 0 0 0;
+	padding:2% 1% 0 1%;
+	border-top:1px dotted #ccc ;
+	
+
+}
+li.buttons input{
+	font-size:100%;
+	margin-right:5px;
+}
+/*
+input.btTxt{
+	padding:0 7px;
+	width:auto;
+	overflow:visible;
+}
+*/
+.safari input.btTxt{
+	font-size:120%;
+}
+
+/* ----- LABEL LAYOUT ----- */
+
+.leftLabel li, .rightLabel li{
+	width:74% !important;
+	padding-top:9px;
+}
+.leftLabel .desc, .rightLabel .desc{
+	float:left;
+	width:31%;
+	margin:0 15px 0 0;
+}
+.rightLabel .desc{
+	text-align:right;
+}
+.leftLabel li div, .rightLabel li div{
+	float:left;
+	width:65%;
+}
+* html .leftLabel li fieldset div, 
+* html .rightLabel li fieldset div{
+	float:right;
+}
+*+html .leftLabel li fieldset div, 
+*+html .rightLabel li fieldset div{
+	float:right;
+}
+.leftLabel .buttons, .rightLabel .buttons{
+	padding-left:23%;
+}
+.leftLabel .buttons div, .rightLabel .buttons div{
+	float:none;
+	margin:0 0 0 20px;
+}
+.leftLabel p.instruct, .rightLabel p.instruct{
+	width:28%;
+	margin-left:5px;
+}
+.leftLabel .altInstruct .instruct, .rightLabel .altInstruct .instruct{
+	margin-left:31% !important;
+	padding-left:15px;
+	width:65%;
+}
+
+/* ----- HALVES AND THIRDS ----- */
+
+li.leftHalf, li.rightHalf{
+	width:47% !important;
+}
+
+li.leftHalf .full, li.rightHalf .full, 
+li.leftHalf input, li.rightHalf input {
+	width:87%;
+}
+
+li.leftThird, li.middleThird, li.rightThird {
+	width:30% !important;
+}
+
+li.leftThird .full, li.middleThird .full, li.rightThird .full, 
+li.leftThird input, li.middleThird input, li.rightThird input {
+	width:80%;
+}
+
+li.leftFourth, li.middleFourth, li.rightFourth {
+	width: 23% !important;
+	_width: 22% !important;
+}
+
+li.leftFourth .full, li.middleFourth .full, li.rightFourth .full, 
+li.leftFourth input, li.middleFourth input, li.rightFourth input{
+	width: 75%;
+}
+
+li.leftFifth, li.middleFifth, li.rightFifth{
+	width: 18% !important;
+	_width: 17% !important;
+}
+
+li.leftHalf, li.leftThird, li.leftFourth, li.leftFifth{
+	clear:left !important;
+	float:left;
+}
+
+li.middleThird{
+	clear:none !important;
+	float:left;
+	margin-left:2% !important;
+}
+
+li.leftFourth, li.middleFourth,
+li.leftFifth, li.middleFifth {
+	clear:none !important;
+	float:left;
+}
+
+li.rightHalf, li.rightThird, li.rightFourth, li.rightFifth {
+	clear:none !important;
+	float:right;
+}
+
+li.leftHalf .small, li.rightHalf .small,
+li.leftHalf .medium, li.rightHalf .medium,
+li.leftThird .small, li.middleThird .small, li.rightThird .small,
+li.leftThird .medium, li.middleThird .medium, li.rightThird .medium,
+li.leftFourth .medium, li.middleFourth .medium, li.rightFourth .medium,
+li.leftFourth .small, li.middleFourth .small, li.rightFourth .small,
+li.leftFifth .medium, li.middleFifth .medium, li.rightFifth .medium,
+li.leftFifth .small, li.middleFifth .small, li.rightFifth .small{
+	width:100% !important;
+}
+
+* html li.middleFourth {
+	margin-left: 1% !important;
+}
+* html li.middleFifth {
+	margin-left: 1% !important;
+}
+
+
+/* ----- ERRORS ----- */
+.error-top, .alert-top, .info-top {
+	width:100%; 
+	font-size:0.90em; 
+	margin:0; 
+	background:#fbcfd0 url() repeat-x; 
+	color:#e24848; 
+	text-align:left; 
+	font-weight:700; 
+	padding-left:27%;
+	border-bottom:1px dotted #ccc;
+	valing:middle;
+}
+.error-top-modal, .alert-top-modal, .info-top-modal {
+    width:100%; 
+    font-size:0.90em; 
+    margin:0; 
+    background:#fbcfd0 url() repeat-x; 
+    color:#e24848; 
+    text-align:left; 
+    font-weight:700; 
+    padding-left:1%;
+    border-bottom:1px dotted #ccc;
+    valing:middle;
+}
+.alert-top {
+	background:#f5f0ae url() repeat-x; 
+	color:#2f2c27;
+	text-align:left;
+	padding-left:27%;
+}
+.alert-top-modal {
+    background:#f5f0ae url() repeat-x; 
+    color:#2f2c27;
+    text-align:left;
+    padding-left:1%;
+}
+
+.info-top{
+	background:#b3dff8 url() repeat-x; 
+	color:#2f2c27;
+	text-align:left;
+	padding-left:27%;
+}
+.info-top-modal{
+    background:#b3dff8 url() repeat-x; 
+    color:#2f2c27;
+    text-align:left;
+    padding-left:1%;
+}
+
+
+/* Ls siguientes estilos corrigen la presentación de los radio buttons */
+
+table tbody tr td input[type="radio"] {
+	width: 15px !important;
+	clear: none;
+}
+
+table tbody tr td label {
+	font:1em "Lucida Grande","Lucida Sans Unicode",Tahoma,sans-serif;
+	display: inline !important;
+}
+
+/* Los siguientes estilos corrigen la presentación de los input spinner */
+.rich-spinner-c {
+	width: 70px;
+}
+
+.rich-spinner-input-container {
+	width: 50px !important;	
+}
+
+.rich-spinner-input {
+	width: 40px !important;
+}
+
+.rich-spinner-buttons {
+	width: 20px !important;	
+}
+
+.rich-spinner-button {
+	width: 14px !important;
+	height: 12px !important;
+}
+
+/* -----TABS CON ERROR -----*/
+.error-tab {
+	color: red;
+}
+
+/* Los siguientes estilos manejan los campos read only */
+
+[readonly], .readonly {
+	background-image: none !important;;
+	background-color: #ffffff !important;
+	border-style: none !important;;
+	color: #000000 !important;
+}
+
+div.readOnlySelect {
+	position: relative
+}
+
+div.readOnlySelect select {
+	width: 100%;
+	background-image: none !important;;
+	background-color: #ffffff !important;
+	border-style: none !important;;
+	color: #000000 !important;
+}
+
+div.hideButton {
+	position: absolute; 
+	right: 0px; 
+	top: 0px; 
+	background-color: white; 
+	width: 30px; 
+	height: 100%;	
+}
+
+div.disableClick {
+	position: absolute; 
+	right: 0px; 
+	top: 0px; 
+	background-color: white; 
+	filter: alpha(opacity=0); 
+	opacity:0; 
+	width: 100%; 
+	height: 100%;"	
+}
+
+select.readonly {
+	width: 100%;
+}
+
+/*Estilo para dias no habiles en rich:calendar*/
+.dia-no-habil{
+    background-image: url("../img/images/style_form/bg_date_disabled.png");
+    background-position: 0 50%;
+    color: #A0A0A0;
+}
+
+img.captcha { 
+    #margin-bottom: -450px;
+    border: 1px solid black;
+    margin-left: 200px;
+}
+
+/*estilo para el overfloat en las tablas*/
+.scroll-table {
+	overflow: auto;
+}
+.form-into-tab {
+	margin:0 auto; width:700px; border: 0px solid #cfdede; background-color:#FFFFFF; padding:0 0px 0px 0px;
+}

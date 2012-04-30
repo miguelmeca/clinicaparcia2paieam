@@ -1,0 +1,54 @@
+.seamTextPreformatted {
+    margin: 8px;
+}
+.seamTextHeadline1 {
+    font-size: 2em;
+}
+.seamTextHeadline2 {
+    font-size: 1.5em;
+}
+.seamTextHeadline3 {
+    font-size: 1.17em;
+}
+.seamTextHeadline4 {
+    font-size: 1em;
+}
+.seamTextLink {
+    background-image: url("/PIT_Web/a4j/g/3_3_3.Finalorg/richfaces/renderkit/html/scripts/tiny_mce/themes/advanced/skins/default/img/items.gif");
+    background-position: left bottom;
+    background-repeat: no-repeat;
+}
+.seamTextOrderedList, .seamTextUnorderedList {
+	margin: 1em 0;
+    padding: 0 0 0 40px;
+}
+.seamTextOrderedListItem {
+	list-style: decimal outside none;
+}
+.seamTextUnorderedListItem {
+	list-style: disc outside none;
+}
+.seamTextPara {
+}
+.bold-larger {
+    font-size: larger;
+    font-weight: bold;
+}
+.bold-smaller {
+    font-size: smaller;
+    font-weight: bold;
+}
+.red-bold {
+    color: red;
+    font-weight: bold;
+}
+.red-bold-larger {
+    color: red;
+    font-size: larger;
+    font-weight: bold;
+}
+.red-bold-smaller {
+    color: red;
+    font-size: smaller;
+    font-weight: bold;
+}

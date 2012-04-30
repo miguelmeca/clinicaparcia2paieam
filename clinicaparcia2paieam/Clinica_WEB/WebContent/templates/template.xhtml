@@ -1,0 +1,124 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:a="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<head>
+<title><ui:insert name="title">
+			#{messages['template.titulo']}
+			</ui:insert></title>
+<a:loadStyle src="/common/stylesheet/structure.css" />
+<a:loadStyle src="/common/stylesheet/form.css" />
+<a:loadStyle src="/common/stylesheet/form_elements.css" />
+
+<!-- 
+		<script type="text/javascript" src="https://getfirebug.com/firebug-lite.js"></script>
+		 -->
+
+<style type="text/css">
+.rich-messages-marker img {
+	padding-right: 7px;
+}
+
+.rich-messages {
+	overflow: hidden;
+	/*padding-left: 150px;*/
+	padding-left: 12%;
+}
+
+             
+.error-top,.alert-top,.info-top {
+	float: right;
+	text-align: left;
+}
+
+             
+.error-label,.warn-label,.info-label,.fatal-label {
+	padding-right: 0%;
+	display: block;
+}
+
+            
+.error-marker,.warn-marker,.info-marker,.fatalMarker {
+	float: left;
+}
+</style>
+</head>
+
+<body>
+
+	<div id="wrap">
+		<div id="menuHeader" >
+			<ui:insert name="header"></ui:insert>
+		</div>
+
+
+	</div>
+	<ui:insert name="errorMessages">
+	
+		<rich:messages id="messages" globalOnly="true" errorClass="error-top"
+			infoClass="info-top" warnClass="alert-top" layout="table"
+			rendered="#{showGlobalMessages != 'false'}" ajaxRendered="true"
+			style="width: 1000px;" errorLabelClass="error-label"
+			errorMarkerClass="error-marker" warnLabelClass="warn-label"
+			warnMarkerClass="warn-marker" infoLabelClass="info-label"
+			infoMarkerClass="info-marker" fatalLabelClass="fatal-label"
+			fatalMarkerClass="fatal-marker">
+			<f:facet name="infoMarker">
+				<h:graphicImage url="/common/img/images/style_form/Inf.png"
+					style="vertical-align: middle;" />
+			</f:facet>
+			<f:facet name="warnMarker">
+				<h:graphicImage url="/common/img/images/style_form/alert.png"
+					style="vertical-align: middle;" />
+			</f:facet>
+			<f:facet name="errorMarker">
+				<h:graphicImage url="/common/img/images/style_form/error.png"
+					style="vertical-align: middle;" />
+			</f:facet>
+			<f:facet name="fatalMarker">
+				<h:graphicImage url="/common/img/images/style_form/error.png"
+					style="vertical-align: middle;" />
+			</f:facet>
+		</rich:messages>
+	
+	</ui:insert>
+	<!-- contenido -->
+	<div id="entry-cont">
+
+		
+
+
+
+
+		<div class="cont" style="margin-right: -30px;padding-top: 20px">
+			<ui:insert name="cuerpo" />
+		</div>
+
+		<div class="menu-cont" style="margin-top: -420px">
+			
+			<ui:insert name="menu">
+			</ui:insert>
+
+
+		</div>
+
+
+	</div>
+	<div class="clear"></div>
+	<!-- end contenido -->
+	<div id="footer" style="BACKGROUND-COLOR: #000000;">
+
+		<div class="entry-credit" style="">
+			
+		</div>
+	</div>
+
+
+
+</body>
+</html>
