@@ -13,5 +13,14 @@
  </managed-bean>
  <application>
   <view-handler>com.sun.facelets.FaceletViewHandler</view-handler>
+  
+  <resource-bundle>
+  <base-name>edu.eam.clinica.web.internacionalizacion.mensajes</base-name>
+  <var>msg</var>
+  </resource-bundle>
+  <locale-config>
+  	<default-locale>es</default-locale>
+  </locale-config>
+  
  </application>
 </faces-config>
