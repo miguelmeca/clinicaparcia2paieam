@@ -7,7 +7,7 @@
 		<class>edu.eam.clinica.jpa.entidades.Acudiente</class>
 		
 
-		<class>edu.eam.clinica.jpa.entidades.Acudiente</class>
+		
     <class>edu.eam.clinica.jpa.entidades.Antecedente</class>
     <class>edu.eam.clinica.jpa.entidades.Articulo</class>
     <class>edu.eam.clinica.jpa.entidades.Ciudad</class>
@@ -39,13 +39,13 @@
 			<!-- valores posible:update,create,create-drop si es create o create-drop 
 				ejecuta un archivo import.sql que este en el src. este archivo es util para 
 				inicializar la BD. -->
-			<property name="hibernate.hbm2ddl.auto" value="create" />
+			<property name="hibernate.hbm2ddl.auto" value="none" />
 			<property name="hibernate.show_sql" value="true" />
 			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect" />
 			<property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver" />
-			<property name="hibernate.connection.username" value="root" />
-			<property name="hibernate.connection.password" value="" />
-			<property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/test" />
+			<property name="hibernate.connection.username" value="caferrerb" />
+			<property name="hibernate.connection.password" value="coquito1234" />
+			<property name="hibernate.connection.url" value="jdbc:mysql://ec2-50-19-213-178.compute-1.amazonaws.com:3306/pruebacloud" />
 		</properties>
 
 
