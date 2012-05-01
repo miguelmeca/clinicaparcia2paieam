@@ -11,8 +11,8 @@ import javax.persistence.*;
  */
 @Entity
 @NamedQueries({
-	@NamedQuery(name=EPS.FIND_EPS_BY_CODIGO,query="select eps from EPS eps where eps.codigo=:"+EPS.PARAMETRO_CODIGO),
-	@NamedQuery(name=EPS.FIND_ALL,query="select eps from EPS eps")
+	@NamedQuery(name=EPS.FIND_EPS_BY_CODIGO,query="select ep from EPS ep where ep.codigo=:"+EPS.PARAMETRO_CODIGO),
+	@NamedQuery(name=EPS.FIND_ALL,query="select ep from EPS ep")
 })
 public class EPS implements Serializable {
 	
