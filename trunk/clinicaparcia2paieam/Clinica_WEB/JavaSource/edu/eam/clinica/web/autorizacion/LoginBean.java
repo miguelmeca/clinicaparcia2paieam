@@ -3,7 +3,9 @@ package edu.eam.clinica.web.autorizacion;
 import edu.eam.clinica.jpa.entidades.Funcionario;
 import edu.eam.clinica.jpa.entidades.Medico;
 import edu.eam.clinica.jpa.entidades.Paciente;
+import edu.eam.clinica.jpa.entidades.Persona;
 import edu.eam.clinica.jpa.entidades.User;
+import edu.eam.clinica.jpa.utilidades.FactoryEntityManager;
 
 /**
  * Clase que implementa el login de la aplicacion.
@@ -21,6 +23,16 @@ public class LoginBean {
 	 * Password del usuario.
 	 */
 	private String password;
+	/**
+	 * Persona que inicio sesion.
+	 */
+	private Persona personaLoggedIn;
+
+	public LoginBean() {
+		// TODO Auto-generated constructor stubfaco
+		FactoryEntityManager.getEm();
+		System.out.println("creadno em.");
+	}
 
 	/**
 	 * Este metodo hace uso de la entidad user. esta entidad esta relacionada
@@ -33,28 +45,68 @@ public class LoginBean {
 
 		// busque el user por nombre y password, dependiendo de que sea vaya a
 		// la pagina que le corresponda.
-		User user=null;//buscar aqui.
-		
-		/*
-		 * Agrega a sesion el que ingreso al sistema.
-		 */
-		SesionFactory.agregarASesion("persona", user.getPersona());
-		
-		if(user.getPersona() instanceof Medico){
-			return "?";
+
+		User user = FactoryEntityManager.getEm().find(User.class, nombreUser);
+		System.out.println(user.getPersona());
+
+		if (user != null) {
+			
+			SesionFactory.agregarASesion("persona", user.getPersona());
+			personaLoggedIn=user.getPersona();
+			if (user.getPersona() instanceof Medico) {
+				System.out.println("medico");
+				return "?";
+			}
+
+			if (user.getPersona() instanceof Paciente) {
+				System.out.println("paciente");
+				return "?";
+			}
+
+			if (user.getPersona() instanceof Funcionario) {
+				System.out.println("funcionario");
+				return "?";
+			}
 		}
-		
-		if(user.getPersona() instanceof Paciente){
-			return "?";
-		}
-		
-		if(user.getPersona() instanceof Funcionario){
-			return "?";
-		}
-		
-		
+
 		return null;
 
 	}
+	/**
+	 * Metodo para determinar si ya hay session.
+	 * @return true si ya hay y false si no.
+	 */
+	public boolean isLoggedIn(){
+		System.out.println(personaLoggedIn!=null);
+		return personaLoggedIn!=null;
+	}
+
+	public String getNombreUser() {
+		System.out.println(FactoryEntityManager.getEm().find(Persona.class,
+				"1234"));
+		return nombreUser;
+	}
+
+	public void setNombreUser(String nombreUser) {
+		this.nombreUser = nombreUser;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public Persona getPersonaLoggedIn() {
+		return personaLoggedIn;
+	}
+
+	public void setPersonaLoggedIn(Persona personaLoggedIn) {
+		this.personaLoggedIn = personaLoggedIn;
+	}
+	
+	
 
 }
