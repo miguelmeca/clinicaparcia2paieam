@@ -6,9 +6,56 @@
 	xmlns:rich="http://richfaces.org/rich"
 	template="/templates/templateFuncionario.xhtml"
 	xmlns:a4j="http://richfaces.org/a4j">
-	
+
 	<ui:define name="cuerpo">
 	</ui:define>
-	
-	
-	</ui:composition>
+	<h:form>
+		<h:panelGrid columns="3">
+			<rich:panel>
+
+				<h:outputLabel value="#{msg['entregarFormulaMedica.usuario']}" />
+				<h:outputText
+					value="#{entregarFormulaMedicaBean.funcionario.primerNombre}" />
+				<h:outputLabel value="" />
+
+				<h:outputLabel value="#{msg['entregarFormulaMedica.codigoFormula']}" />
+				<h:inputText value="#{entregarFormulaMedicaBean.codFormula}" />
+				<a4j:commandButton
+					action="#{entregarFormulaMedicaBean.buscarFormulaMedica}"
+					reRender="tablaMedicamentos"
+					value="#{msg['entregarFormulaMedica.buscar']}">
+				</a4j:commandButton>
+			</rich:panel>
+		</h:panelGrid>
+	</h:form>
+
+	<rich:dataGrid>
+		<rich:dataTable id="tablaMedicamentos"
+			value="#{entregarFormulaMedicaBean.detalles}" var="detalle">
+			<rich:column>
+				<f:facet name="header">
+					<h:outputLabel
+						value="#{msg['entregarFormulaMedica.nombreMedicamento']}" />
+				</f:facet>
+				<h:outputText value="#{detalle.articulo.nombre}" />
+			</rich:column>
+			<rich:column>
+			<f:facet name="header">
+			<h:outputLabel value="#{msg['entregarFormulaMedica.escoger']}" />
+			</f:facet>
+			<a4j:commandButton image="imgs/why-choose-us.png" id="escogerMedicamento" height="20" width="20">
+	        <rich:componentControl for="panel" attachTo="escogerMedicamento" operation="show" event="onclick" />	
+			</a4j:commandButton>
+			</rich:column>
+		</rich:dataTable>
+	</rich:dataGrid>
+
+	<h:form>
+		<rich:modalPanel id="panel" width="350" height="100" autosized="true">
+		<f:facet name="header">
+		<h:outputLabel value="#{['entregarFormulaMedica.textoModal']}" />
+		</f:facet> 
+    </rich:modalPanel>
+    
+	</h:form>
+</ui:composition>
