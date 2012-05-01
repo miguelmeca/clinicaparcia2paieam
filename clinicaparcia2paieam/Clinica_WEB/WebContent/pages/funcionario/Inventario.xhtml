@@ -16,7 +16,8 @@
 	 <rich:tabPanel>
         <rich:tab label="#{msg['Inventario.grupoterapeutico']}">
           <rich:panel id="medicamentospanel">
-          <rich:dataTable id="tablaMedicamentos" value="#{medicamentobean.medicamento}" var="m">
+          <rich:dataTable id="tablaMedicamentos" value="#{inventarioBean.medicamentos}" var="m">
+          
         	<rich:column id="GrupoTerapeutico">
 			<f:facet name="header">
 			<h:outputLabel value="#{msg['Inventario.grupoterapeutico']}" />
@@ -31,14 +32,32 @@
 						<h:outputText id="TxtInvima" value="#{m.registroinvima}" />
 					</rich:column>
 					  
+					  <rich:column id="presentacion">
+					  <f:facet name="header">
+							<h:outputLabel value="#{msg['Inventario.presentacion']}" />
+						</f:facet>
+						<h:outputText id="TxtInvima" value="#{m.presentacion}" />
+					  </rich:column>
+					  
+					  
           
           </rich:dataTable>        
           </rich:panel>
           
         </rich:tab>
         <rich:tab label="#{msg['Inventario.entradaSalida']}">
+        <rich:panel id="panel Entrada salidad">
+        <rich:dataTable id="entrada">
         
-         
+        
+        </rich:dataTable>
+        <rich:dataTable id ="salidad">
+        hola
+        </rich:dataTable>
+        </rich:panel> 
+        
+        
+        
         </rich:tab>
         
         
