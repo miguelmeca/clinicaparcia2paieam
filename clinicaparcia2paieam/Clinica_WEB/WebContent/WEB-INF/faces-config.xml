@@ -16,6 +16,11 @@
   <managed-bean-class>edu.eam.clinica.web.bean.medico.AtenderConsultaBean</managed-bean-class>
   <managed-bean-scope>session</managed-bean-scope>
  </managed-bean>
+ <managed-bean>
+  <managed-bean-name>entregarFormulaMedicaBean</managed-bean-name>
+  <managed-bean-class>edu.eam.clinica.web.bean.funcionario.EntregarFormulaMedicaBean</managed-bean-class>
+  <managed-bean-scope>session</managed-bean-scope>
+ </managed-bean>
  <application>
   <view-handler>com.sun.facelets.FaceletViewHandler</view-handler>
   <resource-bundle>
