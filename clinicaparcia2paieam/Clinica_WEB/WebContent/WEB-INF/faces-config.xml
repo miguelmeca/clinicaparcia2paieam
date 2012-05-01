@@ -12,8 +12,8 @@
   </managed-property>
  </managed-bean>
  <managed-bean>
-  <managed-bean-name>loginBean</managed-bean-name>
-  <managed-bean-class>edu.eam.clinica.web.autorizacion.LoginBean</managed-bean-class>
+  <managed-bean-name>atenderConsultaBean</managed-bean-name>
+  <managed-bean-class>edu.eam.clinica.web.bean.medico.AtenderConsultaBean</managed-bean-class>
   <managed-bean-scope>session</managed-bean-scope>
  </managed-bean>
  <application>
