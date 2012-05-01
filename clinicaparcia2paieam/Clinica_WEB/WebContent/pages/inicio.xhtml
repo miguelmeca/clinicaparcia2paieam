@@ -10,8 +10,26 @@
 		<h1><h:outputText value="CLINICA" style="FONT-SIZE: xx-large; COLOR: #ffffff; FONT-WEIGHT: bold;"></h:outputText></h1>
 	</ui:define>
 	
-	<ui:define name="cuerpo">
-	#{msg['hola']}
+	<ui:define name="menu">
+	
+	<h:form>
+		<rich:spacer height="100px"></rich:spacer>
+		<h2>Inicio de Sesion</h2>
+		<h:panelGrid columns="2">
+			
+			<h:outputText value="#{msg['inicio.user']}" />
+			<h:inputText value="#{loginBean.nombreUser}" />
+			
+			<h:outputText value="#{msg['inicio.password']}" />
+			<h:inputText value="#{loginBean.password}" />
+		
+		</h:panelGrid>
+		<h:commandButton value="#{msg['inicio.entrar']}" 
+		                 action="#{loginBean.login}" />
+		
+		
+	</h:form>
+	
 	</ui:define>
 	
 	
