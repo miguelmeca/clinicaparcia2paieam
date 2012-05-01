@@ -15,6 +15,7 @@ import javax.persistence.InheritanceType;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 import edu.eam.clinica.jpa.enumeraciones.SexoEnum;
 import edu.eam.clinica.jpa.enumeraciones.TipoDocumentoEnum;
@@ -100,9 +101,12 @@ public class Persona implements Serializable {
     @OneToMany(mappedBy = "persona", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Telefono> telefonos;
    
+    @OneToOne(mappedBy="persona",cascade=CascadeType.ALL,fetch=FetchType.EAGER)
+    private User user;
     
-    
-    @ManyToOne
+  
+
+	@ManyToOne
     @JoinColumn(name="CIUDAD")
     private Ciudad ciudad;
 
@@ -315,6 +319,14 @@ public class Persona implements Serializable {
             return false;
         }
     }
+    
+    public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
 
    
 //    public Long getId() {
