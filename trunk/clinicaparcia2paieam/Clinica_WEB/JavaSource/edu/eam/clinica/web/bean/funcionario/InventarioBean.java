@@ -4,11 +4,13 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 
+import edu.eam.clinica.jpa.entidades.Funcionario;
 import edu.eam.clinica.jpa.entidades.Inventario;
 import edu.eam.clinica.jpa.entidades.Medicamento;
 import edu.eam.clinica.jpa.enumeraciones.GrupoTerapeuticoEnum;
 import edu.eam.clinica.jpa.enumeraciones.PresentacionEnum;
 import edu.eam.clinica.jpa.utilidades.FactoryEntityManager;
+import edu.eam.clinica.web.autorizacion.SesionFactory;
 
 public class InventarioBean  {
 
@@ -17,11 +19,13 @@ public class InventarioBean  {
 	private String registroInvima;
 	private PresentacionEnum presentacion;
 	private EntityManager em;
+	private Funcionario funcionario;
+	
 	
 	public InventarioBean(){
 		
 		em=FactoryEntityManager.getEm();
-		
+		funcionario=(Funcionario)SesionFactory.getSesion();
 	}
 	
 	public List<Medicamento> getMedicamentos(){
