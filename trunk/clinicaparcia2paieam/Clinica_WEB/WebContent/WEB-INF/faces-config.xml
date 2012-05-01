@@ -11,16 +11,19 @@
    <value/>
   </managed-property>
  </managed-bean>
+ <managed-bean>
+  <managed-bean-name>loginBean</managed-bean-name>
+  <managed-bean-class>edu.eam.clinica.web.autorizacion.LoginBean</managed-bean-class>
+  <managed-bean-scope>session</managed-bean-scope>
+ </managed-bean>
  <application>
   <view-handler>com.sun.facelets.FaceletViewHandler</view-handler>
-  
   <resource-bundle>
-  <base-name>edu.eam.clinica.web.internacionalizacion.mensajes</base-name>
-  <var>msg</var>
+   <base-name>edu.eam.clinica.web.internacionalizacion.mensajes</base-name>
+   <var>msg</var>
   </resource-bundle>
   <locale-config>
-  	<default-locale>es</default-locale>
+   <default-locale>es</default-locale>
   </locale-config>
-  
  </application>
 </faces-config>
