@@ -8,6 +8,118 @@
 	xmlns:a4j="http://richfaces.org/a4j">
 	
 	<ui:define name="cuerpo">
+    <rich:tabPanel switchType="client">
+        <rich:tab label="#{msg['actualizarDatosFuncionario.actualizarDatosFuncionario']}">
+             <h:form>
+             
+             <rich:panel>
+             
+             <f:facet name="header">
+             </f:facet>
+             <h:panelGrid columns="2">
+             <h:panelGrid columns="2">
+             
+             <!-- Documento del funcionacio -->
+             <h:outputText value="#{msg['actualizarDatosFuncionario.documento']}"/>
+             <h:inputText value="#{actualizarDatosFuncionarioBean.documento}"/>
+             
+             <!-- Tipo de Documento del funcionario -->
+             <h:outputText value="#{msg['actualizarDatosFuncionario.tipoDocumento']}"/>
+             <h:inputText value=""/>
+                        
+             <!-- Primer Nombre del funcionario -->
+             <h:outputText value="#{msg['actualizarDatosFuncionario.primerNombre']}"/>
+             <h:inputText value=""/>
+             
+             <!-- Segundo Nombre del funcionario -->
+             <h:outputText value="#{msg['actualizarDatosFuncionario.segundoNombre']}"/>
+             <h:inputText value=""/>
+             
+             <!-- Primer apellido del funcionario -->
+             <h:outputText value="#{msg['actualizarDatosFuncionario.primerApellido']}"/>
+             <h:inputText value=""/>
+             
+             <!-- Segundo apellido del funcionario -->
+             <h:outputText value="#{msg['actualizarDatosFuncionario.segundoApellido']}"/>
+             <h:inputText value=""/>
+             <!-- email del funcionario -->
+             
+             <h:outputText value="#{msg['actualizarDatosFuncionario.e-Mail']}"/>
+             <h:inputText value=""/>
+             
+             </h:panelGrid>
+              
+             <rich:panel>
+             <!-- Lista de telefonos del funcionario -->
+             <rich:dataTable>
+             <rich:column>
+             <f:facet name="header">
+             
+             <h:outputText value="#{msg['actualizarDatosFuncionario.telefono']}" />
+             </f:facet>
+             <h:outputText value="numero telefono" />
+             </rich:column>
+             
+             <rich:column>
+             <f:facet name="header">
+             
+             <!-- icono para eliminar el telefono del funcionario -->
+             <h:outputText value="#{msg['actualizarDatosFuncionario.eliminar']}" />
+             </f:facet>
+             <h:commandButton value="#{msg['actualizarDatosFuncionario.eliminar']}"/>
+             </rich:column>
+             
+             <rich:column>
+             <f:facet name="header">
+             
+             <!-- icono para editar el telefono del funcionario -->
+             <h:outputText value="#{msg['actualizarDatosFuncionario.editar']}" />
+             </f:facet>
+             <h:commandButton value="#{msg['actualizarDatosFuncionario.editar']}"/>
+             </rich:column>
+             
+             </rich:dataTable>
+             
+             </rich:panel>
+             
+             </h:panelGrid>
+             
+             <!-- Boton que manda los datos del formulario para editar los datos personales del funcionario -->
+             <h:commandButton value="#{msg['actualizarDatosFuncionario.actualizar']}"/>
+             </rich:panel>
+             
+             </h:form>
+                    
+        </rich:tab>
+        
+        <rich:tab label="#{msg['actualizarDatonFuncionario.actualizarDatosUsuario']}">
+            
+             <h:form>
+             
+             <rich:panel>
+             
+             <f:facet name="header">
+             </f:facet>
+             <h:panelGrid columns="2">
+             
+             <!-- Nuevo usuario de la cuenta del funcionario-->
+             <h:outputText value="#{msg['actualizarDatosFuncionario.nuevoUsuario']}"/>
+             <h:inputText value=""/>
+             
+             <!-- Nueva contraseña de la cuenta del funcionario -->
+             <h:outputText value="#{msg['actualizarDatosFuncionario.nuevaContraseña']}"/>
+             <h:inputText value=""/>
+             
+             </h:panelGrid>
+             
+             <!-- Boton que manda los datos del formulario para editar los datos de la cuenta del funcionario -->
+             <h:commandButton value="#{msg['actualizarDatosFuncionario.actualizar']}"/>
+            </rich:panel>
+            </h:form>
+        </rich:tab>
+        
+    </rich:tabPanel>
+	
 	</ui:define>
 	
 	
