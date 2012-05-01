@@ -21,7 +21,7 @@ public class FactoryEntityManager {
     
     private FactoryEntityManager(){
         
-        EntityManagerFactory emf=Persistence.createEntityManagerFactory("tiendaJPAPU");
+        EntityManagerFactory emf=Persistence.createEntityManagerFactory("Clinica_JPA");
        
         em=emf.createEntityManager();
        

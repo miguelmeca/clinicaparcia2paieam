@@ -4,60 +4,36 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
 	<persistence-unit name="Clinica_JPA" transaction-type="RESOURCE_LOCAL">
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
-
-		<class>edu.eam.clinica.jpa.entidades.Persona</class>
-		<class>edu.eam.clinica.jpa.entidades.Paciente</class>
-		<class>edu.eam.clinica.jpa.entidades.Telefono</class>
-		<class>edu.eam.clinica.jpa.entidades.EPS</class>
 		<class>edu.eam.clinica.jpa.entidades.Acudiente</class>
-		<class>edu.eam.clinica.jpa.entidades.Medico</class>
-		<class>edu.eam.clinica.jpa.entidades.Especialidad</class>
-<!-- 		<class>edu.eam.clinica.jpa.entidades.IPS</class> -->
-		<class>edu.eam.clinica.jpa.entidades.Procedimiento</class>
-		<class>edu.eam.clinica.jpa.entidades.Consulta</class>
-		<class>edu.eam.clinica.jpa.entidades.OrdenMedica</class>
-<!-- 		<class>edu.eam.clinica.jpa.entidades.Servicio</class> -->
-		<class>edu.eam.clinica.jpa.entidades.DetalleOrdenMedica</class>
-		<class>edu.eam.clinica.jpa.entidades.FormulaMedica</class>
-		<class>edu.eam.clinica.jpa.entidades.Articulo</class>
-<!-- 		<class>edu.eam.clinica.jpa.entidades.Proveedor</class> -->
-<!-- 		<class>edu.eam.clinica.jpa.entidades.Laboratorio</class> -->
-<!-- 		<class>edu.eam.clinica.jpa.entidades.Fabricante</class> -->
-		<class>edu.eam.clinica.jpa.entidades.Medicamento</class>
-<!-- 		<class>edu.eam.clinica.jpa.entidades.DetalleProveedor</class> -->
-<!-- 		<class>edu.eam.clinica.jpa.entidades.DetalleFabricante</class> -->
-		<class>edu.eam.clinica.jpa.entidades.DetalleFormulaMedica</class>
-		<class>edu.eam.clinica.jpa.entidades.Inventario</class>
-		<class>edu.eam.clinica.jpa.entidades.Funcionario</class>
-<!-- 		<class>edu.eam.clinica.jpa.entidades.Rol</class> -->
-<!-- 		<class>edu.eam.clinica.jpa.entidades.DetalleRol</class> -->
-		<class>edu.eam.clinica.jpa.entidades.HistoriaClinica</class>
-		<class>edu.eam.clinica.jpa.entidades.ExamenFisico</class>
-		<class>edu.eam.clinica.jpa.entidades.DetalleHistoriaClinica</class>
-		<class>edu.eam.clinica.jpa.entidades.DetalleComentarioSistema</class>
-<!-- 		<class>edu.eam.clinica.jpa.entidades.Egreso</class> -->
-<!-- 		<class>edu.eam.clinica.jpa.entidades.FormaDePago</class> -->
-<!-- 		<class>edu.eam.clinica.jpa.entidades.ItemPagar</class> -->
-<!-- 		<class>edu.eam.clinica.jpa.entidades.FormaDePagoCheque</class> -->
-<!-- 		<class>edu.eam.clinica.jpa.entidades.FormaDePagoConsignacion</class> -->
-<!-- 		<class>edu.eam.clinica.jpa.entidades.Banco</class> -->
-<!-- 		<class>edu.eam.clinica.jpa.entidades.DescuentoEgreso</class> -->
-<!-- 		<class>edu.eam.clinica.jpa.entidades.CuentaPorPagar</class> -->
-<!-- 		<class>edu.eam.clinica.jpa.entidades.ImagenDiagnosticaHistoriaClinica</class> -->
-		<class>edu.eam.clinica.jpa.entidades.Remision</class>
-		<class>edu.eam.clinica.jpa.entidades.AuditoriaHistoriaClinica</class>
-		<class>edu.eam.clinica.jpa.entidades.Factura</class>
-<!-- 		<class>edu.eam.clinica.jpa.entidades.ItemFactura</class> -->
-<!-- 		<class>edu.eam.clinica.jpa.entidades.ReciboCaja</class> -->
-		<class>edu.eam.clinica.jpa.entidades.Ciudad</class>
-		<class>edu.eam.clinica.jpa.entidades.Antecedente</class>
-<!-- 		<class>edu.eam.clinica.jpa.entidades.AntecedentesGinecologicos</class> -->
-<!-- 		<class>edu.eam.clinica.jpa.entidades.ResolucionFActuraDian</class> -->
-<!-- 		<class>edu.eam.clinica.jpa.entidades.Diagnostico</class> -->
-		<class>edu.eam.clinica.jpa.entidades.DetalleDiagnosticoHistoriaClinica</class>
-<!-- 		<class>com.torresquintero.oncologos.enumeraciones.RevisionSistemaEnum</class> -->
-<!-- 		<class>edu.eam.clinica.jpa.entidades.DetalleComentarioRevision</class> -->
-<!-- 		<class>edu.eam.clinica.jpa.entidades.AuditoriaCitas</class> -->
+		
+
+		<class>edu.eam.clinica.jpa.entidades.Acudiente</class>
+    <class>edu.eam.clinica.jpa.entidades.Antecedente</class>
+    <class>edu.eam.clinica.jpa.entidades.Articulo</class>
+    <class>edu.eam.clinica.jpa.entidades.Ciudad</class>
+    <class>edu.eam.clinica.jpa.entidades.Consulta</class>
+    <class>edu.eam.clinica.jpa.entidades.DetalleComentarioRevision</class>
+    <class>edu.eam.clinica.jpa.entidades.DetalleComentarioSistema</class>
+    <class>edu.eam.clinica.jpa.entidades.DetalleFormulaMedica</class>
+    <class>edu.eam.clinica.jpa.entidades.DetalleHistoriaClinica</class>
+    <class>edu.eam.clinica.jpa.entidades.DetalleOrdenMedica</class>
+    <class>edu.eam.clinica.jpa.entidades.EPS</class>
+    <class>edu.eam.clinica.jpa.entidades.Especialidad</class>
+    <class>edu.eam.clinica.jpa.entidades.ExamenFisico</class>
+    <class>edu.eam.clinica.jpa.entidades.FormulaMedica</class>
+    <class>edu.eam.clinica.jpa.entidades.Funcionario</class>
+    <class>edu.eam.clinica.jpa.entidades.HistoriaClinica</class>
+    <class>edu.eam.clinica.jpa.entidades.Inventario</class>
+    <class>edu.eam.clinica.jpa.entidades.Laboratorio</class>
+    <class>edu.eam.clinica.jpa.entidades.Medicamento</class>
+    <class>edu.eam.clinica.jpa.entidades.Medico</class>
+    <class>edu.eam.clinica.jpa.entidades.OrdenMedica</class>
+    <class>edu.eam.clinica.jpa.entidades.Paciente</class>
+    <class>edu.eam.clinica.jpa.entidades.Persona</class>
+    <class>edu.eam.clinica.jpa.entidades.Procedimiento</class>
+    <class>edu.eam.clinica.jpa.entidades.Remision</class>
+    <class>edu.eam.clinica.jpa.entidades.Telefono</class>
+    <class>edu.eam.clinica.jpa.entidades.User</class>
 
 		<properties>
 			<!-- valores posible:update,create,create-drop si es create o create-drop 
