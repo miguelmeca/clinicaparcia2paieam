@@ -14,19 +14,52 @@
 	<h:outputText value="Inventario" />
 	</f:facet>
 	 <rich:tabPanel>
-        <rich:tab label="Medicamentos">
+        <rich:tab label="#{msg['Inventario.grupoterapeutico']}">
           <rich:panel id="medicamentospanel">
-          <rich:dataTable id="tablaMedicamentos">
+          <rich:dataTable id="tablaMedicamentos" value="#{medicamentobean.medicamento}" var="m">
+        	<rich:column id="GrupoTerapeutico">
+			<f:facet name="header">
+			<h:outputLabel value="#{msg['Inventario.grupoterapeutico']}" />
+			</f:facet>
+					
+						<h:outputText id="TxtTerapeutico" value="#{m.grupoTerapeutico}" />
+					</rich:column>  
+			<rich:column id="RegistroInvima">
+						<f:facet name="header">
+							<h:outputLabel value="#{msg['Inventario.registroinvima']}" />
+						</f:facet>
+						<h:outputText id="TxtInvima" value="#{m.registroinvima}" />
+					</rich:column>
+					  
           
-          
-          </rich:dataTable>
-          
+          </rich:dataTable>        
           </rich:panel>
+          
         </rich:tab>
-        <rich:tab label="Entradas y salidad">
+        <rich:tab label="#{msg['Inventario.entradaSalida']}">
+        
          
         </rich:tab>
-        <rich:tab label="Ingresar Medicamento">
+        
+        
+        <rich:tab label="#{msg['Inventario.IngresarMedicamento']}">
+        <rich:panel id="panelingresar">
+       	<f:facet name="header">
+					<h:outputText value="#{msg['Inventario.RegistrarMedicamento']}" />
+				</f:facet>
+       	<h:panelGrid columns="2">
+       	<h:outputText value="#{msg['Inventario.codigoBarras']}" />
+       	<h:inputText id="txtbarras" value="" />
+       	
+       	<h:outputText value="#{msg['Inventario.codigoDelArticulo']}" />
+       	<h:inputText id="txtCodigo" value="" />       	
+       	</h:panelGrid>
+       	
+       	<a4j:commandButton value="#{msg['Inventario.crear']}"
+		action="#{medicamentobean.crear}"  />
+       	
+       	
+        </rich:panel>
            
         </rich:tab>
         
