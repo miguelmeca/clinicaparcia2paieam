@@ -17,11 +17,11 @@
              <f:facet name="header">
              </f:facet>
              <h:panelGrid columns="2">
-             <h:panelGrid columns="2">
+             <h:panelGrid columns="1">
              
              <!-- Documento del funcionacio -->
              <h:outputText value="#{msg['actualizarDatosFuncionario.documento']}"/>
-             <h:inputText value="#{actualizarDatosFuncionarioBean.documento}"/>
+             <h:inputText value=""/>
              
              <!-- Tipo de Documento del funcionario -->
              <h:outputText value="#{msg['actualizarDatosFuncionario.tipoDocumento']}"/>
@@ -42,8 +42,20 @@
              <!-- Segundo apellido del funcionario -->
              <h:outputText value="#{msg['actualizarDatosFuncionario.segundoApellido']}"/>
              <h:inputText value=""/>
-             <!-- email del funcionario -->
              
+             <!-- Direccion del funcionario -->
+             <h:outputText value="#{msg['actualizarDatosFuncionario.direccion']}"/>
+             <h:inputText value=""/>
+             
+             <!-- Ciudad del funcionario -->
+             <h:outputText value="#{msg['actualizarDatosFuncionario.ciudad']}"/>
+             <h:inputText value=""/>
+             
+          	 <!-- Sexo del funcionario -->
+             <h:outputText value="#{msg['actualizarDatosFuncionario.sexo']}"/>
+             <h:inputText value=""/>
+             
+             <!-- email del funcionario -->
              <h:outputText value="#{msg['actualizarDatosFuncionario.e-Mail']}"/>
              <h:inputText value=""/>
              
@@ -100,7 +112,7 @@
              
              <f:facet name="header">
              </f:facet>
-             <h:panelGrid columns="2">
+             <h:panelGrid columns="1">
              
              <!-- Nuevo usuario de la cuenta del funcionario-->
              <h:outputText value="#{msg['actualizarDatosFuncionario.nuevoUsuario']}"/>
