@@ -27,7 +27,10 @@ public class AsignarCitasBean {
 	
 
 	public List<Medico> getMedicos(){
-		return em.createNamedQuery("Medico.Medico.findAll").getResultList();
+		List<Medico> m= new ArrayList<Medico>();//em.createNamedQuery("Medico.FIND_ALL").getResultList();
+		m.add(new Medico("123", "unico"));
+		m.add(new Medico("1234", "doble"));
+		return m;
 	}
 	
 	public String crearCrita(){

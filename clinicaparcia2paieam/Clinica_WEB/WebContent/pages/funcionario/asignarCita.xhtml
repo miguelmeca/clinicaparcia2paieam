@@ -56,6 +56,13 @@
 	<h:outputLabel value="#{msg['asignarCita.cedulaDelPaciente']}  " />
 	<h:inputText value="" /><br/><br/>
 	
+	<!-- Medico que atiende -->
+	<h:outputLabel value="#{msg['asignarCita.medicoQueAtiende']}" />
+	<rich:comboBox selectFirstOnUpdate="false"
+        defaultLabel="Seleccionar medico">
+        <f:selectItems value="#{asignarCitasBean.Medicos}" />
+    </rich:comboBox>
+	
 	<!-- Fecha de la cita -->
 	<h:outputLabel value="#{msg['asignarCita.fechaDeLaCita']} " />
 	<rich:calendar isDayEnabled="disablementFunction" dayStyleClass="disabledClassesProv" boundaryDatesMode="scroll"/><br/><br/>
