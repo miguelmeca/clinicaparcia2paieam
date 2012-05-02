@@ -30,7 +30,10 @@ import javax.persistence.NamedQuery;
     
     @NamedQuery(name = Inventario.CONSULTA_FIND_BY_ARTICULO, 
         query = "select inv from Inventario inv where inv.fechaSalida is NULL and inv.articulo.codigo=:" 
-        + Inventario.PARAMETRO_CODIGO )
+        + Inventario.PARAMETRO_CODIGO ),
+        
+         @NamedQuery(name = "MedicamentoAll", query = "SELECT nombre,precio,COUNT(nombre) AS cantidad FROM articulo a,Inventario i WHERE a.id=i.articulo GROUP BY nombre;")
+         
 
 })
 
