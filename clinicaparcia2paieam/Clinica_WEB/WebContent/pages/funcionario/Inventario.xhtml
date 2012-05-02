@@ -20,23 +20,23 @@
           
         	<rich:column id="GrupoTerapeutico">
 			<f:facet name="header">
-			<h:outputLabel value="#{msg['Inventario.grupoterapeutico']}" />
+			<h:outputLabel value="#{msg['Inventario.nombre']}" />
 			</f:facet>
 					
-						<h:outputText id="TxtTerapeutico" value="#{m.grupoTerapeutico}" />
+						<h:outputText id="TxtTerapeutico" value="#{m.nombre}" />
 					</rich:column>  
 			<rich:column id="RegistroInvima">
 						<f:facet name="header">
-							<h:outputLabel value="#{msg['Inventario.registroinvima']}" />
+							<h:outputLabel value="#{msg['Inventario.precio']}" />
 						</f:facet>
-						<h:outputText id="TxtInvima" value="#{m.registroinvima}" />
+						<h:outputText id="TxtInvima" value="#{m.precio}" />
 					</rich:column>
 					  
-					  <rich:column id="presentacion">
+					  <rich:column id="cantidades">
 					  <f:facet name="header">
-							<h:outputLabel value="#{msg['Inventario.presentacion']}" />
+							<h:outputLabel value="#{msg['Inventario.cantidad']}" />
 						</f:facet>
-						<h:outputText id="TxtPresentacion" value="#{m.presentacion}" />
+						<h:outputText id="TxtPresentacion" value="#{m.cantidad}" />
 					  </rich:column>
 					  
 					  
