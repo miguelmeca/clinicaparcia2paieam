@@ -45,17 +45,43 @@
           </rich:panel>
           
         </rich:tab>
-        <rich:tab label="#{msg['Inventario.entradaSalida']}">
-        <rich:panel id="panel Entrada salidad">
-        <rich:dataTable id="entrada">
+       <rich:tab label="#{msg['Inventario.entradaSalida']}">
+        <rich:panel >
+        <f:facet name="header">
+	<h:outputText value="#{msg['Inventario.entradaSalida']}" />
+	</f:facet>
+	<h:outputText value="#{msg['Inventario.nombre']}" />
+	<h:inputText value="" />
+	<h:commandButton  value="#{msg['Inventario.filtro']}" />
+	<br />
+		<rich:dataTable id="entradaMedicamentos" value="#{inventarioBean.medicamentosentrada}" var="md">
         
-        
-        </rich:dataTable>
-        <rich:dataTable id ="salidad">
-        hola
-        </rich:dataTable>
-        </rich:panel> 
-        
+        <rich:column>
+        <f:facet name="header">
+        <h:outputLabel value="#{msg['Inventario.fechaingreso']}" />
+        </f:facet>
+        <h:outputText value="#{md.fechaIngreso}" />
+        </rich:column>
+        <rich:column>
+        <f:facet name="header">
+        <h:outputLabel value="#{msg['Inventario.funcionarioIngreso']}" />
+        </f:facet>
+        <h:outputText value="#{md.FUNCIONARIO_INGRESO}" />
+        </rich:column>
+        <rich:column>
+        <f:facet name="header">
+        <h:outputLabel value="#{msg['Inventario.fechasalidad']}" />
+        </f:facet>
+        <h:outputText value="#{md.fechaSngreso}" />
+        </rich:column>
+         <rich:column>
+        <f:facet name="header">
+        <h:outputLabel value="#{msg['Invetario.funcionariosalidad']}" />
+        </f:facet>
+        <h:outputText value="#{md.FUNCIONARIO_SALIDAD}" />
+        </rich:column>
+        </rich:dataTable>  
+        </rich:panel>     
         
         
         </rich:tab>
