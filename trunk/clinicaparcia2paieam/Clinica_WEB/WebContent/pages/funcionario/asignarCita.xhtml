@@ -7,8 +7,143 @@
 	template="/templates/templateFuncionario.xhtml"
 	xmlns:a4j="http://richfaces.org/a4j">
 	
+	<!-- Insercion del formulario -->
 	<ui:define name="cuerpo">
-	</ui:define>
+	<h1>
+	<h:outputLabel value="#{msg['asignarCita.asignacionYAdministracionDeCitas']}" />
+	</h1>
+	<!-- Estilo para el Rich Calendar -->
+	 <style>
+        .everyThirdDay{
+            background-color:gray;
+            
+        }
+        .weekendBold{
+            font-weight:bold;
+            font-style: italic;
+        }
+        
+    </style>
+    <script type="text/javascript">
+        var curDt = new Date();
+        function disablementFunction(day){
+            if (day.isWeekend) return false;
+            if (curDt==undefined){
+                curDt = day.date.getDate;
+            }
+            if (curDt.getTime() - day.date.getTime() &lt; 0) return true; else return false;  
+        }
+        function disabledClassesProv(day){
+            if (curDt.getTime() - day.date.getTime() &gt;= 0) return 'rich-calendar-boundary-dates';
+            var res = '';
+            if (day.isWeekend) res+='weekendBold ';
+            if (day.day%3==0) res+='everyThirdDay';
+            return res;
+        }
+    </script>
 	
+	<!-- Implementacin interfaz grafica: Rich Simple Toogle Panel 
+		 Secciones con Rich Tab
+		 y sus respectivos h:forms.-->
+	<rich:simpleTogglePanel label="#{msg['asignarCita.formularioDeCitasYConsultas']}" height="345px" width="695px">
+	<rich:tabPanel headerAlignment="left" switchType="client">
+	
+	<rich:tab label="#{msg['asignarCita.generarCitas']}  ">
+	<h:form>
+	<div align="left">
+	
+	<!-- Cedula del paciente -->
+	<h:outputLabel value="#{msg['asignarCita.cedulaDelPaciente']}  " />
+	<h:inputText value="" /><br/><br/>
+	
+	<!-- Fecha de la cita -->
+	<h:outputLabel value="#{msg['asignarCita.fechaDeLaCita']} " />
+	<rich:calendar isDayEnabled="disablementFunction" dayStyleClass="disabledClassesProv" boundaryDatesMode="scroll"/><br/><br/>
+	
+	<!-- Horario de la cita -->
+	<h:outputLabel value="#{msg['asignarCita.horaDeLaCita']}" />
+	<h:selectOneMenu value="horaCita">
+	<f:selectItem itemLabel="Seleccionar Hora"/>
+	<f:selectItem itemLabel="6:30 am" itemValue="1"/>
+	<f:selectItem itemLabel="7:00 am" itemValue="2"/>
+	<f:selectItem itemLabel="7:30 am" itemValue="3"/>
+	<f:selectItem itemLabel="8:00 am" itemValue="4"/>
+	<f:selectItem itemLabel="8:30 am" itemValue="5"/>
+	<f:selectItem itemLabel="9:00 am" itemValue="6"/>
+	<f:selectItem itemLabel="9:30 am" itemValue="7"/>
+	<f:selectItem itemLabel="10:00 am" itemValue="8"/>
+	<f:selectItem itemLabel="10:30 am" itemValue="9"/>
+	<f:selectItem itemLabel="11:00 am" itemValue="10"/>
+	<f:selectItem itemLabel="11:30 am" itemValue="11"/>
+	<f:selectItem itemLabel="12:00 pm" itemValue="12"/>
+	<f:selectItem itemLabel="12:30 pm" itemValue="13"/>
+	<f:selectItem itemLabel="1:00 pm" itemValue="14"/>
+	<f:selectItem itemLabel="1:30 pm" itemValue="15"/>
+	<f:selectItem itemLabel="2:30 pm" itemValue="16"/>
+	<f:selectItem itemLabel="3:00 pm" itemValue="17"/>
+	<f:selectItem itemLabel="3:30 pm" itemValue="18"/>
+	<f:selectItem itemLabel="4:00 pm" itemValue="19"/>
+	<f:selectItem itemLabel="4:30 pm" itemValue="20"/>
+	<f:selectItem itemLabel="5:00 pm" itemValue="21"/>
+	<f:selectItem itemLabel="5:30 pm" itemValue="22"/>
+	<f:selectItem itemLabel="6:00 pm" itemValue="23"/>
+	<f:selectItem itemLabel="6:30 pm" itemValue="24"/>
+	<f:selectItem itemLabel="7:00 pm" itemValue="25"/>
+	<f:selectItem itemLabel="7:30 pm" itemValue="26"/>
+	<f:selectItem itemLabel="8:00 pm" itemValue="27"/>
+	</h:selectOneMenu><br/><br/>
+	
+	<!-- como listar los medicos en el rich combobox -->
+
+	
+	<!-- Estado inicial de la cita -->
+	<h:outputLabel value="#{msg['asignarCita.estadoDeLaCita']}  " />
+	<h:selectOneMenu value="estadoCita">
+	<f:selectItem itemLabel="Seleccionar estado"/>
+	<f:selectItem itemLabel="Pendiente" itemValue="1"/>
+	<f:selectItem itemLabel="Tomada" itemValue="2"/>
+	<f:selectItem itemLabel="Vencida" itemValue="3"/>
+	<f:selectItem itemLabel="Cancelada" itemValue="4"/>
+	</h:selectOneMenu><br/><br/>
+	
+	<h:panelGrid columns="2" >
+	<h:panelGrid>
+	
+	<!-- Descripcion del motivo de la consulta -->
+	<h:outputLabel value="#{msg['asignarCita.motivoDeLaConsulta']}" />
+	<h:inputTextarea value="" />
+	
+	</h:panelGrid>
+	<h:panelGrid>
+	
+	<!-- Descripcion del procedimiento que se llevara en la cita -->
+	<h:outputLabel value="#{msg['asignarCita.procedimientoDeLaCita']}" />
+	<h:inputTextarea value="" />
+	</h:panelGrid>
+	
+	</h:panelGrid>
+	<br/><br/>
+		
+	<!-- Boton para asignar la cita -->	
+	<a4j:commandButton value="#{msg['asignarCita.asignarNuevaCita']}"></a4j:commandButton>	
+	</div>
+	</h:form>
+	</rich:tab>
+	
+	<rich:tab label="#{msg['asignarCita.horariosMedicos']}">
+	<h:form>
+	
+	</h:form>
+	</rich:tab>
+	
+	<rich:tab label="#{msg['asignarCita.citasPacientes']}">
+	<h:form>
+	
+	</h:form>
+	</rich:tab>
+	
+	</rich:tabPanel>
+	</rich:simpleTogglePanel>															
+	</ui:define>
 	
 	</ui:composition>
