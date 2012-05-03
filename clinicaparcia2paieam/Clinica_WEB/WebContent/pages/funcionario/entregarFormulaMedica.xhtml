@@ -8,14 +8,13 @@
 	xmlns:a4j="http://richfaces.org/a4j">
 
 	<ui:define name="cuerpo">
-	</ui:define>
 	<h:form>
 		<h:panelGrid columns="3">
 			<rich:panel>
 
 				<h:outputLabel value="#{msg['entregarFormulaMedica.usuario']}" />
 				<h:outputText
-					value="#{entregarFormulaMedicaBean.funcionario.primerNombre}" />
+					value="#{funcionarioBean.primerNombre}" />
 				<h:outputLabel value="" />
 
 				<h:outputLabel value="#{msg['entregarFormulaMedica.codigoFormula']}" />
@@ -37,7 +36,7 @@
 					<h:outputLabel
 						value="#{msg['entregarFormulaMedica.nombreMedicamento']}" />
 				</f:facet>
-				<h:outputText value="#{detalle.articulo.nombre}" />
+				<h:outputText value="#{articuloBean.nombre}" />
 			</rich:column>
 			<rich:column>
 			<f:facet name="header">
@@ -58,4 +57,6 @@
     </rich:modalPanel>
     
 	</h:form>
+	</ui:define>
+	
 </ui:composition>
