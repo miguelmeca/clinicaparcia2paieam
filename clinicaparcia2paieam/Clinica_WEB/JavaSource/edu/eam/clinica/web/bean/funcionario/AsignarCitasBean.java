@@ -16,6 +16,7 @@ import edu.eam.clinica.jpa.utilidades.FactoryEntityManager;
 
 public class AsignarCitasBean {
 
+	//Atributos
 	private long nroConsulta;
 	private String cedulaPaciente;
 	private String docmedico;
@@ -32,11 +33,21 @@ public class AsignarCitasBean {
 		em = FactoryEntityManager.getEm();
 	}
 
+	/**
+	 * Verifica la existencia del paciente
+	 * La disponibilidad del medico
+	 * Consulta que no hayan cruses de horarios
+	 * Finalmente crea una nueva consulta
+	 * @return
+	 */
 	public String crearCrita() {
 		
 		Paciente paciente = em.find(Paciente.class, cedulaPaciente);
+		
 		if (paciente != null) {
+			
 			Medico medico = em.find(Medico.class, docmedico);
+		
 			if (medico != null) {
 
 				Query query = em.createNamedQuery(Consulta.FIND_CONSULTA_BY_REGISTRO_MEDICO);
@@ -56,6 +67,7 @@ public class AsignarCitasBean {
 					}
 				}
 				Consulta consulta = new Consulta(nroConsulta, fechaCita,paciente, medico, motivoConsulta, procedimientoConsulta);
+				
 				em.getTransaction().begin();
 				em.persist(consulta);
 				em.getTransaction().commit();
@@ -64,6 +76,32 @@ public class AsignarCitasBean {
 		}
 		return null;
 	}
+	
+	/**
+	 * Verifica que el medico exista
+	 * Realiza una consulta para obetener las citas en una fecha del mismo medico
+	 * @return
+	 */
+	public String getHorariosMedico(){
+		
+		Medico medico = em.find(Medico.class, docmedico);
+		
+		if(medico != null){
+			
+			Query query = em.createNamedQuery(Consulta.FIND_CONSULTA_BY_REGISTRO_MEDICO);
+			query.setParameter(Consulta.PARAMETRO_REGISTRO_MEDICO,docmedico);
+
+			List<Consulta> consultasMedico = query.getResultList();
+		}else{
+			
+		}
+		
+		return null;
+	}
+	
+	/*
+	 * Getters and setters
+	 */
 
 	public void setNroConsulta(int nroConsulta) {
 		this.nroConsulta = nroConsulta;
