@@ -139,9 +139,52 @@
 	
 	<rich:tab label="#{msg['asignarCita.horariosMedicos']}">
 	<h:form>
+	<!-- Estilo del selector -->
+	 <style>
+        .inplace{
+            border: none;
+            cursor:pointer; 
+        }
+        .hover {
+            color: #{a4jSkin.generalTextColor};
+            background-color :#{a4jSkin.tipBorderColor};
+        }       
+    </style> 
+    
+    <!-- Selector del medico -->
+    <h:outputLabel value="Seleccione un medico  " />
+    <h:panelGroup style="width:200px;" layout="block">
+        <rich:inplaceSelect value="#{asignarCitasBean.horariosMedico}"
+            defaultLabel="Doble clik para seleccionar" openOnEdit="true"
+            showControls="true" editEvent="ondblclick" layout="block"
+            viewClass="inplace" changedClass="inplace"
+            changedHoverClass="hover" viewHoverClass="hover">
+            <f:selectItems value="#{medicoBean.medicos}" />
+        </rich:inplaceSelect>
+    </h:panelGroup>
+    <rich:spacer width="100%" height="20px" /><br/><br/>
 	
+	<!-- Tabla donde se muestran las fechas y las horas de las citas -->
+	<h:outputLabel value="Consultas por atender" />
+	<rich:dataTable value="#{asignarCitasBean.horariosMedico}" var="consultas">
+	<rich:column>
+	<f:facet name="header">
+	<h:outputLabel
+	value="Fecha de la cita" />
+	</f:facet>
+	<h:outputText value="#{consultas.fechaCita}" />
+	</rich:column>
+	<rich:column>
+	<f:facet name="header">
+	<h:outputLabel
+	value="Hora de la cita" />
+	</f:facet>
+	<h:outputText value="#{consultas.horaCita}" />
+	</rich:column>
+	</rich:dataTable>
 	</h:form>
 	</rich:tab>
+	
 	
 	<rich:tab label="#{msg['asignarCita.citasPacientes']}">
 	<h:form>
