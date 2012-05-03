@@ -107,17 +107,25 @@ public class VerAgendaBean {
 	}
 
 	public String actionConsulta() {
-		if(fecha==fecha1){
-		
 		Consulta c = em.find(Consulta.class, idC);
-		s = new SesionFactory();
-		s.agregarASesion("consulta", c);
 
-		return "atenderConsulta";
-		}else{
-			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Esta consulta no se puede atender debido a que hoy no es el dia indicado",null));
-		}return null;
+	//	if (fecha == c.getFechaHora() || fecha1 == c.getFechaHora()) {
+
+			s = new SesionFactory();
+			s.agregarASesion("consulta", c);
+
+			return "atenderConsulta";
+//		} else {
+//			FacesContext
+//					.getCurrentInstance()
+//					.addMessage(
+//							null,
+//							new FacesMessage(
+//									FacesMessage.SEVERITY_ERROR,
+//									"Esta consulta no se puede atender debido a que hoy no es el dia indicado",
+//									null));
+//		}
+//		return null;
 
 	}
 
