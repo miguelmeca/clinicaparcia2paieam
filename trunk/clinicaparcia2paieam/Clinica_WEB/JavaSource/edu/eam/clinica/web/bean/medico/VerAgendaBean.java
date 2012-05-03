@@ -21,7 +21,7 @@ import java.util.List;
 public class VerAgendaBean {
 
 	/*
-	 * 
+	 * Parametro que permite acceder a los datos de la base de datos
 	 */
 	private EntityManager em;
 	/*
@@ -34,11 +34,11 @@ public class VerAgendaBean {
 	 */
 	private Date fecha1;
 	/*
-	 * Medico en session
+	 * Medico  utilizado para la simulacion de session
 	 */
-	private Medico m;
+	private Medico medico;
 	/*
-	 * 
+	 * Parametro que permite utilizar la variable en session
 	 */
 	private SesionFactory s;
 	/*
@@ -49,11 +49,13 @@ public class VerAgendaBean {
 	public VerAgendaBean() {
 		fecha1 = new Date();
 		em = FactoryEntityManager.getEm();
+/*
+ * Estas dos lineas se usan para la simulacion de la variable medico en session
+ */
+//		medico = em.find(Medico.class, "1234");
+//		SesionFactory.agregarASesion("persona", medico);
 
-		m = em.find(Medico.class, "1234");
-		SesionFactory.agregarASesion("persona", m);
-
-		// m=(Medico) SesionFactory.getValor("persona");
+		 medico=(Medico) SesionFactory.getValor("persona");
 
 	}
 
@@ -77,11 +79,15 @@ public class VerAgendaBean {
 		q.setParameter(Consulta.PARAMETRO_MENOR_FECHA, fechaM);
 		q.setParameter(Consulta.PARAMETRO_MAYOR_FECHA, fecha);
 		q.setParameter(Consulta.PARAMETRO_REGISTRO_MEDICO,
-				m.getRegistroMedico());
+				medico.getRegistroMedico());
 		return q.getResultList();
 
 	}
-
+	
+	/*
+	 * Metodo que  optiene las consultas de un medico en el dia actual
+	 * 
+	 */
 	public List<Consulta> getConsultasD() {
 
 		Date fechaM = new Date();
@@ -98,14 +104,19 @@ public class VerAgendaBean {
 		q.setParameter(Consulta.PARAMETRO_MENOR_FECHA, fechaM);
 		q.setParameter(Consulta.PARAMETRO_MAYOR_FECHA, fecha1);
 		q.setParameter(Consulta.PARAMETRO_REGISTRO_MEDICO,
-				m.getRegistroMedico());
+				medico.getRegistroMedico());
 		return q.getResultList();
 	}
 
 	public EntityManager getEm() {
 		return em;
 	}
-
+	
+	/*
+	 * Metodo que permite  enviar la variable consulta
+	 * en session, y ademas permite navegar a la pagina
+	 * atenderConsulta
+	 */
 	public String actionConsulta() {
 		Consulta c = em.find(Consulta.class, idC);
 
