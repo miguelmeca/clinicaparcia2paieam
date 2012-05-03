@@ -25,14 +25,6 @@ public class AsignarCitasBean {
 		em = FactoryEntityManager.getEm();
 	}
 	
-
-	public List<Medico> getMedicos(){
-		List<Medico> m= new ArrayList<Medico>();//em.createNamedQuery("Medico.FIND_ALL").getResultList();
-		m.add(new Medico("123", "unico"));
-		m.add(new Medico("1234", "doble"));
-		return m;
-	}
-	
 	public String crearCrita(){
 		
 		return null;
