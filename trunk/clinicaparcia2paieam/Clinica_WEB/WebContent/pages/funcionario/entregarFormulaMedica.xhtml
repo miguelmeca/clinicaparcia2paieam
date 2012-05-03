@@ -28,7 +28,6 @@
 		</h:panelGrid>
 	</h:form>
 
-	<rich:dataGrid>
 		<rich:dataTable id="tablaMedicamentos"
 			value="#{entregarFormulaMedicaBean.detalles}" var="detalle">
 			<rich:column>
@@ -38,17 +37,63 @@
 				</f:facet>
 				<h:outputText value="#{articuloBean.nombre}" />
 			</rich:column>
+			
 			<rich:column>
-			<f:facet name="header">
-			<h:outputLabel value="#{msg['entregarFormulaMedica.escoger']}" />
-			</f:facet>
-			<a4j:commandButton image="imgs/why-choose-us.png" id="escogerMedicamento" height="20" width="20">
-	        <rich:componentControl for="panel" attachTo="escogerMedicamento" operation="show" event="onclick" />	
-			</a4j:commandButton>
+                    <a4j:commandLink ajaxSingle="true" id="linkCodBarras"
+                        oncomplete="#{rich:component('modalCodBarras')}.show()">
+                        <h:graphicImage value="/imgs/why-choose-us.png" style="border:0" />
+                        <f:setPropertyActionListener value="#{row}"
+                            target="#{MedicamentoBean.codigoBarras}" />
+                    </a4j:commandLink>
+                    <rich:toolTip for="linkCodBarras" value="#{msg['entregarFormulaMedica.ingresar']}" />
 			</rich:column>
+			
 		</rich:dataTable>
-	</rich:dataGrid>
-
+		
+		
+		
+		<rich:modalPanel id="modalCodBarras">
+		
+		 <f:facet name="header">
+            <h:outputText value="Ingrese el codigo de barras por favor"
+                style="padding-right:15px;" />
+        </f:facet>
+        
+           <f:facet name="controls">
+            <h:panelGroup>
+                <h:graphicImage value="/imgs/close.png"
+                    styleClass="hidelink" id="ocultar" />
+                <rich:componentControl for="modalCodBarras" attachTo="ocultar"
+                    operation="hide" event="onclick" />
+            </h:panelGroup>
+        </f:facet>
+        <h:panelGrid columns="2">
+        <h:outputLabel value="#{msg['entregarFormulaMedica.codigoBarras']}" />
+        <h:inputText value="#{MedicamentoBean.codigoBarras}" />
+        </h:panelGrid>
+        
+        
+		<h:form>
+        
+         <table width="100%" id="table">
+                <tbody>
+                    <tr>
+                        <td align="center" width="50%">
+                        <a4j:commandButton value="#{msg['entregarFormulaMedica.aceptar']}"
+                            ajaxSingle="true" action="#{MedicamentoBean.codigoBarras}"
+                            oncomplete="#{rich:component('modalCodBarras')}.hide();"
+                            reRender="tablaMedicamentos" /></td>
+                        <td align="center" width="50%"><a4j:commandButton
+                            value="#{msg['entregarFormulaMedica.cancelar']}"
+                            onclick="#{rich:component('modalCodBarras')}.hide();return false;" />
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+		
+		</h:form>
+		
+		</rich:modalPanel>
 	
 	</ui:define>
 	
