@@ -15,7 +15,7 @@ import edu.eam.clinica.web.autorizacion.SesionFactory;
  *
  */
 public class ActualizarDatosMedicoBean {
-
+	//javadoc......
 	public Funcionario persona;
 	public String primerNombre;
 	public String segundoNombre;
@@ -60,7 +60,8 @@ public class ActualizarDatosMedicoBean {
 		em.getTransaction().begin();
 		em.merge(persona);
 		em.getTransaction().commit();
-		SesionFactory.agregarASesion("medico", persona);
+		//en session no hay nadie medico.
+		//SesionFactory.agregarASesion("medico", persona);
 		
 		return null;
 	}
@@ -70,6 +71,8 @@ public class ActualizarDatosMedicoBean {
 	 * @return
 	 */
 	public String cambiarPassword(){
+		
+		//validaciones del viejo password y la confirmacion.
 		persona = (Funcionario) SesionFactory.getValor("persona");
 		persona.setPassword(nuevoPass);
 		em.getTransaction().begin();

@@ -20,7 +20,7 @@ import edu.eam.clinica.jpa.entidades.Paciente;
 import edu.eam.clinica.jpa.entidades.Persona;
 import edu.eam.clinica.jpa.entidades.Procedimiento;
 import edu.eam.clinica.jpa.entidades.Remision;
-import edu.eam.clinica.jpa.entidades.utilidades.FactoryEntityManager;
+//import edu.eam.clinica.jpa.entidades.utilidades.FactoryEntityManager;
 import edu.eam.clinica.jpa.enumeraciones.EstadoConsultaEnum;
 import edu.eam.clinica.web.autorizacion.SesionFactory;
 
@@ -37,17 +37,16 @@ public class AtenderConsultaBean {
 	public EntityManager em;
 
 	/*
-	 * nombre del medicamento el cual se quiere  buscar para 
-	 * luego mostrar una lista de medicamentos
-	 * que concuerden con este nombre
+	 * nombre del medicamento el cual se quiere buscar para luego mostrar una
+	 * lista de medicamentos que concuerden con este nombre
 	 */
 	@Pattern(regex = "[a-zA-Z]*", message = "solo letras.")
 	@Length(min = 1, max = 20, message = "debe tener almenos 1 caracter y maximo 30")
 	private String nombreMedicamento;
 
 	/*
-	 * codigo del medicaento que se quiere agregar a la lista
-	 * con este se busca el medicamento
+	 * codigo del medicaento que se quiere agregar a la lista con este se busca
+	 * el medicamento
 	 */
 	private String codigoMedicamento;
 
@@ -62,18 +61,20 @@ public class AtenderConsultaBean {
 	private ArrayList<Medicamento> medicamentosPaciente;
 
 	/*
-	 * medicamento que se va a ir elegiendo para agregar a los medicamentos 
-	 * que el paciente llevara
+	 * medicamento que se va a ir elegiendo para agregar a los medicamentos que
+	 * el paciente llevara
 	 */
 	private Medicamento medicamento;
 
 	/*
-	 * prescripcion es la dosis y la frecuencia con la que se tomara el medicamento
+	 * prescripcion es la dosis y la frecuencia con la que se tomara el
+	 * medicamento
 	 */
 	private String prescrpcion;
 
 	/*
-	 * es la variable que llega en session y representa la consulta que atiende el medico
+	 * es la variable que llega en session y representa la consulta que atiende
+	 * el medico
 	 */
 	private Consulta conuslta;
 	/*
@@ -99,19 +100,20 @@ public class AtenderConsultaBean {
 	private String nombreProcedimiento;
 
 	/*
-	 * lista de procedimientos candidato a elegir 
+	 * lista de procedimientos candidato a elegir
 	 */
 	private ArrayList<Procedimiento> procedimientos;
 
 	/*
-	 * procedimeinto elegido para agregar a la lista de procedimientos del paciente
+	 * procedimeinto elegido para agregar a la lista de procedimientos del
+	 * paciente
 	 */
 	private Procedimiento procedimiento;
 
 	// ---------------------------------------variables remisiones
-/*
- * remisiones  que tendra finalmente el paciente
- */
+	/*
+	 * remisiones que tendra finalmente el paciente
+	 */
 	private ArrayList<Remision> remisionesPaciente;
 
 	/*
@@ -127,17 +129,17 @@ public class AtenderConsultaBean {
 	 * codigo de la remision que se selecciona en el combo box
 	 */
 	private String codComboRemision;
-	
-	 /*
-	  * id de la especialidad la cual se va a remitir al paciente
-	  */
+
+	/*
+	 * id de la especialidad la cual se va a remitir al paciente
+	 */
 	private long idEspecialidad;
-	
+
 	/*
 	 * comentario de la remision
 	 */
 	private String comentarioRemision;
-	//----------------------------------------variables evolucion
+	// ----------------------------------------variables evolucion
 	/*
 	 * evolucion que el medico le ha visto a l paciente
 	 */
@@ -146,11 +148,10 @@ public class AtenderConsultaBean {
 	 * medico que atiende la consulta que viene por session
 	 */
 	private Persona medico;
-	
+
 	public AtenderConsultaBean() {
 
-		em = FactoryEntityManager.getEm();
-
+		em = edu.eam.clinica.jpa.utilidades.FactoryEntityManager.getEm();
 		// aqui se saca la variable en sesion
 		/*
 		 * FacesContext context = FacesContext.getCurrentInstance();
@@ -159,14 +160,13 @@ public class AtenderConsultaBean {
 		 * request.getSession(false); Consulta consulta = (Consulta)
 		 * httpSession.getAttribute("consulta");
 		 */
-		
-		 SesionFactory session=new SesionFactory();
-		 Consulta consulta =
-		 (Consulta)session.getValor("consulta");
-		 medico=(Persona)session.getValor("persona");
-		 
-		 this.paciente = consulta.getPaciente();
-		 
+
+		SesionFactory session = new SesionFactory();
+		Consulta consulta = (Consulta) session.getValor("consulta");
+		medico = (Persona) session.getValor("persona");
+
+		this.paciente = consulta.getPaciente();
+
 	}
 
 	/*
@@ -177,36 +177,39 @@ public class AtenderConsultaBean {
 
 		SesionFactory session = new SesionFactory();
 		session.agregarASesion("pacienteHistoria", this.paciente);
-		
-		//aqui va evaluacion agregarla
+
+		// aqui va evaluacion agregarla
 		/*
-		HistoriaClinica hc=new HistoriaClinica();
-		DetalleComentarioRevision detalle=new DetalleComentarioRevision();
-		detalle.setComentario(evolucion);
-		detalle.setHistoria(hc);
-		ArrayList<DetalleComentarioRevision>detalles=new ArrayList<DetalleComentarioRevision>();
-		detalles.add(detalle);
-		Antecedente an= new Antecedente();
-		hc.setPaciente(paciente);*/
-		
+		 * HistoriaClinica hc=new HistoriaClinica(); DetalleComentarioRevision
+		 * detalle=new DetalleComentarioRevision();
+		 * detalle.setComentario(evolucion); detalle.setHistoria(hc);
+		 * ArrayList<DetalleComentarioRevision>detalles=new
+		 * ArrayList<DetalleComentarioRevision>(); detalles.add(detalle);
+		 * Antecedente an= new Antecedente(); hc.setPaciente(paciente);
+		 */
 
 		return "historiaClinica";
 	}
-	
+
 	/*
 	 * guar dar todo es para gusdar lo que se ha hecho en esta pagina a nivel de
 	 * bese de datos. guarda la formula y la consulta
 	 */
-	public void guardarTodo(){
+	public void guardarTodo() {
+
+		// asigna a als consulta la formula, la orden y las remisiones.
+		// actualiza
+		// solo laconsulta
+//		em.getTransaction().begin();
+//		em.persist(formula);
+//		em.getTransaction().commit();
+
+		this.conuslta.setEstado(EstadoConsultaEnum.TOMADA);
+		//erminar de llenar la conuslta....
+
 		em.getTransaction().begin();
-		em.persist(formula);
+		em.merge(this.conuslta);
 		em.getTransaction().commit();
-		
-	this.conuslta.setEstado(EstadoConsultaEnum.TOMADA);
-	
-	em.getTransaction().begin();
-	em.merge(this.conuslta);
-	em.getTransaction().commit();
 	}
 
 	/*
@@ -215,8 +218,9 @@ public class AtenderConsultaBean {
 	public void buscarMedicamentos() {
 
 		Query q = em.createNamedQuery(Articulo.FIND_ARTICULO_BY_NOMBRE);
-		q.setParameter(Articulo.PARAMENTRO_NOMBRE, "%"+nombreMedicamento+"%");
-		
+		q.setParameter(Articulo.PARAMENTRO_NOMBRE, "%" + nombreMedicamento
+				+ "%");
+		// medicamenteos sea una lista.
 		this.medicamentos = (ArrayList<Medicamento>) q.getResultList();
 		System.out.println(medicamentos);
 
@@ -229,21 +233,27 @@ public class AtenderConsultaBean {
 
 		Query q = em
 				.createNamedQuery(Procedimiento.FIND_PROCEDIMIENTO_BY_NOMBRE);
-		q.setParameter(Procedimiento.PARAMETRO_NOMBRE_PROC, "%"+nombreProcedimiento+"%");
+		q.setParameter(Procedimiento.PARAMETRO_NOMBRE_PROC, "%"
+				+ nombreProcedimiento + "%");
+
+		// lists.....
 		this.procedimientos = (ArrayList<Procedimiento>) q.getResultList();
 
 	}
-/*
- * busca el medicamento con el codigo y lo iguala a medicamento
- */
+
+	/*
+	 * busca el medicamento con el codigo y lo iguala a medicamento
+	 */
 	public void agregarMediacmento() {
 
 		medicamento = em.find(Medicamento.class, codigoMedicamento);
 
 	}
-/*
- * agrega el procedimiento encontrado a la variable procedimientos de paciente
- */
+
+	/*
+	 * agrega el procedimiento encontrado a la variable procedimientos de
+	 * paciente
+	 */
 	public void agregarProcedimiento() {
 
 		procedimiento = em.find(Procedimiento.class, codigoProcedimiento);
@@ -267,7 +277,7 @@ public class AtenderConsultaBean {
 	}
 
 	/*
-	 * elimina uno de los procedimientos que adquiere el paciente en esta 
+	 * elimina uno de los procedimientos que adquiere el paciente en esta
 	 * atencion de consulta
 	 */
 	public void eliminarProcedimiento() {
@@ -301,33 +311,35 @@ public class AtenderConsultaBean {
 	 */
 	public ArrayList<Especialidad> getEspecialidadesAll() {
 		Query q = em.createNamedQuery(Especialidad.FIND_ALL);
+
+		// list.
 		return (ArrayList<Especialidad>) q.getResultList();
 
 	}
-	
+
 	/*
 	 * agregar remisiones a la consulta
 	 */
-	public void agregarRemisiones(){
-		
-		Remision remi= new Remision();
+	public void agregarRemisiones() {
+
+		Remision remi = new Remision();
 		remi.setConsulta(this.conuslta);
 		remi.setObservacion(comentarioRemision);
-		
+
 		Query q = em.createNamedQuery(Especialidad.FIND_ESPECIALIDAD_BY_CODIGO);
 		q.setParameter(Especialidad.PARAMETRO_CODIGO, idEspecialidad);
-		Especialidad esp=(Especialidad) q.getSingleResult();
-		
+		Especialidad esp = (Especialidad) q.getSingleResult();
+
 		remi.setEspecialidad(esp);
-		
+
 		remisionesPaciente.add(remi);
 		this.conuslta.setRemisiones(remisionesPaciente);
-		
+
 	}
 
 	/*
-	 * agrega medicamentos a la lista general de 
-	 * los medicamentos que el paciente finalmente llevara
+	 * agrega medicamentos a la lista general de los medicamentos que el
+	 * paciente finalmente llevara
 	 */
 	public void agregarMediacmentoToLista() {
 
@@ -335,44 +347,45 @@ public class AtenderConsultaBean {
 		detalle.setArticulo(medicamento);
 		detalle.setCantidad(1);
 
-		formula = new FormulaMedica();
+		if (formula == null) {
+			formula = new FormulaMedica();
+			formula.setDetallesFormulaMedica(new ArrayList<DetalleFormulaMedica>());
+		}
 		formula.setConsulta(conuslta);
-		formula.setDetallesFormulaMedica(formula.getDetallesFormulaMedica());// actualizar
+		//formula.setDetallesFormulaMedica(formula.getDetallesFormulaMedica());// actualizar
 		formula.setRecomendacion("");
 
 		detalle.setFormulaMedica(formula);
 		detalle.setPrescripcion(prescrpcion);
 
-		ArrayList<DetalleFormulaMedica> detalles = (ArrayList<DetalleFormulaMedica>) medicamento
-				.getDetallesFormulaMedica();
-		detalles.add(detalle);
 
-	
+		formula.getDetallesFormulaMedica().add(detalle);
 
-		medicamentosPaciente.add(medicamento);
-		//creo una sola formula y los mediamentospaciente son detalles
+		//medicamentosPaciente.add(medicamento);
+		// creo una sola formula y los mediamentospaciente son detalles
 
 	}
 
 	/*
 	 * lista las especialidades que hay en la basxe de datos
 	 */
-	public List<SelectItem> getEspecialidades(){
-		
-		List<SelectItem> lista= new ArrayList<SelectItem>();
+	public List<SelectItem> getEspecialidades() {
+
+		List<SelectItem> lista = new ArrayList<SelectItem>();
 		Query q = em.createNamedQuery(Especialidad.FIND_ALL);
-		ArrayList<Especialidad> especials =(ArrayList<Especialidad>) q.getResultList();
+		ArrayList<Especialidad> especials = (ArrayList<Especialidad>) q
+				.getResultList();
 		for (int i = 0; i < especials.size(); i++) {
-			
-			Especialidad e= especials.get(i);
-			SelectItem item=new SelectItem(e.getId(),e.getNombre());
+
+			Especialidad e = especials.get(i);
+			SelectItem item = new SelectItem(e.getId(), e.getNombre());
 			lista.add(item);
 		}
-		
+
 		return lista;
-		
+
 	}
-	
+
 	public Consulta getConuslta() {
 		return conuslta;
 	}
@@ -574,15 +587,15 @@ public class AtenderConsultaBean {
 	public void setIdEspecialidad(long idEspecialidad) {
 		this.idEspecialidad = idEspecialidad;
 	}
-/*
- * retornar la fecha de nacimiento del paciente en forma de cadena
- */
+
+	/*
+	 * retornar la fecha de nacimiento del paciente en forma de cadena
+	 */
 	public String getFechaNacimiento() {
 		int dia = paciente.getFechaNacimiento().getDay();
 		int mes = paciente.getFechaNacimiento().getMonth();
 		int anho = paciente.getFechaNacimiento().getYear();
 		return dia + "/" + mes + "/" + anho;
 	}
-	
 
 }

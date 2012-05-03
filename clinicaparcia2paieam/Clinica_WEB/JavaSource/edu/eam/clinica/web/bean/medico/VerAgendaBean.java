@@ -1,22 +1,16 @@
 package edu.eam.clinica.web.bean.medico;
 
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
-import javax.management.loading.PrivateClassLoader;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
-import org.hibernate.validator.Length;
-import org.hibernate.validator.Pattern;
-
 import edu.eam.clinica.jpa.entidades.Consulta;
 import edu.eam.clinica.jpa.entidades.Medico;
-import edu.eam.clinica.jpa.entidades.Persona;
 import edu.eam.clinica.jpa.utilidades.FactoryEntityManager;
 import edu.eam.clinica.web.autorizacion.SesionFactory;
-
-import java.util.Date;
-import java.util.List;
 
 public class VerAgendaBean {
 
@@ -91,13 +85,17 @@ public class VerAgendaBean {
 	public List<Consulta> getConsultasD() {
 
 		Date fechaM = new Date();
-		fechaM.setYear(fecha1.getYear());
-		fechaM.setMonth(fecha1.getMonth());
-		fechaM.setDate(fecha1.getDate());
-		fechaM.setHours(0);
-		fechaM.setMinutes(00);
-		fecha1.setHours(23);
-		fecha1.setMinutes(59);
+//		fechaM.setYear(fecha1.getYear());
+//		fechaM.setMonth(fecha1.getMonth());
+//		fechaM.setDate(fecha1.getDate());
+//		fechaM.setHours(0);
+//		fechaM.setMinutes(00);
+//		fecha1.setHours(23);
+//		fecha1.setMinutes(59);
+		Calendar c=Calendar.getInstance();
+		//c.set(Calendar.MINUTE, 34);
+		c.getTime();//date del calendar.
+
 
 		Query q = em
 				.createNamedQuery(Consulta.FIND_CONSULTA_BY_MEDICO_AND_FECHAS);
@@ -119,8 +117,8 @@ public class VerAgendaBean {
 	 */
 	public String actionConsulta() {
 		Consulta c = em.find(Consulta.class, idC);
-
-	//	if (fecha == c.getFechaHora() || fecha1 == c.getFechaHora()) {
+		//crear un hoy y compararalo solo por dia,
+		//if (fecha == c.getFechaHora() || fecha1 == c.getFechaHora()) {
 
 			s = new SesionFactory();
 			s.agregarASesion("consulta", c);
