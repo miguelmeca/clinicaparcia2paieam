@@ -8,6 +8,88 @@
 	xmlns:a4j="http://richfaces.org/a4j">
 	
 	<ui:define name="cuerpo">
+	
+ 	<h1>
+    <h:outputLabel value="#{msg['inicio.paciente.linkActualizarPaciente']}" />
+    </h1>
+    <rich:tabPanel switchType="client" style="height : 200px; width : 662px;">
+        <rich:tab label="#{msg['actualizarInformacion.paciente.modificarDatosBasicos']}">
+          
+           <h:form>
+            <h:panelGrid columns="4" >
+            <h:outputText value="#{msg['actualizarInformacion.paciente.modificar.primerNombre']}" />
+           	<h:inputText value="#{paciente_Bean.primerNombre}" >
+           	</h:inputText>
+           	<h:outputText value="#{msg['actualizarInformacion.paciente.modificar.segundoNombre']}" />
+           	<h:inputText value="#{paciente_Bean.segundoNombre}" >
+           	</h:inputText>
+           		<h:outputText value="#{msg['actualizarInformacion.paciente.modificar.primerApellido']}" />
+           	<h:inputText value="#{paciente_Bean.primerApellido}" >
+          	</h:inputText>
+           		<h:outputText value="#{msg['actualizarInformacion.paciente.modificar.segundoApellido']}" />
+           	<h:inputText value="#{paciente_Bean.segundoApellido}" >
+           	</h:inputText>	
+           	<h:outputText value="#{msg['actualizarInformacion.paciente.modificar.direccion']}" />
+           	<h:inputText value="#{paciente_Bean.direccion}" >
+          	</h:inputText>
+          	<h:outputText value="#{msg['actualizarInformacion.paciente.modificar.email']}" />
+           	<h:inputText value="#{paciente_Bean.email}" >
+          	</h:inputText>
+          	<h:inputHidden value="" />
+          	
+          	<h:inputHidden value="" />
+          	<h:commandButton value="#{msg['actualizarInformacion.paciente.modificar.botonActualizar']}" action="#{paciente_Bean.actualizarDatos()}" />
+           
+             </h:panelGrid>
+             </h:form>
+             
+   
+    	<h1>
+    	<h:outputLabel value="#{msg['actualizarInformacion.paciente.modificar.telefonos']}" />
+        </h1>
+        <rich:dataTable id="tablaTelefonos"
+			value="#{paciente_Bean.telefonos}" var="detalle">
+			<rich:column>
+				<f:facet name="header">
+					<h:outputLabel
+						value="#{msg['actualizarInformacion.paciente.modificar.telefonos']}" />
+				</f:facet>
+				<h:form>
+				<h:panelGrid columns="3">
+				<h:outputText value="#{detalle.numero}" />
+				
+				<h:inputText value="#{detalle.numero}" />
+				<h:commandButton value="#{msg['actualizarInformacion.paciente.modificar.botonTelefono']}" action="" />
+				</h:panelGrid>
+				</h:form>
+			</rich:column>
+			
+		</rich:dataTable>
+      
+        </rich:tab>
+        <rich:tab label="#{msg['actualizarInformacion.paciente.modificar.inicioSesion']}">
+             <h:form>
+            <h:panelGrid columns="1" >
+            <h:outputText value="#{msg['actualizarInformacion.paciente.modificar.inicioSesion.usuario']}" />
+           	<h:inputText value="#{paciente_Bean.usuario}" >
+           	</h:inputText>
+           	<h:outputText value="#{msg['actualizarInformacion.paciente.modificar.inicioSesion.contraseña']}" />
+           	<h:inputText value="#{paciente_Bean.contraseña}" >
+           	</h:inputText>
+         	<h:commandButton value="#{msg['actualizarInformacion.paciente.modificar.inicioSesion.actualizarLogin']}" action="#{paciente_Bean.actualizarInicioSesion()}" />
+           
+             </h:panelGrid>
+             
+             </h:form>
+             
+             
+             
+        </rich:tab>
+       
+       
+    </rich:tabPanel>
+	
+
 	</ui:define>
 	
 	

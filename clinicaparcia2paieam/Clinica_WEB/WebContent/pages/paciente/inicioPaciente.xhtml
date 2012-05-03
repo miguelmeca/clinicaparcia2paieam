@@ -8,7 +8,43 @@
 	xmlns:a4j="http://richfaces.org/a4j">
 	
 	<ui:define name="cuerpo">
-	</ui:define>
+	<h1>
+	<h:outputLabel value="#{msg['inicio.paciente.bienvenida']} #{paciente_Bean.nombrePaciente}" />
+	</h1>
 	
+	  
+    <style>
+        .cols{
+            vertical-align:top;
+        }
+    </style>            
+    <h:form id="form">
+    <h:panelGrid columns="1" columnClasses="cols,cols" width="400">
+    <center>
+    <rich:panelMenu style="width:300px; height : 81px;"  mode="ajax" 
+        iconExpandedGroup="disc" iconCollapsedGroup="disc" 
+        iconExpandedTopGroup="chevronUp" iconGroupTopPosition="right" 
+        iconCollapsedTopGroup="chevronDown">
+        <rich:panelMenuGroup label="#{msg['inicio.paciente.linksPaciente']}">
+            <rich:panelMenuItem >
+               <h:commandLink value="#{msg['inicio.paciente.linkActualizarPaciente']}" action="ActualizarPaciente.xhtml" />
+            </rich:panelMenuItem>
+            <rich:panelMenuItem>
+                <h:commandLink value="#{msg['inicio.paciente.linkCitasPaciente']}" action="citasPaciente.xhtml" />
+           
+            </rich:panelMenuItem>
+            <rich:panelMenuItem>
+                <h:commandLink value="#{msg['inicio.paciente.linkHistorialPaciente']}" action="historiaClinica.xhtml" />
+           
+            </rich:panelMenuItem>
+        </rich:panelMenuGroup>
+        
+        
+        
+    </rich:panelMenu>
+    </center>
+    </h:panelGrid>
+    </h:form>
+	</ui:define>
 	
 	</ui:composition>
