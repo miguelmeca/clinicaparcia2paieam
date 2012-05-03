@@ -19,6 +19,20 @@
 	</ui:define>
 	
 	<ui:define name="menu">
-		
+		<rich:panelMenu style="width:200px" mode="ajax"
+					iconExpandedGroup="disc" iconCollapsedGroup="disc"
+					iconExpandedTopGroup="chevronUp" iconGroupTopPosition="right"
+					iconCollapsedTopGroup="chevronDown">
+					<rich:panelMenuGroup label="Opciones" >
+						<rich:panelMenuItem label="Agenda" action="verAgenda">
+							<f:param name="current" value="Agenda" />
+						</rich:panelMenuItem>
+						<rich:panelMenuItem label="Actualizar Mis Datos"
+							action="actualizarDatosMedico">
+							<f:param name="current" value="Actualizar Mis Datos" />
+						</rich:panelMenuItem>
+
+					</rich:panelMenuGroup>
+				</rich:panelMenu>
 	</ui:define>
 </ui:composition>

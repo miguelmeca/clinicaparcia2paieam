@@ -8,6 +8,44 @@
 	xmlns:a4j="http://richfaces.org/a4j">
 	
 	<ui:define name="cuerpo">
+	
+	<rich:tabPanel switchType="ajax" style=" height : 47px;">
+        <rich:tab label="#{msg['atenderConsulta.informacion']}">
+            
+            <h:panelGrid columns="4">
+            
+            <h:outputText value="#{atenderConsultaBean.primerNombre}" />
+            <h:outputText value="#{atenderConsultaBean.segundoNombre}" />
+            
+            <h:outputText value="#{atenderConsultaBean.primerApellido}" />
+            <h:outputText value="#{atenderConsultaBean.segundoApellido}" />
+            
+            </h:panelGrid>
+            <h:panelGrid columns="2">
+            <h:outputText value="#{msg['atenderConsulta.eps]}" />
+            <h:outputText value="#{atenderConsultaBean.eps}" />
+            
+            <h:outputText value="#{msg['atenderConsulta.ocupacion}]}" />
+            <h:outputText value="#{atenderConsultaBean.ocupacion}" />
+            
+            <h:outputText value="#{msg['atenderConsulta.fechaN}]}" />
+            <h:outputText value="#{atenderConsultaBean.fechaNacimiento}" />
+            </h:panelGrid>
+            
+            
+        </rich:tab>
+        <rich:tab label="#{msg['atenderConsulta.prescripcion']}" >
+           
+        </rich:tab>
+        <rich:tab label="#{msg['atenderConsulta.remision']}">
+         
+        </rich:tab>
+        <rich:tab label="#{msg['atenderConsulta.historia']}">
+         
+        </rich:tab>
+    </rich:tabPanel>
+	
+	
 	</ui:define>
 	
 	
