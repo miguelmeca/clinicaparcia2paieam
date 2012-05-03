@@ -2,11 +2,14 @@ package edu.eam.clinica.web.bean.funcionario;
 
 import java.util.List;
 
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
 import org.hibernate.validator.*;
 
+import edu.eam.clinica.jpa.entidades.Articulo;
 import edu.eam.clinica.jpa.entidades.DetalleFormulaMedica;
 import edu.eam.clinica.jpa.entidades.FormulaMedica;
 import edu.eam.clinica.jpa.entidades.Funcionario;
@@ -27,12 +30,6 @@ public class EntregarFormulaMedicaBean {
 	private EntityManager em;
 	
 	/*
-	 * lista de detallesFormulaMedica para guardar los medicamentos de la formula
-	 */
-	
-	private List<DetalleFormulaMedica> detalles;
-	
-	/*
 	 * Persona (Funcionario) que inicio sesion
 	 */
 
@@ -51,6 +48,8 @@ public class EntregarFormulaMedicaBean {
 	
 	public String buscarFormulaMedica(){
 		
+		if(funcionario!=null){
+		
 		FormulaMedica formula=em.find(FormulaMedica.class,codFormula);
 		
 		/*
@@ -58,10 +57,9 @@ public class EntregarFormulaMedicaBean {
 		 */
 		if(formula !=null){
 			
-			/*
-			 * cargar los medicamentos que esten en la formula encontrada
-			 */
 			
+			//cargar los medicamentos que esten en la formula encontrada
+			 
 			/*
 			 * consulta para sacar los medicamentos de la formula medica encontrada
 			 */
@@ -71,14 +69,21 @@ public class EntregarFormulaMedicaBean {
 			/*
 			 * los medicamentos quedan guardados en la lista llamada detalles
 			 */
-			detalles=consulta.getResultList();
+			
+			List<DetalleFormulaMedica> detalles=consulta.getResultList();
+			DetalleFormulaMedica detalleForm=new DetalleFormulaMedica();
+			
+			for (DetalleFormulaMedica detalleFormulaMedica : detalles) {
+				
+				Articulo articulo=detalleFormulaMedica.getArticulo();
+				detalleForm.setArticulo(articulo);
+			}
 			
 		}else{
-			/*
-			 * lanzar mensajes globales inidicandole al funcionario que la formula ingresada no existe
-			 */
+			
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "La Formula No pudo se encontrada", null));
 		}
-		
+		}
 		return null;
 	}
 
@@ -88,14 +93,6 @@ public class EntregarFormulaMedicaBean {
 
 	public void setCodFormula(long codFormula) {
 		this.codFormula = codFormula;
-	}
-
-	public List<DetalleFormulaMedica> getDetalles() {
-		return detalles;
-	}
-
-	public void setDetalles(List<DetalleFormulaMedica> detalles) {
-		this.detalles = detalles;
 	}
 
 	public Funcionario getFuncionario() {
