@@ -14,29 +14,29 @@
 	<h:outputText value="Inventario" />
 	</f:facet>
 	 <rich:tabPanel>
-        <rich:tab label="#{msg['Inventario.grupoterapeutico']}">
+        <rich:tab label="#{msg['Inventario.medica']}">
           <rich:panel id="medicamentospanel">
-          <rich:dataTable id="tablaMedicamentos" value="#{inventarioBean.medicamentos}" var="m">
+          <rich:dataTable id="tablaMedicamentos" value="#{inventariobean.medicamentos}" var="m">
           
         	<rich:column id="GrupoTerapeutico">
 			<f:facet name="header">
 			<h:outputLabel value="#{msg['Inventario.nombre']}" />
 			</f:facet>
 					
-						<h:outputText id="TxtTerapeutico" value="#{m.nombre}" />
+						<h:outputText id="Txtnombres" value="#{m.nombre}" />
 					</rich:column>  
-			<rich:column id="RegistroInvima">
+			<rich:column id="precios">
 						<f:facet name="header">
 							<h:outputLabel value="#{msg['Inventario.precio']}" />
 						</f:facet>
-						<h:outputText id="TxtInvima" value="#{m.precio}" />
+						<h:outputText id="Txtprecios" value="#{m.precio}" />
 					</rich:column>
 					  
 					  <rich:column id="cantidades">
 					  <f:facet name="header">
 							<h:outputLabel value="#{msg['Inventario.cantidad']}" />
 						</f:facet>
-						<h:outputText id="TxtPresentacion" value="#{m.cantidad}" />
+						<h:outputText id="Txtcantidades" value="#{m.cantidad}" />
 					  </rich:column>
 					  
 					  
@@ -45,16 +45,38 @@
           </rich:panel>
           
         </rich:tab>
+      
+        
+        
+        <rich:tab label="#{msg['Inventario.IngresarMedicamento']}">
+        <rich:panel id="panelingresar">
+       	<f:facet name="header">
+					<h:outputText value="#{msg['Inventario.RegistrarMedicamento']}" />
+				</f:facet>
+       	<h:panelGrid columns="2">
+       	<h:outputText value="#{msg['Inventario.codigoBarras']}" />
+       	<h:inputText id="txtbarras" value="#{inventarioBean.codigoBarras}" />
+       	
+       	<h:outputText value="#{msg['Inventario.codigoDelArticulo']}" />
+       	<h:inputText id="txtCodigo" value="#{inventarioBean.codigoArticulo}" />       	
+       	</h:panelGrid>
+       	
+       	<a4j:commandButton value="#{msg['Inventario.crear']}"
+       	action="inventarioBean.crearInventario"
+		/>      	
+        </rich:panel>          
+        </rich:tab>
+          
        <rich:tab label="#{msg['Inventario.entradaSalida']}">
-        <rich:panel >
+       <rich:panel >
         <f:facet name="header">
 	<h:outputText value="#{msg['Inventario.entradaSalida']}" />
 	</f:facet>
 	<h:outputText value="#{msg['Inventario.nombre']}" />
-	<h:inputText value="" />
-	<h:commandButton  value="#{msg['Inventario.filtro']}" />
+	<h:inputText value="#{inventarioBean.nombre}" />
+	<a4j:commandButton  value="#{msg['Inventario.filtro']}" />
 	<br />
-		<rich:dataTable id="entradaMedicamentos" value="#{inventarioBean.medicamentosentrada}" var="md">
+		<rich:dataTable id="entradaMedicamentos" value="#{inventarioBean.filtradoAll}" var="md">
         
         <rich:column>
         <f:facet name="header">
@@ -72,7 +94,7 @@
         <f:facet name="header">
         <h:outputLabel value="#{msg['Inventario.fechasalidad']}" />
         </f:facet>
-        <h:outputText value="#{md.fechaSngreso}" />
+        <h:outputText value="#{md.fechaSalida}" />
         </rich:column>
          <rich:column>
         <f:facet name="header">
@@ -82,32 +104,9 @@
         </rich:column>
         </rich:dataTable>  
         </rich:panel>     
-        
+    
         
         </rich:tab>
-        
-        
-        <rich:tab label="#{msg['Inventario.IngresarMedicamento']}">
-        <rich:panel id="panelingresar">
-       	<f:facet name="header">
-					<h:outputText value="#{msg['Inventario.RegistrarMedicamento']}" />
-				</f:facet>
-       	<h:panelGrid columns="2">
-       	<h:outputText value="#{msg['Inventario.codigoBarras']}" />
-       	<h:inputText id="txtbarras" value="" />
-       	
-       	<h:outputText value="#{msg['Inventario.codigoDelArticulo']}" />
-       	<h:inputText id="txtCodigo" value="" />       	
-       	</h:panelGrid>
-       	
-       	<a4j:commandButton value="#{msg['Inventario.crear']}"
-		action="#{medicamentobean.crear}"  />
-       	
-       	
-        </rich:panel>
-           
-        </rich:tab>
-        
     </rich:tabPanel>
     </rich:panel>
     </h:form>
