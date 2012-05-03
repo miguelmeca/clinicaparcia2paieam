@@ -19,6 +19,9 @@ import edu.eam.clinica.web.autorizacion.SesionFactory;
 /**
  * Servlet Filter implementation class FiltroSesion
  */
+/**
+ * @author Cesar
+ */
 public class FiltroSesion implements Filter {
 
     /**
