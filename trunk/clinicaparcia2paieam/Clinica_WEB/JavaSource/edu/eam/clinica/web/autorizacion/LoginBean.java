@@ -65,7 +65,7 @@ public class LoginBean {
 
 			if (user.getPersona() instanceof Funcionario) {
 				System.out.println("funcionario");
-				return "?";
+				return "inicioFuncionario";
 			}
 		}
 
