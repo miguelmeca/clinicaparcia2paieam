@@ -31,20 +31,30 @@ import javax.persistence.NamedQuery;
     @NamedQuery(name = Inventario.CONSULTA_FIND_BY_ARTICULO, 
         query = "select inv from Inventario inv where inv.fechaSalida is NULL and inv.articulo.codigo=:" 
         + Inventario.PARAMETRO_CODIGO ),  
-     @NamedQuery(name = "MedicamentoAll", query = "SELECT nombre,precio,COUNT(nombre) AS cantidad FROM articulo a,Inventario i WHERE a.id=i.articulo GROUP BY nombre"),
-     @NamedQuery(name = "filtroAll", query = "SELECT fechaIngreso,fechaSalida,FUNCIONARIO_INGRESO,FUNCIONARIO_SALIDA FROM inventario i,articulo a WHERE a.id=i.articulo AND a.nombre LIKE:"+Inventario.PARAMENTRO_NOMBRE)    
+        
+     @NamedQuery(name = Inventario.CONSULTA_FIND_BY_MEDICAMENTOS, query = "SELECT nombre,precio,COUNT(nombre) AS cantidad FROM articulo a,Inventario i WHERE a.id=i.articulo GROUP BY nombre"),
+     @NamedQuery(name = Inventario.CONSULTA_FIND_BY_NOMBRE, query = "SELECT fechaIngreso,fechaSalida,FUNCIONARIO_INGRESO,FUNCIONARIO_SALIDA FROM inventario i,articulo a WHERE a.id=i.articulo AND a.nombre LIKE:"+Inventario.PARAMENTRO_NOMBRE)    
 
 })
 
 public class Inventario implements Serializable {
 
     
+	/**
+	 * consulta para mostrar los medicamentos por nombre precio y que cantidad tenemos
+	 */
+	public static final String CONSULTA_FIND_BY_MEDICAMENTOS="Allmedicamentos";
+	
      /**
      * Consulta para buscar el inventario por codigo.
      */
     public static final String CONSULTA_FIND_BY_CODIGO="Inventario.findbyCodigoBarras";
     
+    /**
+     * consulta para filtrar
+     */
     
+    public static final String CONSULTA_FIND_BY_NOMBRE="filtroAll";
     /**
      * Consulta el invetario y articulo por nombre
      */
