@@ -117,12 +117,17 @@ public class ActualizarDatosFuncionarioBean {
 		
 	}
 	
+	/*
+	 * listar los telefonos del funcionario
+	 */
 	public List<Telefono> getTelefonosFuncionario() {
 		
 		return em.createNamedQuery(funcionario.FIND_ALL).getResultList();
 
 	}
-	
+	/*
+	 * metodo con el cual se actualizaran los datos del usuario funcionario
+	 */
 	public void actualizarDatosUsuarioFuncionario(){
 		funcionario = (Funcionario) SesionFactory.getValor("persona");
 		
@@ -139,6 +144,9 @@ public class ActualizarDatosFuncionarioBean {
 		
 	}
 
+	/*
+	 *Getters and Setter
+	 */
 	public Funcionario getFuncionario() {
 		return funcionario;
 	}
