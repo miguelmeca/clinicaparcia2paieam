@@ -8,10 +8,10 @@
 	xmlns:a4j="http://richfaces.org/a4j">
 
 	<ui:define name="cuerpo">
+	<rich:messages globalOnly="true"/>
 	<h:form>
 		<h:panelGrid columns="3">
-			<rich:panel>
-
+			
 				<h:outputLabel value="#{msg['entregarFormulaMedica.usuario']}" />
 				<h:outputText
 					value="#{funcionarioBean.primerNombre}" />
@@ -24,7 +24,7 @@
 					reRender="tablaMedicamentos"
 					value="#{msg['entregarFormulaMedica.buscar']}">
 				</a4j:commandButton>
-			</rich:panel>
+		
 		</h:panelGrid>
 	</h:form>
 
@@ -49,14 +49,7 @@
 		</rich:dataTable>
 	</rich:dataGrid>
 
-	<h:form>
-		<rich:modalPanel id="panel" width="350" height="100" autosized="true">
-		<f:facet name="header">
-		<h:outputLabel value="#{['entregarFormulaMedica.textoModal']}" />
-		</f:facet> 
-    </rich:modalPanel>
-    
-	</h:form>
+	
 	</ui:define>
 	
 </ui:composition>
