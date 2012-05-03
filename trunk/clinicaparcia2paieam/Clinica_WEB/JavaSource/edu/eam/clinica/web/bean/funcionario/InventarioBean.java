@@ -38,6 +38,7 @@ public class InventarioBean  {
 	public InventarioBean(){
 		
 		em=FactoryEntityManager.getEm();
+		//sacar el funcionario.
 		funcionario=(Funcionario)SesionFactory.getSesion();
 	}
 	
@@ -45,13 +46,13 @@ public class InventarioBean  {
 	 * metodo que lista los medicamentos utulizando una query que proyecta nombre precio y un count que cuenta por nombres de un grupo por nombre
 	 * @return
 	 */
-	public List<Articulo> getMedicamentos(){
-		
-		Query query= em.createNamedQuery(Inventario.CONSULTA_FIND_BY_MEDICAMENTOS);
-		List<Articulo>medicamentos= query.getResultList();
-		return medicamentos;
-		
-	}
+//	public List<Articulo> getMedicamentos(){
+//		
+//		Query query= em.createNamedQuery(Inventario.CONSULTA_FIND_BY_MEDICAMENTOS);
+//		List<Articulo>medicamentos= query.getResultList();
+//		return medicamentos;
+//		
+//	}
 	/**
 	 * metodo para crear el medicamento en el inventario
 	 * utilizo el codigoarticulo que me digita el usuario y busco un articulo con el y si encuentra algo procedo 
@@ -66,11 +67,11 @@ public class InventarioBean  {
 			Inventario i=em.find(Inventario.class,codigoBarras);
 			if(i==null){
 				
-				em.getTransaction().begin();
-				Inventario inven= new Inventario(a, fechaIngreso, null, codigoBarras, null, funcionario,null);
-				em.persist(inven);
-				em.flush();
-				em.getTransaction().commit();
+//				em.getTransaction().begin();
+//				Inventario inven= new Inventario(a, fechaIngreso, null, codigoBarras, null, funcionario,null);
+//				em.persist(inven);
+//				em.flush();
+//				em.getTransaction().commit();
 			}
 			
 			
@@ -84,18 +85,18 @@ public class InventarioBean  {
 	 * metodo que filtra los medicamentos por el nombre entrdas y salidas
 	 * @return
 	 */
-	public List<Inventario>getfiltrando(){
-		
-		Query query= em.createNamedQuery(Inventario.CONSULTA_FIND_BY_NOMBRE);
-		query.setParameter(Inventario.PARAMENTRO_NOMBRE,nombre);
-		
-		List<Inventario>inventario= query.getResultList();
-		
-		return inventario;
-		
-		
-		
-	}
+//	public List<Inventario>getfiltrando(){
+//		
+//		Query query= em.createNamedQuery(Inventario.CONSULTA_FIND_BY_NOMBRE);
+//		query.setParameter(Inventario.PARAMENTRO_NOMBRE,nombre);
+//		
+//		List<Inventario>inventario= query.getResultList();
+//		
+//		return inventario;
+//		
+//		
+//		
+//	}
 	public Funcionario getFuncionario() {
 		return funcionario;
 	}

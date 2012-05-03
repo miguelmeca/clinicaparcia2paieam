@@ -83,7 +83,7 @@ public class ActualizarDatosFuncionarioBean {
 	 */
 	public ActualizarDatosFuncionarioBean() {
 		em = FactoryEntityManager.getEm();
-		funcionario = (Funcionario) SesionFactory.getSesion();
+		funcionario = (Funcionario) SesionFactory.getValor("persona");
 	}
 
 	/*
@@ -112,6 +112,8 @@ public class ActualizarDatosFuncionarioBean {
 			
 			em.getTransaction().commit();
 			SesionFactory.agregarASesion("funcionario", funcionario);
+			
+			//mandar un mesnaje global con el exito.
 		
 		
 		
@@ -121,6 +123,8 @@ public class ActualizarDatosFuncionarioBean {
 	 * listar los telefonos del funcionario
 	 */
 	public List<Telefono> getTelefonosFuncionario() {
+		
+		//buscar los telefonos por persona... hacer la consulta.
 		
 		return em.createNamedQuery(funcionario.FIND_ALL).getResultList();
 
@@ -133,6 +137,8 @@ public class ActualizarDatosFuncionarioBean {
 		
 		em.getTransaction().begin();
 		
+		//hay que preguntar el pasword acutal y comprarlo con una confrimacion.
+		
 		funcionario.setLogin(logIn);
 		funcionario.setPassword(pass);
 		
@@ -141,6 +147,8 @@ public class ActualizarDatosFuncionarioBean {
 		
 		em.getTransaction().commit();
 		SesionFactory.agregarASesion("funcionario", funcionario);
+		
+		//mensaje global con el exito de la operacion.
 		
 	}
 

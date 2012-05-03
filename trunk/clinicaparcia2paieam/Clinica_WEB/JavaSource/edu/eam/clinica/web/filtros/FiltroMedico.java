@@ -43,12 +43,13 @@ public class FiltroMedico implements Filter {
 		HttpServletRequest req=(HttpServletRequest) request;
 		
 		//se obtiene la persona de sesion.
+		//saca la persona.
 		Medico user=(Medico) SesionFactory.getValor("medico");
 		//esta en sesion, sigue la peticion.
 		if(user!=null){
 			
 			/*se envia al HttpSession la variable de sesion de tipo medico*/
-			SesionFactory.agregarASesion("medico", user);
+			//SesionFactory.agregarASesion("medico", user);
 			
 			chain.doFilter(request, response);
 		}else{

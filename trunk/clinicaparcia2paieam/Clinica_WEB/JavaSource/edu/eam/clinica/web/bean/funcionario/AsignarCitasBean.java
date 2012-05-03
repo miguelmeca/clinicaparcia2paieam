@@ -17,6 +17,7 @@ import edu.eam.clinica.jpa.utilidades.FactoryEntityManager;
 public class AsignarCitasBean {
 
 	//Atributos
+	//javadoc.....
 	private long nroConsulta;
 	private String cedulaPaciente;
 	private String docmedico;
@@ -38,7 +39,7 @@ public class AsignarCitasBean {
 	 * La disponibilidad del medico
 	 * Consulta que no hayan cruses de horarios
 	 * Finalmente crea una nueva consulta
-	 * @return
+	 * @return 
 	 */
 	public String crearCrita() {
 		
@@ -56,12 +57,12 @@ public class AsignarCitasBean {
 				List<Consulta> consultasMedico = query.getResultList();
 
 				for (Consulta consulta : consultasMedico) {
+					//ojo con la comparacion de fechas...
+					if (consulta.getFechaHora().equals(fechaCita + "" + horaCita)) {//date con string?
 
-					if (consulta.getFechaHora().equals(fechaCita + "" + horaCita)) {
-
-						JOptionPane.showMessageDialog(null,"la cita ya fue asignada");
+						//JOptionPane.showMessageDialog(null,"la cita ya fue asignada");
 						/*
-						 * lanzar mensaje indicando que la cita ya fue asignada
+						 * lanzar mensaje global de error. indicando que la cita ya fue asignada
 						 * en ese dia en esa hora
 						 */
 					}
@@ -87,6 +88,7 @@ public class AsignarCitasBean {
 		Medico medico = em.find(Medico.class, docmedico);
 		
 		if(medico != null){
+			//ojo con esta consulta, mejor usar FIND_CONSULTA_BY_MEDICO_AND_FECHAS
 			
 			Query query = em.createNamedQuery(Consulta.FIND_CONSULTA_BY_REGISTRO_MEDICO);
 			query.setParameter(Consulta.PARAMETRO_REGISTRO_MEDICO,docmedico);

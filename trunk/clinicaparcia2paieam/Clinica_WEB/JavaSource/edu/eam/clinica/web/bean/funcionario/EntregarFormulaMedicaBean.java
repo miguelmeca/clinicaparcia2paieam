@@ -43,6 +43,7 @@ public class EntregarFormulaMedicaBean {
 	
 	public EntregarFormulaMedicaBean(){
 		em=FactoryEntityManager.getEm();
+		//el funcionario de la session con getValor.
 	    funcionario=(Funcionario) sf.getSesion();	
 	}
 	
@@ -71,13 +72,13 @@ public class EntregarFormulaMedicaBean {
 			 */
 			
 			List<DetalleFormulaMedica> detalles=consulta.getResultList();
-			DetalleFormulaMedica detalleForm=new DetalleFormulaMedica();
-			
-			for (DetalleFormulaMedica detalleFormulaMedica : detalles) {
-				
-				Articulo articulo=detalleFormulaMedica.getArticulo();
-				detalleForm.setArticulo(articulo);
-			}
+//			DetalleFormulaMedica detalleForm=new DetalleFormulaMedica();
+//			
+//			for (DetalleFormulaMedica detalleFormulaMedica : detalles) {
+//				
+//				Articulo articulo=detalleFormulaMedica.getArticulo();
+//				detalleForm.setArticulo(articulo);
+//			}
 			
 		}else{
 			
