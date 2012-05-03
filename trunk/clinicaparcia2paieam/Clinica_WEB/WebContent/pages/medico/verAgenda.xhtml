@@ -6,9 +6,86 @@
 	xmlns:rich="http://richfaces.org/rich"
 	template="/templates/templateMedico.xhtml"
 	xmlns:a4j="http://richfaces.org/a4j">
-	
+
 	<ui:define name="cuerpo">
+		<h:form>
+			<rich:panel id="datos_Panel">
+				<a4j:outputPanel id="calendar" layout="block">
+					<h:form>
+						<h:outputText value="#{msg['verAgenda.ConsultaXM']}" />
+						<rich:calendar value="#{verAgendaBean.fecha}"
+							datePattern="#{calendarBean.pattern}"
+							showApplyButton="#{calendarBean.showApply}" cellWidth="24px"
+							cellHeight="22px" style="width:200px" />
+						<a4j:commandButton value="Listar"
+							action="#{verAgendaBean.consultasM}"
+							reRender="tabla_Agenda_Diaria">
+						</a4j:commandButton>
+					</h:form>
+				</a4j:outputPanel>
+			</rich:panel>
+
+			<rich:panel>
+
+				<rich:dataTable id="tabla_Agenda_Diaria"
+					value="#{verAgendaBean.consultasD}" var="agenda">
+
+					<rich:column>
+						<f:facet name="header">
+							<h:outputText value="#{msg['verAgenda.nombre']}" />
+						</f:facet>
+						<h:outputText id="NombreP" value="#{agenda.paciente.nombre}" />
+					</rich:column>
+
+					<rich:column>
+						<f:facet name="header">
+							<h:outputText value="#{msg['verAgenda.documento']}" />
+						</f:facet>
+						<h:outputText id="DocumentoP" value="#{agenda.paciente.documento}" />
+					</rich:column>
+
+					<rich:column>
+						<f:facet name="header">
+							<h:outputText value="#{msg['verAgenda.fechaC']}" />
+						</f:facet>
+						<h:outputText id="FechaCP" value="#{agenda.fechaHora}" />
+					</rich:column>
+
+					<rich:column>
+						<f:facet name="header">
+							<h:outputText value="#{msg['verAgenda.id']}" />
+						</f:facet>
+						<h:outputText id="id" value="#{agenda.id}" />
+					</rich:column>
+
+					<rich:column>
+						<f:facet name="header">
+							<h:outputText value="#{msg['verAgenda.atenderC']}" />
+						</f:facet>
+
+						<a4j:commandLink action="#{verAgendaBean.actionConsulta}"
+							immediate="true" ajaxSingle="true" process="id">
+							<a4j:actionparam name="id" value="#{agenda.id}"
+								assignTo="#{verAgendaBean.idC}" />
+							<h:graphicImage value="/common/img/resolveTask.png" />
+						</a4j:commandLink>
+
+					</rich:column>
+				</rich:dataTable>
+
+			</rich:panel>
+
+
+			<br />
+			<br />
+
+
+
+			<rich:panel>
+
+
+			</rich:panel>
+
+		</h:form>
 	</ui:define>
-	
-	
-	</ui:composition>
+</ui:composition>
