@@ -113,13 +113,13 @@ public class Consulta implements Serializable {
     /**
      * paciente que expide la consulta.
      */
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "PACIENTE")
     private Paciente paciente;
     /**
      * Medico que atendera la cita.
      */
-    @ManyToOne(fetch = LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "MEDICO")
     private Medico medico;
     /**
