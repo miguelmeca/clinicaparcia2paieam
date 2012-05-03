@@ -2,12 +2,16 @@ package edu.eam.clinica.web.bean.funcionario;
 
 public class MedicamentoBean {
 	
-	
+	/*
+	 *Atributos Necesarios de la Entidad Medicamento 
+	 */
+	//CODIGO DE BARRAS DEL MEDICAMENTO
 	private String codigoBarras;
-	private long id;
-	private String codigo;
+	//NOMBRE ASIGNADO AL MEDICAMENTO
 	private String nombre;
+	//PRECIO DEL MEDICAMENTO
 	private double precio;
+	//CANTIDAD DEL MEDICAMENTO
     private int cantidad;
 	
 	public MedicamentoBean(){
@@ -15,6 +19,7 @@ public class MedicamentoBean {
 	}
 
 
+	//GETTERS AND SETTERS***
 	public String getCodigoBarras() {
 		return codigoBarras;
 	}
@@ -24,21 +29,6 @@ public class MedicamentoBean {
 		this.codigoBarras = codigoBarras;
 	}
 
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
-
-	public String getCodigo() {
-		return codigo;
-	}
-
-	public void setCodigo(String codigo) {
-		this.codigo = codigo;
-	}
 
 	public String getNombre() {
 		return nombre;
