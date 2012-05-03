@@ -20,6 +20,35 @@
 	</ui:define>
 	
 	<ui:define name="menu">
+	
+	<style>
+        .cols{
+            vertical-align:top;
+        }
+    </style>            
+    <h:form id="form">
+    <h:panelGrid columns="2" columnClasses="cols,cols" width="400">
+    <rich:panelMenu style="width:200px"  mode="ajax" 
+        iconExpandedGroup="disc" iconCollapsedGroup="disc" 
+        iconExpandedTopGroup="chevronUp" iconGroupTopPosition="right" 
+        iconCollapsedTopGroup="chevronDown">
+        <rich:panelMenuGroup label="Navegacion">
+            <rich:panelMenuItem label="Actualizar Datos Funcionario" action="actualizarDatosFuncionario">
+                <f:param name="current" value="Actualizar Datos Funcionario"/>
+            </rich:panelMenuItem>
+            <rich:panelMenuItem label="Asignar Cita" action="asignarCita">
+                <f:param name="current" value="Asignar Cita"/>
+            </rich:panelMenuItem>
+            <rich:panelMenuItem label="Inventario" action="Inventario">
+                <f:param name="current" value="Inventario"/>
+            </rich:panelMenuItem>
+        </rich:panelMenuGroup>
+        
+        
+    </rich:panelMenu>
+    </h:panelGrid>
+    </h:form>
+	 
 		
 	</ui:define>
 </ui:composition>
