@@ -36,6 +36,11 @@
   <managed-bean-class>edu.eam.clinica.web.bean.funcionario.InventarioBean</managed-bean-class>
   <managed-bean-scope>request</managed-bean-scope>
  </managed-bean>
+ <managed-bean>
+  <managed-bean-name>inicioSesionFuncionarioBean</managed-bean-name>
+  <managed-bean-class>edu.eam.clinica.web.bean.funcionario.InicioSesionFuncionarioBean</managed-bean-class>
+  <managed-bean-scope>session</managed-bean-scope>
+ </managed-bean>
  <application>
   <view-handler>com.sun.facelets.FaceletViewHandler</view-handler>
   <resource-bundle>
