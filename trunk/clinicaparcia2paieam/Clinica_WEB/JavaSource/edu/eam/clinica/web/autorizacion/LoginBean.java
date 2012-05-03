@@ -47,15 +47,15 @@ public class LoginBean {
 		// la pagina que le corresponda.
 
 		User user = FactoryEntityManager.getEm().find(User.class, nombreUser);
-		System.out.println(user.getPersona());
 
 		if (user != null) {
 			
 			SesionFactory.agregarASesion("persona", user.getPersona());
 			personaLoggedIn=user.getPersona();
 			if (user.getPersona() instanceof Medico) {
+				
 				System.out.println("medico");
-				return "?";
+				return "inicioMedico";
 			}
 
 			if (user.getPersona() instanceof Paciente) {
