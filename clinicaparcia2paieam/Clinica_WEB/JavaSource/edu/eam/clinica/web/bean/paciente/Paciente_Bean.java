@@ -4,9 +4,12 @@ import java.util.List;
 
 import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import javax.servlet.http.HttpSession;
 
 
+import edu.eam.clinica.jpa.entidades.Articulo;
+import edu.eam.clinica.jpa.entidades.Inventario;
 import edu.eam.clinica.jpa.entidades.Persona;
 import edu.eam.clinica.jpa.entidades.Telefono;
 import edu.eam.clinica.jpa.entidades.User;
@@ -76,6 +79,14 @@ public class Paciente_Bean {
 			persona.setUser(us);
 			
 			return null;
+		}
+		
+		public List<Telefono> getTelefonos(){
+			
+			Query query= em.createNamedQuery(Telefono.FIND_ALL);
+			List<Telefono>tel= query.getResultList();
+			return tel;
+			
 		}
 		
 		public String iniciarSesion(){
@@ -167,9 +178,7 @@ public class Paciente_Bean {
 			this.contraseña = contraseña;
 		}
 
-		public List<Telefono> getTelefonos() {
-			return telefonos;
-		}
+		
 
 		public void setTelefonos(List<Telefono> telefonos) {
 			this.telefonos = telefonos;
