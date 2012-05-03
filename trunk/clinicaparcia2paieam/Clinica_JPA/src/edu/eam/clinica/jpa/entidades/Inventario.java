@@ -30,10 +30,9 @@ import javax.persistence.NamedQuery;
     
     @NamedQuery(name = Inventario.CONSULTA_FIND_BY_ARTICULO, 
         query = "select inv from Inventario inv where inv.fechaSalida is NULL and inv.articulo.codigo=:" 
-        + Inventario.PARAMETRO_CODIGO ),
-        
-         @NamedQuery(name = "MedicamentoAll", query = "SELECT nombre,precio,COUNT(nombre) AS cantidad FROM articulo a,Inventario i WHERE a.id=i.articulo GROUP BY nombre;")
-         
+        + Inventario.PARAMETRO_CODIGO ),  
+     @NamedQuery(name = "MedicamentoAll", query = "SELECT nombre,precio,COUNT(nombre) AS cantidad FROM articulo a,Inventario i WHERE a.id=i.articulo GROUP BY nombre"),
+     @NamedQuery(name = "filtroAll", query = "SELECT fechaIngreso,fechaSalida,FUNCIONARIO_INGRESO,FUNCIONARIO_SALIDA FROM inventario i,articulo a WHERE a.id=i.articulo AND a.nombre LIKE:"+Inventario.PARAMENTRO_NOMBRE)    
 
 })
 
@@ -45,6 +44,11 @@ public class Inventario implements Serializable {
      */
     public static final String CONSULTA_FIND_BY_CODIGO="Inventario.findbyCodigoBarras";
     
+    
+    /**
+     * Consulta el invetario y articulo por nombre
+     */
+    public static final String PARAMENTRO_NOMBRE="nombre";
     /**
      * Consulta para buscar el inventario por codigo.
      */
@@ -114,8 +118,33 @@ public class Inventario implements Serializable {
     public Inventario() {
         super();
     }
-
+   
     /**
+     * 
+     * @param articulo
+     * @param fechaIngreso
+     * @param fechaSalida
+     * @param codigo
+     * @param motivoSalida
+     * @param funcionarioIngreso
+     * @param funcionarioSalida
+     * 
+     *
+     */
+    public Inventario(Articulo articulo, Date fechaIngreso, Date fechaSalida,
+			String codigo, String motivoSalida, Funcionario funcionarioIngreso,
+			Funcionario funcionarioSalida) {
+		super();
+		this.articulo = articulo;
+		this.fechaIngreso = fechaIngreso;
+		this.fechaSalida = fechaSalida;
+		this.codigo = codigo;
+		this.motivoSalida = motivoSalida;
+		this.funcionarioIngreso = funcionarioIngreso;
+		this.funcionarioSalida = funcionarioSalida;
+	}
+
+	/**
      * @return the id
      */
     public Long getId() {
