@@ -16,6 +16,11 @@
   <managed-bean-class>edu.eam.clinica.web.bean.paciente.Paciente_Bean</managed-bean-class>
   <managed-bean-scope>request</managed-bean-scope>
  </managed-bean>
+ <managed-bean>
+  <managed-bean-name>asignarCitasPacienteBean</managed-bean-name>
+  <managed-bean-class>edu.eam.clinica.web.bean.paciente.AsignarCitasPacienteBean</managed-bean-class>
+  <managed-bean-scope>request</managed-bean-scope>
+ </managed-bean>
  <navigation-rule>
   <from-view-id>/pages/paciente/inicioPaciente.xhtml</from-view-id>
   <navigation-case>
