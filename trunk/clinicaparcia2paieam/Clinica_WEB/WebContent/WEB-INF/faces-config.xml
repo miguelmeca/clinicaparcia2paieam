@@ -12,35 +12,45 @@
   </managed-property>
  </managed-bean>
  <managed-bean>
-  <managed-bean-name>atenderConsultaBean</managed-bean-name>
-  <managed-bean-class>edu.eam.clinica.web.bean.medico.AtenderConsultaBean</managed-bean-class>
-  <managed-bean-scope>session</managed-bean-scope>
- </managed-bean>
- <managed-bean>
-  <managed-bean-name>entregarFormulaMedicaBean</managed-bean-name>
-  <managed-bean-class>edu.eam.clinica.web.bean.funcionario.EntregarFormulaMedicaBean</managed-bean-class>
-  <managed-bean-scope>session</managed-bean-scope>
- </managed-bean>
- <managed-bean>
-  <managed-bean-name>actualizarDatosFuncionarioBean</managed-bean-name>
-  <managed-bean-class>edu.eam.clinica.web.bean.funcionario.ActualizarDatosFuncionarioBean</managed-bean-class>
-  <managed-bean-scope>session</managed-bean-scope>
- </managed-bean>
- <managed-bean>
-  <managed-bean-name>asignarCitasBean</managed-bean-name>
-  <managed-bean-class>edu.eam.clinica.web.bean.funcionario.AsignarCitasBean</managed-bean-class>
+  <managed-bean-name>paciente_Bean</managed-bean-name>
+  <managed-bean-class>edu.eam.clinica.web.bean.paciente.Paciente_Bean</managed-bean-class>
   <managed-bean-scope>request</managed-bean-scope>
  </managed-bean>
- <managed-bean>
-  <managed-bean-name>inventarioBean</managed-bean-name>
-  <managed-bean-class>edu.eam.clinica.web.bean.funcionario.InventarioBean</managed-bean-class>
-  <managed-bean-scope>request</managed-bean-scope>
- </managed-bean>
- <managed-bean>
-  <managed-bean-name>inicioSesionFuncionarioBean</managed-bean-name>
-  <managed-bean-class>edu.eam.clinica.web.bean.funcionario.InicioSesionFuncionarioBean</managed-bean-class>
-  <managed-bean-scope>session</managed-bean-scope>
- </managed-bean>
+ <navigation-rule>
+  <from-view-id>/pages/paciente/inicioPaciente.xhtml</from-view-id>
+  <navigation-case>
+   <from-outcome>citasPaciente</from-outcome>
+   <to-view-id>/pages/paciente/citasPaciente.xhtml</to-view-id>
+  </navigation-case>
+  <navigation-case>
+   <from-outcome>historiaClinica</from-outcome>
+   <to-view-id>/pages/paciente/historiaClinica.xhtml</to-view-id>
+  </navigation-case>
+  <navigation-case>
+   <from-outcome>ActualizarPaciente</from-outcome>
+   <to-view-id>/pages/paciente/ActualizarPaciente.xhtml</to-view-id>
+  </navigation-case>
+ </navigation-rule>
+ <!--  <managed-bean> 
+   <managed-bean-name>atenderConsultaBean</managed-bean-name> 
+   <managed-bean-class>edu.eam.clinica.web.bean.medico.AtenderConsultaBean</managed-bean-class> 
+   <managed-bean-scope>session</managed-bean-scope> 
+  </managed-bean> 
+  <managed-bean> 
+   <managed-bean-name>entregarFormulaMedicaBean</managed-bean-name> 
+   <managed-bean-class>edu.eam.clinica.web.bean.funcionario.EntregarFormulaMedicaBean</managed-bean-class> 
+   <managed-bean-scope>session</managed-bean-scope> 
+  </managed-bean> 
+  <managed-bean> 
+   <managed-bean-name>actualizarDatosFuncionarioBean</managed-bean-name> 
+   <managed-bean-class>edu.eam.clinica.web.bean.funcionario.ActualizarDatosFuncionarioBean</managed-bean-class> 
+   <managed-bean-scope>session</managed-bean-scope> 
+  </managed-bean> 
+  <managed-bean> 
+   <managed-bean-name>asignarCitasBean</managed-bean-name> 
+   <managed-bean-class>edu.eam.clinica.web.bean.funcionario.AsignarCitasBean</managed-bean-class> 
+   <managed-bean-scope>request</managed-bean-scope> 
+  </managed-bean> -->
  <application>
   <view-handler>com.sun.facelets.FaceletViewHandler</view-handler>
   <resource-bundle>
