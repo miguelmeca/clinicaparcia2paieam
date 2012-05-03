@@ -13,12 +13,19 @@ public class FuncionarioBean {
 	/*
 	 * Atributos de la Entidad Funcionario
 	 */
+	//CODIGO DEL FUNCIONARIO
 	private String codigoFun;
+	//PRIMER NOMBRE DE LA PERSONA FUNCIONARIO
 	private String primerNombre;
+	//SEGUNDO NOMBRE DE LA PERSONA FUNCIONARIO
     private String segundoNombre;
+    //PRIMER APELLIDO DE LA PERSONA FUNCIONARIO
     private String primerApellido;
+    //SEGUNDO APELLIDO DE LA PERSONA FUNCIONARIO
     private String segundoApellido;
+    //DIRECCION DE LA PERSONA FUNCIONARIO
     private String direccion;
+    //EMAIL DE LA PERSONA FUNCIONARIO
     private String email;
 	
     /*
