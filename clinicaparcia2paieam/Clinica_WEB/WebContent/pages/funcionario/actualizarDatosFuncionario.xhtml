@@ -21,75 +21,56 @@
              
              <!-- Documento del funcionacio -->
              <h:outputText value="#{msg['actualizarDatosFuncionario.documento']}"/>
-             <h:inputText value=""/>
+             <h:inputText value="#{ActualizarDatosFuncionario.documento}"/>
              
              <!-- Tipo de Documento del funcionario -->
              <h:outputText value="#{msg['actualizarDatosFuncionario.tipoDocumento']}"/>
-             <h:inputText value=""/>
+             <h:inputText value="#{ActualizarDatosFuncionario.tipoDocumento}"/>
                         
              <!-- Primer Nombre del funcionario -->
              <h:outputText value="#{msg['actualizarDatosFuncionario.primerNombre']}"/>
-             <h:inputText value=""/>
+             <h:inputText value="#{ActualizarDatosFuncionario.primerNombre}"/>
              
              <!-- Segundo Nombre del funcionario -->
              <h:outputText value="#{msg['actualizarDatosFuncionario.segundoNombre']}"/>
-             <h:inputText value=""/>
+             <h:inputText value="#{ActualizarDatosFuncionario.segundoNombre}"/>
              
              <!-- Primer apellido del funcionario -->
              <h:outputText value="#{msg['actualizarDatosFuncionario.primerApellido']}"/>
-             <h:inputText value=""/>
+             <h:inputText value="#{ActualizarDatosFuncionario.primerApellido}"/>
              
              <!-- Segundo apellido del funcionario -->
              <h:outputText value="#{msg['actualizarDatosFuncionario.segundoApellido']}"/>
-             <h:inputText value=""/>
+             <h:inputText value="#{ActualizarDatosFuncionario.segundoApellido}"/>
              
              <!-- Direccion del funcionario -->
              <h:outputText value="#{msg['actualizarDatosFuncionario.direccion']}"/>
-             <h:inputText value=""/>
+             <h:inputText value="#{ActualizarDatosFuncionario.direccion}"/>
              
              <!-- Ciudad del funcionario -->
              <h:outputText value="#{msg['actualizarDatosFuncionario.ciudad']}"/>
-             <h:inputText value=""/>
+             <h:inputText value="#{ActualizarDatosFuncionario.cuidad}"/>
              
           	 <!-- Sexo del funcionario -->
              <h:outputText value="#{msg['actualizarDatosFuncionario.sexo']}"/>
-             <h:inputText value=""/>
+             <h:inputText value="#{ActualizarDatosFuncionario.sexo}"/>
              
              <!-- email del funcionario -->
              <h:outputText value="#{msg['actualizarDatosFuncionario.e-Mail']}"/>
-             <h:inputText value=""/>
+             <h:inputText value="#{ActualizarDatosFuncionario.eMail}"/>
              
              </h:panelGrid>
               
              <rich:panel>
              <!-- Lista de telefonos del funcionario -->
-             <rich:dataTable>
+             <rich:dataTable value="#{ActualizarDatosFuncionario.TelefonosFuncionario}" var="telefono">
              <rich:column>
              <f:facet name="header">
              
              <h:outputText value="#{msg['actualizarDatosFuncionario.telefono']}" />
              </f:facet>
-             <h:outputText value="numero telefono" />
+             <h:outputText value="#{telefono.telefono}" />
              </rich:column>
-             
-             <rich:column>
-             <f:facet name="header">
-             
-             <!-- icono para eliminar el telefono del funcionario -->
-             <h:outputText value="#{msg['actualizarDatosFuncionario.eliminar']}" />
-             </f:facet>
-             <h:commandButton value="#{msg['actualizarDatosFuncionario.eliminar']}"/>
-             </rich:column>
-             
-             <rich:column>
-             <f:facet name="header">
-             
-             <!-- icono para editar el telefono del funcionario -->
-             <h:outputText value="#{msg['actualizarDatosFuncionario.editar']}" />
-             </f:facet>
-             <h:commandButton value="#{msg['actualizarDatosFuncionario.editar']}"/>
-             </rich:column>
-             
              </rich:dataTable>
              
              </rich:panel>
@@ -97,7 +78,7 @@
              </h:panelGrid>
              
              <!-- Boton que manda los datos del formulario para editar los datos personales del funcionario -->
-             <h:commandButton value="#{msg['actualizarDatosFuncionario.actualizar']}"/>
+             <h:commandButton  action="#{ActualizarDatosFuncionario.actualizarDatosPersonalesFuncionario}" value="#{msg['actualizarDatosFuncionario.actualizar']}"/>
              </rich:panel>
              
              </h:form>
@@ -116,16 +97,16 @@
              
              <!-- Nuevo usuario de la cuenta del funcionario-->
              <h:outputText value="#{msg['actualizarDatosFuncionario.nuevoUsuario']}"/>
-             <h:inputText value=""/>
+             <h:inputText value="#{ActualizarDatosFuncionario.logIn}"/>
              
              <!-- Nueva contraseña de la cuenta del funcionario -->
              <h:outputText value="#{msg['actualizarDatosFuncionario.nuevaContraseña']}"/>
-             <h:inputText value=""/>
+             <h:inputText value="#{ActualizarDatosFuncionario.pass}"/>
              
              </h:panelGrid>
              
              <!-- Boton que manda los datos del formulario para editar los datos de la cuenta del funcionario -->
-             <h:commandButton value="#{msg['actualizarDatosFuncionario.actualizar']}"/>
+             <h:commandButton action="#{ActualizarDatosFuncionario.actualizarDatosUsuarioFuncionario}" value="#{msg['actualizarDatosFuncionario.actualizar']}"/>
             </rich:panel>
             </h:form>
         </rich:tab>
