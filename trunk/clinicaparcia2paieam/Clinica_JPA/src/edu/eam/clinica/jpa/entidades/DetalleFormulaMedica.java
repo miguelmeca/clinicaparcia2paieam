@@ -88,7 +88,7 @@ public class DetalleFormulaMedica implements Serializable {
 	/**
 	 * Articulo del detalle de la formuna medica.
 	 */
-	@ManyToOne(fetch= FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name="ARTICULO")
 	private Articulo articulo;
 	
