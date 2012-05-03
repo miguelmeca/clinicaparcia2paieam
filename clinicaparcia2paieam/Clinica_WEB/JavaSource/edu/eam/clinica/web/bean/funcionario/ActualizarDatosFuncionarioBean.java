@@ -92,6 +92,8 @@ public class ActualizarDatosFuncionarioBean {
 	public void actualizarDatosPersonalesFuncionario(){
 		
 	
+		funcionario = (Funcionario) SesionFactory.getValor("persona");
+		
 			em.getTransaction().begin();
 			
 			funcionario.setCiudad(ciudad);
@@ -105,11 +107,11 @@ public class ActualizarDatosFuncionarioBean {
 			funcionario.setSexo(sexo);
 			funcionario.setTipoDocumento(tipoDocumento);
 			
-			em.refresh(funcionario);
-			em.flush();
+			em.merge(funcionario);
+			
 			
 			em.getTransaction().commit();
-		
+			SesionFactory.agregarASesion("funcionario", funcionario);
 		
 		
 		
@@ -122,15 +124,18 @@ public class ActualizarDatosFuncionarioBean {
 	}
 	
 	public void actualizarDatosUsuarioFuncionario(){
+		funcionario = (Funcionario) SesionFactory.getValor("persona");
+		
 		em.getTransaction().begin();
 		
 		funcionario.setLogin(logIn);
 		funcionario.setPassword(pass);
 		
-		em.refresh(funcionario);
-		em.flush();
+		em.merge(funcionario);
+		
 		
 		em.getTransaction().commit();
+		SesionFactory.agregarASesion("funcionario", funcionario);
 		
 	}
 
