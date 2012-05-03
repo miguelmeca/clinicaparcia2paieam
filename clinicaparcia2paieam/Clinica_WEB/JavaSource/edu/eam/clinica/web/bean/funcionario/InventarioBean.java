@@ -5,8 +5,10 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NamedQuery;
+import javax.persistence.Query;
 
 import edu.eam.clinica.jpa.entidades.Articulo;
+import edu.eam.clinica.jpa.entidades.Consulta;
 import edu.eam.clinica.jpa.entidades.Funcionario;
 import edu.eam.clinica.jpa.entidades.Inventario;
 import edu.eam.clinica.jpa.entidades.Medicamento;
@@ -45,7 +47,9 @@ public class InventarioBean  {
 	 */
 	public List<Articulo> getMedicamentos(){
 		
-		return em.createNamedQuery("MedicamentoAll").getResultList();
+		Query query= em.createNamedQuery(Inventario.CONSULTA_FIND_BY_MEDICAMENTOS);
+		List<Articulo>medicamentos= query.getResultList();
+		return medicamentos;
 		
 	}
 	/**
@@ -76,10 +80,18 @@ public class InventarioBean  {
 		
 	}
 
+	/**
+	 * metodo que filtra los medicamentos por el nombre entrdas y salidas
+	 * @return
+	 */
 	public List<Inventario>getfiltrando(){
 		
+		Query query= em.createNamedQuery(Inventario.CONSULTA_FIND_BY_NOMBRE);
+		query.setParameter(Inventario.PARAMENTRO_NOMBRE,nombre);
 		
-		return em.createNamedQuery("filtradoAll").getResultList();
+		List<Inventario>inventario= query.getResultList();
+		
+		return inventario;
 		
 		
 		
