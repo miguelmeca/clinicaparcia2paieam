@@ -90,7 +90,7 @@ public class ActualizarDatosMedicoBean {
 			correo = persona.getEmail();
 			direccion = persona.getDireccion();
 			pass = persona.getPassword();
-			telefonos = persona.getTelefonos();
+			llenarTelefonos();
 		}
 	}
 
