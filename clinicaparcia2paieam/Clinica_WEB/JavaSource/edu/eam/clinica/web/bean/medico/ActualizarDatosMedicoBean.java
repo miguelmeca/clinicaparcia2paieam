@@ -2,36 +2,87 @@ package edu.eam.clinica.web.bean.medico;
 
 import java.util.List;
 
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 
+import edu.eam.clinica.jpa.entidades.Articulo;
 import edu.eam.clinica.jpa.entidades.Funcionario;
 import edu.eam.clinica.jpa.entidades.Persona;
 import edu.eam.clinica.jpa.entidades.Telefono;
+import edu.eam.clinica.jpa.enumeraciones.TipoDocumentoEnum;
 import edu.eam.clinica.web.autorizacion.SesionFactory;
 
 /**
  * 
  * @author Cesar
- *
+ * 
  */
 public class ActualizarDatosMedicoBean {
-	//javadoc......
+	/**
+	 * Funcionario que esta en sesion de tipo Medico
+	 */
 	public Funcionario persona;
+	/**
+	 * Primer nombre del medico
+	 */
 	public String primerNombre;
+	/**
+	 * Segundo nombre del medico
+	 */
 	public String segundoNombre;
+	/**
+	 * Primer apellido del medico
+	 */
 	public String primerApellido;
+	/**
+	 * segundo apellido del medico
+	 */
 	public String segundoApellido;
+	/**
+	 * Correo electronico del medico
+	 */
 	public String correo;
+	/**
+	 * Lista de numeros telefonicos del medico
+	 */
 	public List<Telefono> telefonos;
+	/**
+	 * Direccion de residencia del medico
+	 */
 	public String direccion;
+	/**
+	 * Password actual del medico
+	 */
 	public String pass;
+	/**
+	 * Password que sera el nuevo al actualizar
+	 */
 	public String nuevoPass;
+	/**
+	 * Password para confirmar que sea igual al nuevoPass
+	 */
+	public String confirmarPass;
+	/**
+	 * Telefono que se actualiza
+	 */
+	public String numTelefono;
+	/**
+	 * Nuevo numero telefonico que se va a actualizar
+	 */
+	public String nuevoTelefono;
+	/**
+	 * EntityManager para el manejo de registros con la base de datos
+	 */
 	public EntityManager em;
 
 	public ActualizarDatosMedicoBean() {
-		/* instanciar EntityManeger */
+		
 		persona = (Funcionario) SesionFactory.getValor("persona");
+		
 		if (persona != null) {
+			/*si la persona en sesion no es null se cargan todos sus datos para mostrarlos en la ventana*/
 			primerNombre = persona.getPrimerNombre();
 			segundoNombre = persona.getSegundoNombre();
 			primerApellido = persona.getPrimerApellido();
@@ -42,15 +93,16 @@ public class ActualizarDatosMedicoBean {
 			telefonos = persona.getTelefonos();
 		}
 	}
-	
+
 	/**
 	 * Metodo que actualiza los datos de un medico que esta en sesion
+	 * 
 	 * @return
 	 */
-	public String actualizarDatos(){
-		
+	public String actualizarDatos() {
+
 		persona = (Funcionario) SesionFactory.getValor("persona");
-		
+
 		persona.setDireccion(direccion);
 		persona.setEmail(correo);
 		persona.setPrimerApellido(primerApellido);
@@ -60,25 +112,77 @@ public class ActualizarDatosMedicoBean {
 		em.getTransaction().begin();
 		em.merge(persona);
 		em.getTransaction().commit();
-		//en session no hay nadie medico.
-		//SesionFactory.agregarASesion("medico", persona);
-		
+
+		FacesContext.getCurrentInstance().addMessage(null,new FacesMessage(FacesMessage.SEVERITY_INFO,"Sus datos se han actualizado correctamente", null));
+
+		return null;
+	}
+
+	/**
+	 * Metodo que cambia el password de un Medico que esta en sesion
+	 * 
+	 * @return
+	 */
+	public String cambiarPassword() {
+
+		/* si la contraseña ingresada no corresponde a la contraseña antigua */
+		if (persona.getPassword().equals(pass) == false) {
+			FacesContext.getCurrentInstance().addMessage(null,new FacesMessage(FacesMessage.SEVERITY_FATAL,"Su contraseña actual no coincide", null));
+		} else {
+			/*si la nueva contraseña no coincide con la contraseña de confirmacion*/
+			if (nuevoPass.equals(confirmarPass) == false) {
+				FacesContext.getCurrentInstance().addMessage(null,new FacesMessage(FacesMessage.SEVERITY_FATAL,"La nueva contraseña no coincide con la de confirmacion",null));
+			}else{
+				/*si todo se cumple se actualiza la contraseña*/
+				persona = (Funcionario) SesionFactory.getValor("persona");
+				persona.setPassword(nuevoPass);
+				em.getTransaction().begin();
+				em.merge(persona);
+				em.getTransaction().commit();
+				FacesContext.getCurrentInstance().addMessage(null,new FacesMessage(FacesMessage.SEVERITY_INFO,"Su contraseña se actualizo correctamente",null));
+			}
+		}
 		return null;
 	}
 	
 	/**
-	 * Metodo que cambia el password de un Medico que esta en sesion
+	 * Metodo que actualiza un telefono seleccionado del Medico que esta en sesion
+	 * buscandolo por el numero telefonico
 	 * @return
 	 */
-	public String cambiarPassword(){
+	public String actualizarTelefono(){
 		
-		//validaciones del viejo password y la confirmacion.
-		persona = (Funcionario) SesionFactory.getValor("persona");
-		persona.setPassword(nuevoPass);
+		Query q = em.createNamedQuery(Telefono.FIND_TELEFONO_BY_NUMERO);
+		q.setParameter(Telefono.PARAMETRO_NUMERO, numTelefono);
+		/*buscar el telefono que se quiere actualizar*/
 		em.getTransaction().begin();
-		em.merge(persona);
+		Telefono t = (Telefono) q.getSingleResult();
 		em.getTransaction().commit();
+		/*cambio de numero telefonico*/
+		t.setNumero(nuevoTelefono);
+		/*actualizacion del numero*/
+		em.getTransaction().begin();
+		em.merge(t);
+		em.getTransaction().commit();
+		
+		FacesContext.getCurrentInstance().addMessage(null,new FacesMessage(FacesMessage.SEVERITY_INFO,"Numero telefonico actualizado correctamente",null));
+		
 		return null;
+	}
+
+	/**
+	 * Metodo que lista los telefonos del Medico en sesion
+	 */
+	public void llenarTelefonos() {
+		/*consulta que saca los numeros telefonicos de una persona con el documento y tipo de documento*/
+		Query q = em.createNamedQuery(Telefono.FIND_TELEFONO_BY_NUMERO_Y_TIPO_DOCUMENTO);
+		/*se le manda a la consulta el documento de la persona*/
+		q.setParameter(Telefono.PARAMETRO_NUMERO_DOCUMENTO,persona.getDocumento());
+		/*tipo de documento de la persona, CC, TI etc*/
+		q.setParameter(Telefono.PARAMETRO_TIPO_DOCUMENTO,TipoDocumentoEnum.CEDULA_CIUDAUDANIA);
+		em.getTransaction().begin();
+		this.telefonos = q.getResultList();
+		em.getTransaction().commit();
 	}
 
 	public String getPass() {
@@ -161,5 +265,4 @@ public class ActualizarDatosMedicoBean {
 		this.nuevoPass = nuevoPass;
 	}
 
-	
 }
