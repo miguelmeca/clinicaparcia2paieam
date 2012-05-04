@@ -99,6 +99,13 @@
 				<h:outputText value="#{detalle.numero}" />
 				
 				<h:inputText value="#{detalle.numero}" />
+				
+				<a4j:commandButton  value="borrar boton" >
+				<rich:componentControl for="idModalpane" operation="Show" event="oncomplete" >
+			
+				</rich:componentControl>
+				
+				</a4j:commandButton>
 				<h:commandButton value="#{msg['actualizarInformacion.paciente.modificar.botonTelefono']}" action="" />
 				</h:panelGrid>
 				</h:form>
