@@ -89,8 +89,8 @@ public class AsignarCitasPacienteBean {
 			Consulta consulta=consultasMedico.get(0);
 			if(consulta!=null){
 			
-			SelectItem itemMedico=new SelectItem(medico2.getDocumento(),medico2.getNombre() );
-			medicos.add(itemMedico);
+				SelectItem itemMedico=new SelectItem(medico2.getDocumento(),medico2.getNombre() );
+				medicos.add(itemMedico);
 			}
 		}
 		return medicos;
