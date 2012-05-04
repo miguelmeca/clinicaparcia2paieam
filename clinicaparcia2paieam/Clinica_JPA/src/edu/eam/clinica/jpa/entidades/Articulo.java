@@ -27,7 +27,8 @@ import javax.persistence.Transient;
 @NamedQueries({
 	@NamedQuery(name=Articulo.FIND_ARTICULO_BY_CODIGO,query="select art from Articulo art where art.codigo=:"+Articulo.PARAMETRO_CODIGO),
     @NamedQuery(name=Articulo.FIND_ARTICULO_BY_NOMBRE,query="select art from Articulo art where art.nombre LIKE :"+Articulo.PARAMENTRO_NOMBRE),
-	@NamedQuery(name=Articulo.FIND_ALL,query="select art from Articulo art ")
+	@NamedQuery(name=Articulo.FIND_ALL,query="select art from Articulo art "),
+	@NamedQuery(name=Articulo.FIND_ARTICULO_BY_NOMBREARTI,query="select art from Articulo art where art.nombre=:"+Articulo.PARAMENTRO_NOMBREART)
 })
 public class Articulo implements Serializable {
 	
@@ -36,16 +37,24 @@ public class Articulo implements Serializable {
 	 */
 	public static final String FIND_ALL = "Articulo.findAll";
 	
+	
 	/**
 	 * Constante para la named query de buscar articulo por nombre.
 	 */
 	public static final String FIND_ARTICULO_BY_NOMBRE="Articulo.findArticuloByNombre";
 	
 	/**
+	 * Constantes para buscar un articulo por nombre
+	 */
+	public static final String FIND_ARTICULO_BY_NOMBREARTI="Articulo.findArticuloByNombreArti";
+	/**
 	 * Constante para el parametro nombre.
 	 */
 	public static final String PARAMENTRO_NOMBRE="nombre";
-   
+   /**
+    * constante para el nombre
+    */
+	public static final String PARAMENTRO_NOMBREART="nombre";
    /**
 	 * Constante para la named Query de buscar Articulo por codigo.
 	 */
