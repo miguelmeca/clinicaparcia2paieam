@@ -25,40 +25,36 @@ import javax.persistence.NamedQuery;
 @Entity
 @NamedQueries({
     @NamedQuery(name = Inventario.CONSULTA_FIND_BY_CODIGO, 
-        query = "select inv from Inventario inv where inv.codigo=:" 
+        query = "select inv from Inventario inv where inv.ARTICULO=:" 
         + Inventario.PARAMETRO_CODIGO),
     
     @NamedQuery(name = Inventario.CONSULTA_FIND_BY_ARTICULO, 
         query = "select inv from Inventario inv where inv.fechaSalida is NULL and inv.articulo.codigo=:" 
-        + Inventario.PARAMETRO_CODIGO ),  
+        + Inventario.PARAMETRO_CODIGO ),      
         
-     @NamedQuery(name = Inventario.CONSULTA_FIND_BY_MEDICAMENTOS, query = "SELECT nombre,precio,COUNT(nombre) AS cantidad FROM articulo a,Inventario i WHERE a.id=i.articulo GROUP BY nombre"),
-     @NamedQuery(name = Inventario.CONSULTA_FIND_BY_NOMBRE, query = "SELECT fechaIngreso,fechaSalida,FUNCIONARIO_INGRESO,FUNCIONARIO_SALIDA FROM inventario i,articulo a WHERE a.id=i.articulo AND a.nombre LIKE:"+Inventario.PARAMENTRO_NOMBRE)    
-
+     @NamedQuery(name = Inventario.FIND_ARTICULO_BY_CANTIDAD, query = "SELECT COUNT(i) as cantidad from inventario i  where  i.ARTICULO=:"+Inventario.PARAMETRO_CODIGO+ "group by i.articulo.id")
+     
+     
 })
 
 public class Inventario implements Serializable {
 
     
-	/**
-	 * consulta para mostrar los medicamentos por nombre precio y que cantidad tenemos
-	 */
-	public static final String CONSULTA_FIND_BY_MEDICAMENTOS="Allmedicamentos";
-	
      /**
      * Consulta para buscar el inventario por codigo.
      */
     public static final String CONSULTA_FIND_BY_CODIGO="Inventario.findbyCodigoBarras";
     
     /**
-     * consulta para filtrar
-     */
+	 * constante para sacr la cantida de un articulo del inventario
+	 */
+	public static final String FIND_ARTICULO_BY_CANTIDAD="Articulo.findArticuloBYCantidad";
     
-    public static final String CONSULTA_FIND_BY_NOMBRE="filtroAll";
     /**
      * Consulta el invetario y articulo por nombre
      */
     public static final String PARAMENTRO_NOMBRE="nombre";
+  
     /**
      * Consulta para buscar el inventario por codigo.
      */
