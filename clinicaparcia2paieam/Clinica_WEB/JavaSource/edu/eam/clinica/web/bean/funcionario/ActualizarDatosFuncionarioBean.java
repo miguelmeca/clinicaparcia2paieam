@@ -2,8 +2,9 @@ package edu.eam.clinica.web.bean.funcionario;
 
 import java.util.List;
 
-import javax.management.Query;
+
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 
 import edu.eam.clinica.jpa.entidades.Ciudad;
 import edu.eam.clinica.jpa.entidades.Funcionario;
@@ -70,9 +71,12 @@ public class ActualizarDatosFuncionarioBean {
 	 */
 	private String logIn;
 	/*
-	 * contraseña de acceso del funcionario
+	 * contraseña de acceso del funcionario 
 	 */
 	private String passViejo;
+	/**
+	 * Contraseña nueva para el funcionario
+	 */
 	private String passNuevo;
 	
 	
@@ -81,7 +85,7 @@ public class ActualizarDatosFuncionarioBean {
 	 */
 	private EntityManager em;
 
-	/*
+	/**
 	 * constructor
 	 */
 	public ActualizarDatosFuncionarioBean() {
@@ -89,7 +93,7 @@ public class ActualizarDatosFuncionarioBean {
 		funcionario = (Funcionario) SesionFactory.getValor("persona");
 	}
 
-	/*
+	/**
 	 * metodo con el cual se actualizaran los datos personales de un funcionario
 	 */
 	public void actualizarDatosPersonalesFuncionario(){
@@ -124,15 +128,17 @@ public class ActualizarDatosFuncionarioBean {
 		
 	}
 	
-	/*
+	/**
 	 * listar los telefonos del funcionario
 	 */
 	public List<Telefono> getTelefonosFuncionario() {
 		
 		//buscar los telefonos por persona... hacer la consulta.
 		funcionario = (Funcionario) SesionFactory.getValor("persona");
-		telefonos=(List<Telefono>) em.createNamedQuery(telefono.FIND_TELEFONO_BY_NUMERO_Y_TIPO_DOCUMENTO).getResultList();
-		
+		Query q=em.createNamedQuery(Telefono.FIND_TELEFONO_BY_NUMERO_Y_TIPO_DOCUMENTO);
+		q.setParameter(Telefono.PARAMETRO_NUMERO_DOCUMENTO, funcionario.getDocumento());
+		q.setParameter(Telefono.PARAMETRO_TIPO_DOCUMENTO, funcionario.getTipoDocumento());
+		telefonos=q.getResultList();
 		return telefonos;
 	}
 	/*
