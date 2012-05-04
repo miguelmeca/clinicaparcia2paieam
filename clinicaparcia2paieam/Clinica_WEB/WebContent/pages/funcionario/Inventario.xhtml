@@ -16,20 +16,20 @@
 	 <rich:tabPanel>
         <rich:tab label="#{msg['Inventario.medica']}">
           <rich:panel id="medicamentospanel">
-          <rich:dataTable id="tablaMedicamentos" value="#{inventariobean.medicamentos}" var="m">
+          <rich:dataTable id="tablaMedicamentos" value="#{inventarioBean.ListaMedicamentos}" var="m">
           
-        	<rich:column id="GrupoTerapeutico">
+        	<rich:column id="NombreMedicas">
 			<f:facet name="header">
 			<h:outputLabel value="#{msg['Inventario.nombre']}" />
 			</f:facet>
 					
 						<h:outputText id="Txtnombres" value="#{m.nombre}" />
 					</rich:column>  
-			<rich:column id="precios">
+			<rich:column id="codigosMedis">
 						<f:facet name="header">
-							<h:outputLabel value="#{msg['Inventario.precio']}" />
+							<h:outputLabel value="#{msg['Inventario.codigo']}" />
 						</f:facet>
-						<h:outputText id="Txtprecios" value="#{m.precio}" />
+						<h:outputText id="Txtprecios" value="#{m.codigo}" />
 					</rich:column>
 					  
 					  <rich:column id="cantidades">
@@ -74,9 +74,10 @@
 	</f:facet>
 	<h:outputText value="#{msg['Inventario.nombre']}" />
 	<h:inputText value="#{inventarioBean.nombre}" />
-	<a4j:commandButton  value="#{msg['Inventario.filtro']}" />
+	<a4j:commandButton  value="#{msg['Inventario.filtro']}"  action="inventarioBean.buscarfiltrado"/>
 	<br />
-		<rich:dataTable id="entradaMedicamentos" value="#{inventarioBean.filtradoAll}" var="md">
+	<rich:panel>
+		<rich:dataTable id="entradaMedicamentos" value="#{inventarioBean.filtrados}" var="md">
         
         <rich:column>
         <f:facet name="header">
@@ -103,6 +104,7 @@
         <h:outputText value="#{md.FUNCIONARIO_SALIDAD}" />
         </rich:column>
         </rich:dataTable>  
+        </rich:panel>
         </rich:panel>     
     
         
