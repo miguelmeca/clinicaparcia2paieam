@@ -7,6 +7,9 @@ import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
+import org.hibernate.validator.NotNull;
+import org.hibernate.validator.Pattern;
+
 import edu.eam.clinica.jpa.entidades.Articulo;
 import edu.eam.clinica.jpa.entidades.Funcionario;
 import edu.eam.clinica.jpa.entidades.Persona;
@@ -59,10 +62,14 @@ public class ActualizarDatosMedicoBean {
 	/**
 	 * Password que sera el nuevo al actualizar
 	 */
+	@NotNull
+	@Pattern(regex = "[0-9A-Za-z]*",message="Ingrese solo numeros")
 	public String nuevoPass;
 	/**
 	 * Password para confirmar que sea igual al nuevoPass
 	 */
+	@NotNull
+	@Pattern(regex = "[0-9A-Za-z]*",message="Ingrese solo numeros")
 	public String confirmarPass;
 	/**
 	 * Telefono que se actualiza
@@ -71,6 +78,8 @@ public class ActualizarDatosMedicoBean {
 	/**
 	 * Nuevo numero telefonico que se va a actualizar
 	 */
+	@NotNull
+	@Pattern(regex = "[0-9]*",message="Ingrese solo numeros")
 	public String nuevoTelefono;
 	/**
 	 * EntityManager para el manejo de registros con la base de datos

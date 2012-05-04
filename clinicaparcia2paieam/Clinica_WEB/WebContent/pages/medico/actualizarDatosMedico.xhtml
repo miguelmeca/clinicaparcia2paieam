@@ -95,55 +95,50 @@
 							<h:outputText value="#{msg['actualizarDatosMedico.telefonos']}" />
 						</rich:column>
 						<rich:column>
-							<rich:comboBox selectFirstOnUpdate="false"
-								defaultLabel="Enter some value">
+						<!-- 	<rich:comboBox selectFirstOnUpdate="false"
+								defaultLabel="Enter some value" >
 								<f:selectItems value="#{actualizarDatosMedico.telefonos}" />
-							</rich:comboBox>
+							</rich:comboBox> -->
+
+							<rich:dataTable id="tablaTelefonos"value="#{actualizarDatosMedico.telefonos}" var="tel">
+								<rich:column>
+									<f:facet name="header">
+										<h:outputText value="telefono" />
+									</f:facet>
+									<h:outputText value="tel.numero" />
+								</rich:column>
+								<rich:column>
+									<f:facet name="header">
+										<h:outputText value="Accion" />
+									</f:facet>
+									<a4j:commandLink value="editar" action="editPanel">
+										<a4j:actionparam name="telefono" value="tel.numero" assignTo="#{actualizarDatosMedico.numTelefono}"/>
+									</a4j:commandLink>
+								</rich:column>
+							</rich:dataTable>
+
+
 						</rich:column>
-						<rich:column>
-							<a4j:commandLink ajaxSingle="true" id="editlink" value="editar"
-								oncomplete="#{rich:component('editPanel')}.show()">
-							</a4j:commandLink>
-						</rich:column>
+					
 					</rich:columnGroup>
 					
 					<br />
-					<a4j:commandButton value="#{msg['actualizarDatosMedico.Editar']}" action="#{actualizarDatosMedicoBean}"></a4j:commandButton>
+					<a4j:commandButton value="#{msg['actualizarDatosMedico.Editar']}" action="#{actualizarDatosMedicoBean.actualizarDatos}"></a4j:commandButton>
 
 				</rich:dataTable>
 
-				<!-- MODAL PANEL para editar algun dato del usuario -->
+				<!-- MODAL PANEL para editar algun telefono del usuario -->
 				<rich:modalPanel id="editPanel" autosized="true" width="450">
-					<f:facet name="header">
-						<h:outputText value="Edit Current Car" />
-					</f:facet>
-					<f:facet name="controls">
-						<h:panelGroup>
-							<h:graphicImage value="/images/modal/close.png" id="hidelink"
-								styleClass="hidelink" />
-							<rich:componentControl for="editPanel" attachTo="hidelink"
-								operation="hide" event="onclick" />
-						</h:panelGroup>
-					</f:facet>
+					
 					<h:form>
-						<rich:messages style="color:red;"></rich:messages>
 						<h:panelGrid columns="1">
-							<a4j:outputPanel ajaxRendered="true">
-								<h:panelGrid columns="2">
-									<h:outputText value="Make" />
-									<h:inputText value="#{dataTableScrollerBean.currentItem.make}" />
-									<h:outputText value="Model" />
-									<h:inputText value="#{dataTableScrollerBean.currentItem.model}" />
-									<h:outputText value="Price" />
-									<h:inputText value="#{dataTableScrollerBean.currentItem.price}"
-										label="Price" immediate="true" />
-								</h:panelGrid>
-								<rich:message showSummary="true" showDetail="false" for="price" />
-							</a4j:outputPanel>
-							<a4j:commandButton value="Store"
-								action="#{dataTableScrollerBean.store}"
-								reRender="make, model, price"
-								oncomplete="if (#{facesContext.maximumSeverity==null}) #{rich:component('editPanel')}.hide();" />
+							
+							<h:outputText value="#{actualizarDatosMedico.numTelefono}" />
+							
+							<h:inputText value="#{actualizarDatosMedico.nuevoTelefono}" />
+							
+							<a4j:commandButton value="#{msg['actualizarDatosMedico.Editar']}" action="#{actualizarDatosMedicoBean.actualizarTelefono}" />
+							
 						</h:panelGrid>
 					</h:form>
 				</rich:modalPanel>
@@ -154,13 +149,24 @@
 				<!-- formulario para actualizar la contraseña -->
 				<rich:dataTable>
 					<h:form>
+					
+						<rich:columnGroup>
+							<rich:column>
+								<h:outputText
+									value="#{msg['actualizarDatosMedico.passwordViejo']}" />
+							</rich:column>
+							<rich:column>
+								<h:inputText value="#{actualizarDatosMedicoBean.pass}" />
+							</rich:column>
+						</rich:columnGroup>
+					
 						<rich:columnGroup>
 							<rich:column>
 								<h:outputText
 									value="#{msg['actualizarDatosMedico.passwordActual']}" />
 							</rich:column>
 							<rich:column>
-								<h:inputText value="#{actualizarDatosMedicoBean.pass}" />
+								<h:inputText value="#{actualizarDatosMedicoBean.nuevoPass}" />
 							</rich:column>
 						</rich:columnGroup>
 
@@ -170,13 +176,13 @@
 									value="#{msg['actualizarDatosMedico.passwordNuevo']}" />
 							</rich:column>
 							<rich:column>
-								<h:inputText value="#{actualizarDatosMedicoBean.nuevoPass}" />
+								<h:inputText value="#{actualizarDatosMedicoBean.confirmarPass}" />
 							</rich:column>
 						</rich:columnGroup>
 						
 						<rich:columnGroup>
 							<rich:column>
-								<h:commandButton action="#{actualizarDatosMedicoBean.cambiarPassword}" value="Cambiar" />
+								<h:commandButton action="#{actualizarDatosMedicoBean.cambiarPassword}" value="#{msg['actualizarDatosMedico.Editar']}" />
 							</rich:column>
 						</rich:columnGroup>
 						
