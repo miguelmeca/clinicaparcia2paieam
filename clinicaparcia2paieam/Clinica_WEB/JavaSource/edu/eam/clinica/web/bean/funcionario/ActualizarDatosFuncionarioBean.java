@@ -2,6 +2,7 @@ package edu.eam.clinica.web.bean.funcionario;
 
 import java.util.List;
 
+import javax.management.Query;
 import javax.persistence.EntityManager;
 
 import edu.eam.clinica.jpa.entidades.Ciudad;
@@ -63,6 +64,7 @@ public class ActualizarDatosFuncionarioBean {
 	 * telefonos del funcionario
 	 */
 	private List<Telefono> telefonos;
+	private Telefono telefono;
 	/*
 	 * nombre de usuario del funcionario
 	 */
@@ -70,7 +72,8 @@ public class ActualizarDatosFuncionarioBean {
 	/*
 	 * contraseña de acceso del funcionario
 	 */
-	private String pass;
+	private String passViejo;
+	private String passNuevo;
 	
 	
 	/*
@@ -96,6 +99,7 @@ public class ActualizarDatosFuncionarioBean {
 		
 			em.getTransaction().begin();
 			
+			/*
 			funcionario.setCiudad(ciudad);
 			funcionario.setDireccion(direccion);
 			funcionario.setDocumento(documento);
@@ -106,6 +110,7 @@ public class ActualizarDatosFuncionarioBean {
 			funcionario.setSegundoNombre(segundoNombre);
 			funcionario.setSexo(sexo);
 			funcionario.setTipoDocumento(tipoDocumento);
+			*/
 			
 			em.merge(funcionario);
 			
@@ -125,9 +130,10 @@ public class ActualizarDatosFuncionarioBean {
 	public List<Telefono> getTelefonosFuncionario() {
 		
 		//buscar los telefonos por persona... hacer la consulta.
+		funcionario = (Funcionario) SesionFactory.getValor("persona");
+		telefonos=(List<Telefono>) em.createNamedQuery(telefono.FIND_TELEFONO_BY_NUMERO_Y_TIPO_DOCUMENTO).getResultList();
 		
-		return em.createNamedQuery(funcionario.FIND_ALL).getResultList();
-
+		return telefonos;
 	}
 	/*
 	 * metodo con el cual se actualizaran los datos del usuario funcionario
@@ -137,16 +143,17 @@ public class ActualizarDatosFuncionarioBean {
 		
 		em.getTransaction().begin();
 		
-		//hay que preguntar el pasword acutal y comprarlo con una confrimacion.
 		
-		funcionario.setLogin(logIn);
-		funcionario.setPassword(pass);
+		//se validad q el password digitado sea el mismo al anterior, para poderlo actualizar
+		if(funcionario.getPassword().equals(passViejo)){
+			funcionario.setPassword(passNuevo);
+			
+			em.merge(funcionario);
+			em.getTransaction().commit();
+			SesionFactory.agregarASesion("funcionario", funcionario);
+		}
 		
-		em.merge(funcionario);
 		
-		
-		em.getTransaction().commit();
-		SesionFactory.agregarASesion("funcionario", funcionario);
 		
 		//mensaje global con el exito de la operacion.
 		
