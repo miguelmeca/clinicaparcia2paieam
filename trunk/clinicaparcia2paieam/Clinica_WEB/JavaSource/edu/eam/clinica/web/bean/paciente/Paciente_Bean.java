@@ -33,6 +33,8 @@ public class Paciente_Bean {
 		private String usuario;
 		private String contraseña;
 		private List<Telefono> telefonos;
+		private Telefono nuevoTelefono;
+		private int numeroTelefonoBorrar;
 		
 
 		public Paciente_Bean() {
@@ -83,9 +85,32 @@ public class Paciente_Bean {
 		
 		public List<Telefono> getTelefonos(){
 			
-			Query query= em.createNamedQuery(Telefono.FIND_ALL);
+			Query query= em.createNamedQuery(Telefono.FIND_TELEFONO_BY_NUMERO_Y_TIPO_DOCUMENTO);
+			query.setParameter(Telefono.PARAMETRO_TIPO_DOCUMENTO, persona.getTipoDocumento());
+			query.setParameter(Telefono.PARAMETRO_NUMERO_DOCUMENTO, persona.getDocumento());
+			
 			List<Telefono>tel= query.getResultList();
 			return tel;
+			
+		}
+		
+		public String borrarTelefono(){
+			
+			em.getTransaction().begin();
+			Query query=	em.createNamedQuery(Telefono.FIND_TELEFONO_BY_NUMERO);
+			query.setParameter(Telefono.PARAMETRO_NUMERO, numeroTelefonoBorrar);
+			em.remove(query.getSingleResult());
+			em.getTransaction().commit();
+			return null;
+			
+		}
+		
+		public String agregarTelefono(){
+			
+			em.getTransaction().begin();
+			em.persist(nuevoTelefono);
+			em.close();
+			return null;
 			
 		}
 		
@@ -182,6 +207,22 @@ public class Paciente_Bean {
 
 		public void setTelefonos(List<Telefono> telefonos) {
 			this.telefonos = telefonos;
+		}
+
+		public Telefono getNuevoTelefono() {
+			return nuevoTelefono;
+		}
+
+		public void setNuevoTelefono(Telefono nuevoTelefono) {
+			this.nuevoTelefono = nuevoTelefono;
+		}
+
+		public int getNumeroTelefonoBorrar() {
+			return numeroTelefonoBorrar;
+		}
+
+		public void setNumeroTelefonoBorrar(int numeroTelefonoBorrar) {
+			this.numeroTelefonoBorrar = numeroTelefonoBorrar;
 		}
 		
 		
