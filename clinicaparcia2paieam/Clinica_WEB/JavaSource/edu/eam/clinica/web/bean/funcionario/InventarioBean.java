@@ -12,6 +12,8 @@ import javax.persistence.Query;
 
 import org.hibernate.validator.Pattern;
 
+import com.arjuna.ats.internal.jdbc.drivers.modifiers.list;
+
 import edu.eam.clinica.jpa.entidades.Articulo;
 import edu.eam.clinica.jpa.entidades.Consulta;
 import edu.eam.clinica.jpa.entidades.Funcionario;
@@ -29,6 +31,7 @@ public class InventarioBean {
 	 * parametros del InvetarioBean
 	 */
 	private EntityManager em;
+	
 	private Funcionario funcionario;
 
 	@Pattern(regex = "[0-9]*", message = "solo numeros porfavor.")
@@ -44,10 +47,13 @@ public class InventarioBean {
 	private String nombre;
 
 	private List<Articulo> articulos;
-	private ArrayList<ListarMedicamentos> listaMedicamentos;
+	private List<ListarMedicamentos> listaMedicamentos;
+	
 	private List<Inventario> filtrados;
 	private List<Inventario> inventarioEntrada;
 	private List<Inventario> inventarioSalidad;
+	private Funcionario f;
+	
 
 	/**
 	 * Constructor InventarioBean
@@ -56,11 +62,7 @@ public class InventarioBean {
 
 		em = FactoryEntityManager.getEm();
 		funcionario = (Funcionario) SesionFactory.getValor("persona");
-		
-		
-		
-		
-		listaMedicamentos = new ArrayList<ListarMedicamentos>();
+		f=em.find(Funcionario.class,"1234");
 	}
 
 	/**
@@ -75,6 +77,34 @@ public class InventarioBean {
 		
 		
 
+	}
+	
+	public List<ListarMedicamentos>getListaMedicamentos(){
+		
+		Query query = em.createNamedQuery(Articulo.FIND_ALL);
+		articulos = query.getResultList();
+		
+		for(int i=0;i<articulos.size();i++){
+			
+			long id=articulos.get(i).getId();
+			String nombre=articulos.get(i).getNombre();
+			String codigo=articulos.get(i).getCodigo();
+			
+			long cantidad= (Long) em.createNamedQuery(Inventario.FIND_ARTICULO_BY_CANTIDAD).
+			setParameter(Inventario.PARAMETRO_CODIGO,id).getSingleResult();
+			
+			ListarMedicamentos c= new ListarMedicamentos(nombre, codigo, cantidad);
+			
+			if(listaMedicamentos==null){
+				listaMedicamentos= new ArrayList<ListarMedicamentos>();
+			
+			}
+			
+			 listaMedicamentos.add(c);
+			
+		}
+		
+		return listaMedicamentos;
 	}
 
 	
@@ -99,10 +129,11 @@ public class InventarioBean {
 			if (i.size() == 0) {
 				em.getTransaction().begin();
 				Inventario inven = new Inventario(a, new Date(), null,
-						codigoBarras, null, funcionario, null);
+						codigoBarras, null, f, null);
 
 				em.persist(inven);
 				em.getTransaction().commit();
+				inven.setCodigoBarras("");
 				FacesContext.getCurrentInstance().addMessage(
 						null,
 						new FacesMessage(FacesMessage.SEVERITY_INFO,
@@ -220,9 +251,7 @@ public class InventarioBean {
 	public void setInventarioSalidad(List<Inventario> inventarioSalidad) {
 		this.inventarioSalidad = inventarioSalidad;
 	}
-	public ArrayList<ListarMedicamentos> getListaMedicamentos() {
-		return listaMedicamentos;
-	}
+
 
 	public void setListaMedicamentos(ArrayList<ListarMedicamentos> listaMedicamentos) {
 		this.listaMedicamentos = listaMedicamentos;
