@@ -75,6 +75,7 @@
 				</rich:column>
 			</rich:dataTable>
 		</h:form>
+		<br/>
 
 		<h:form>
 			<rich:modalPanel id="panelMedicamento" autosized="true" width="200">
@@ -112,7 +113,7 @@
 					</table>
 				</h:form>
 			</rich:modalPanel>
-		</h:form>
+		</h:form><br/>
 		
 		<rich:dataTable id="tablaMedicamentosAdd"
 				value="#{entregarFormulaMedicaBean.detalles}" var="detalle">
@@ -144,8 +145,6 @@
 					<a4j:commandLink ajaxSingle="true" id="link"
 						oncomplete="#{rich:component('panelMedicamento')}.show()">
 						<h:graphicImage value="agregar" style="border:0" />
-						<!--  <f:setPropertyActionListener value="#{row}" target="#{dataTableScrollerBean.currentRow}" /> -->
-						<!--<a4j:actionparam name="#{msg['entregarFormulaMedica.codigoBarras']}" value="#{entregarFormulaMedicaBean.}"/>-->
 					</a4j:commandLink>
 					<rich:toolTip for="link"
 						value="#{msg['entregarFormulaMedica.modal']}" />
