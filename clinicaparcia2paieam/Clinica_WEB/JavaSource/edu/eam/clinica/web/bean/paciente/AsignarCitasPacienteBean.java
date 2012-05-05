@@ -12,6 +12,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.codec.net.QCodec;
 import org.richfaces.iterator.ForEachIterator;
 
 import com.sun.org.apache.xerces.internal.impl.dv.xs.YearDV;
@@ -36,20 +37,27 @@ public class AsignarCitasPacienteBean {
 	
 	private List<SelectItem> medicos;
 	private SelectItem medicoAsignado;
+	
+	private List<Consulta>consultasAtendias;
+	
 
 	
-	public AsignarCitasPacienteBean() {
+	
+	
+	public void AsignarCitasPacienteBean() {
 
 		em = FactoryEntityManager.getEm();
 
 		HttpSession sesion = (HttpSession) FacesContext.getCurrentInstance()
 				.getExternalContext().getSession(false);
-		Persona persona = (Persona) sesion.getAttribute("persona");
-		paciente = em.find(Paciente.class, persona.getDocumento());
-
+		paciente = (Paciente) sesion.getAttribute("persona");
+		
+		
 	
 
 	}
+	
+	
 	
 	
 
@@ -66,11 +74,15 @@ public class AsignarCitasPacienteBean {
 		fecha.add(Calendar.HOUR_OF_DAY,Integer.parseInt(horaYMin[0]));
 		fecha.add(Calendar.MINUTE,Integer.parseInt(horaYMin[1]));
 		consulta.setFechaHora(fecha.getTime());//fecha del rich:calendar.
-		consulta.setMedico(null);	//medico q se elijio.disponibles.	
+		
+		Query query=	em.createNamedQuery(Medico.FIND_MEDICO_BY_NIT);
+		query.setParameter(Medico.PARAMETRO_NIT, medicoAsignado.getValue());
+		consulta.setMedico((Medico)query.getSingleResult());	//medico q se elijio.disponibles.	
 		consulta.setPaciente(paciente);
 		em.persist(consulta);
 		consultas.add(consulta);
 		paciente.setConsultas(consultas);
+		em.persist(paciente);
 		//em.persist(paciente);
 		return null;
 	}
@@ -89,7 +101,7 @@ public class AsignarCitasPacienteBean {
 			Consulta consulta=consultasMedico.get(0);
 			if(consulta!=null){
 			
-				SelectItem itemMedico=new SelectItem(medico2.getDocumento(),medico2.getNombre() );
+				SelectItem itemMedico=new SelectItem(medico2.getNIT(),medico2.getNombre() );
 				medicos.add(itemMedico);
 			}
 		}
@@ -151,4 +163,39 @@ public class AsignarCitasPacienteBean {
 		this.cita = cita;
 	}
 
+
+
+
+
+	public SelectItem getMedicoAsignado() {
+		return medicoAsignado;
+	}
+
+
+
+
+
+	public void setMedicoAsignado(SelectItem medicoAsignado) {
+		this.medicoAsignado = medicoAsignado;
+	}
+
+
+
+
+
+	public List<Consulta> getConsultasAtendias() {
+		return consultasAtendias;
+	}
+
+
+
+
+
+	public void setConsultasAtendias(List<Consulta> consultasAtendias) {
+		this.consultasAtendias = consultasAtendias;
+	}
+
+	
+	
+	
 }
