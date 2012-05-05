@@ -25,14 +25,27 @@ import javax.persistence.NamedQuery;
 @Entity
 @NamedQueries({
     @NamedQuery(name = Inventario.CONSULTA_FIND_BY_CODIGO, 
-        query = "select inv from Inventario inv where inv.ARTICULO=:" 
+        query = "select inv from Inventario inv where inv.articulo=:" 
         + Inventario.PARAMETRO_CODIGO),
+        
+        @NamedQuery(name = Inventario.CONSULTA_FIND_BY_CODIGOBARRAS, 
+                query = "select inv from Inventario inv where inv.codigo=:" 
+                + Inventario.PARAMETRO_CODIGO),
     
     @NamedQuery(name = Inventario.CONSULTA_FIND_BY_ARTICULO, 
         query = "select inv from Inventario inv where inv.fechaSalida is NULL and inv.articulo.codigo=:" 
-        + Inventario.PARAMETRO_CODIGO ),      
+        + Inventario.PARAMETRO_CODIGO ),  
         
-     @NamedQuery(name = Inventario.FIND_ARTICULO_BY_CANTIDAD, query = "SELECT COUNT(i) as cantidad from inventario i  where  i.ARTICULO=:"+Inventario.PARAMETRO_CODIGO+ "group by i.articulo.id")
+        
+        @NamedQuery(name = Inventario.CONSULTA_FIND_BY_SALIDA_ARTICULO, 
+                query = "select inv from Inventario inv where inv.fechaSalida is NOT NULL and inv.articulo.nombre=:"
+                	+Inventario.PARAMENTRO_NOMBRE), 
+       
+        @NamedQuery(name = Inventario.CONSULTA_FIND_BY_ENTRADA_ARTICULO, 
+                      query = "select inv from Inventario inv where inv.fechaSalida is  NULL and inv.articulo.nombre=:" 
+                        + Inventario.PARAMENTRO_NOMBRE)  ,      
+        
+   //@NamedQuery(name = Inventario.FIND_ARTICULO_BY_CANTIDAD, query = "SELECT COUNT(i) from inventario i")
      
      
 })
@@ -40,16 +53,36 @@ import javax.persistence.NamedQuery;
 public class Inventario implements Serializable {
 
     
+	/**
+	 * 
+	 */
+	 public static final String CONSULTA_FIND_BY_CODIGOBARRAS="Inventario.findbyCodigoBarrasT";
+	 
      /**
      * Consulta para buscar el inventario por codigo.
      */
     public static final String CONSULTA_FIND_BY_CODIGO="Inventario.findbyCodigoBarras";
     
+    
     /**
 	 * constante para sacr la cantida de un articulo del inventario
 	 */
 	public static final String FIND_ARTICULO_BY_CANTIDAD="Articulo.findArticuloBYCantidad";
-    
+	/**
+	 * parametro para buscar por nombre
+	 */
+	
+	/**
+	 * constante para sacar los que no tiennene salida
+	 */
+	
+	public static final String CONSULTA_FIND_BY_SALIDA_ARTICULO="Inventario.findSalidad";
+	
+	/**
+	 * Constante para sacar los que tiene salidad
+	 */
+	public static final String CONSULTA_FIND_BY_ENTRADA_ARTICULO="Inventario.findEntrada";
+	
     /**
      * Consulta el invetario y articulo por nombre
      */
