@@ -3,10 +3,10 @@ package edu.eam.clinica.jpa.entidades;
 public class ListarMedicamentos {
 	
 	private String nombre;
-	private int cantidad;
-	private long codigo;
+	private long cantidad;
+	private String codigo;
 	
-	public ListarMedicamentos(String nombre,long codigo, int cantidad) {
+	public ListarMedicamentos(String nombre,String codigo, long cantidad) {
 		super();
 		this.nombre = nombre;
 		this.cantidad = cantidad;
@@ -18,16 +18,20 @@ public class ListarMedicamentos {
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
-	public int getCantidad() {
+	
+	public long getCantidad() {
 		return cantidad;
+	}
+	public void setCantidad(long cantidad) {
+		this.cantidad = cantidad;
 	}
 	public void setCantidad(int cantidad) {
 		this.cantidad = cantidad;
 	}
-	public long getCodigo() {
+	public String getCodigo() {
 		return codigo;
 	}
-	public void setCodigo(long codigo) {
+	public void setCodigo(String codigo) {
 		this.codigo = codigo;
 	}
 
