@@ -123,6 +123,10 @@
         <rich:componentControl for="panel" attachTo="hideThis" operation="hide" event="onclick"/>
     </h:outputLink>
     </rich:modalPanel>
+   
+   
+   
+   
     <h:outputLink value="#" id="link">
         Ver detalle:
         <rich:componentControl for="panel" attachTo="link" operation="show" event="onclick"/>
@@ -188,7 +192,38 @@
         <rich:tab label="#{ msg['pedirCita.paciente.citasPendientes']}">
             Here is tab #3
            
-           
+               <rich:dataTable  id="tablaCitasSinCancelar" value="#{asignarCitasPacienteBean.consultaSinAtender}" var="consultaSinAtender">
+	<rich:column>
+	<f:facet name="header">
+	<h:outputLabel
+	value="Fecha y hora:" />
+	</f:facet>
+	<h:outputText value="#{consultas.fechaHora.time}" />
+	</rich:column>
+	<rich:column>
+	<f:facet name="header">
+	<h:outputLabel
+	value="Medico responsable:" />
+	</f:facet>
+	<h:outputText value="#{consultas.medico.nombre}" />
+	</rich:column>
+		<rich:column id="consultaSeleccionada">
+	<f:facet name="header">
+	<h:outputLabel
+	value="Cancelar:" />
+	</f:facet>
+	<a4j:commandButton value="#{msg['actualizarInformacion.paciente.telefonos.eliminarTelefono']}"
+				action="#{asignarCitasPacienteBean.cancelarCita()}"
+				reRender="tablaCitasSinCancelar" ajaxSingle="true"
+				process="consultaSeleccionada">
+
+			<a4j:actionparam name="id" value="#{consultas.id}"
+						assignTo="#{asignarCitasPacienteBean.idCOnsultaCancelar}" />
+
+</a4j:commandButton>
+	</rich:column>
+	
+	</rich:dataTable> 
             
         </rich:tab>
     </rich:tabPanel>
