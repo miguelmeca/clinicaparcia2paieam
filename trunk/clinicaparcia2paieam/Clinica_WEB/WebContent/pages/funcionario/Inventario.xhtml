@@ -14,13 +14,13 @@
 				<f:facet name="header">
 					<h:outputText value="Inventario" />
 				</f:facet>
-				<rich:tabPanel >
+				<rich:tabPanel switchType="client">
 				
 					<rich:tab label="#{msg['Inventario.medica']}">
 					
 					
 						<rich:panel id="medicamentospanel">
-							<rich:dataTable id="tablaMedicamentos"  value="#{inventarioBean.articulos}"  var="m">
+							<rich:dataTable id="tablaMedicamentos"  value="#{inventarioBean.listaMedicamentos}"  var="m">
 
 								<rich:column id="NombreMedicas">
 									<f:facet name="header">
@@ -37,10 +37,10 @@
 								</rich:column>
 						<rich:column id="PrecioMedicas">
 									<f:facet name="header">
-										<h:outputLabel value="#{msg['Inventario.precio']}" />
+										<h:outputLabel value="#{msg['Inventario.cantidad']}" />
 									</f:facet>
 
-									<h:outputText id="Txtprecio" value="#{m.precio}" />
+									<h:outputText id="Txtprecio" value="#{m.cantidad}" />
 								</rich:column>
 								
 
@@ -87,13 +87,20 @@
 					</rich:tab>
 
 					<rich:tab label="#{msg['Inventario.entradaSalida']}">
-
-						<h:outputText value="#{msg['Inventario.nombre']}" />
-						<h:inputText value="#{inventarioBean.nombre}">
-
+					
+						<h:panelGrid columns="3">
+						<h:outputText value="#{msg['Inventario.nombre']}" />						
+						<a4j:region>
+						<h:inputText id="txtfiltronombre" value="#{inventarioBean.nombre}">
+						<rich:beanValidator />
+					   <a4j:support event="onkeyup" />
 						</h:inputText>
+						</a4j:region>
+						<rich:message for="txtfiltronombre" errorClass="errors" />
+						</h:panelGrid>
 						<a4j:commandButton value="#{msg['Inventario.filtro']}"
 							action="#{inventarioBean.buscarfiltrado}" reRender="entradaMedicamentos,salidamedicamentos" />
+							
 						<br />
 						<rich:panel>
 							<f:facet name="header">
