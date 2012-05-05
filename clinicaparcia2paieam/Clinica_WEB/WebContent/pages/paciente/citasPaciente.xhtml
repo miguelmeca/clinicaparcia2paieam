@@ -26,7 +26,9 @@
 	<!-- Fecha de la cita -->
 	<h:outputLabel value="#{msg['pedirCita.paciente.pedirCita.fechaCita']} " />
 	
-	<rich:calendar value="#{asignarCitasPacienteBean.fecha}" isDayEnabled="disablementFunction" dayStyleClass="disabledClassesProv" boundaryDatesMode="scroll"/><br/><br/>
+	<rich:calendar value="#{asignarCitasPacienteBean.fecha}" 
+	isDayEnabled="disablementFunction" dayStyleClass="disabledClassesProv" 
+	boundaryDatesMode="scroll"/><br/><br/>
 	
 	<!-- Horario de la cita -->
 	<h:outputLabel value="#{msg['pedirCita.paciente.pedirCita.horaCita']}" />
@@ -64,10 +66,13 @@
 	
 	<!-- Medico que atiende -->
 	<h:outputLabel value="#{msg['pedirCita.paciente.pedirCita.medico']}" />
-	<rich:comboBox selectFirstOnUpdate="false"
-        defaultLabel="#{msg['pedirCita.paciente.pedirCita.elejirMedico']}" val suggestionValues="#{asignarCitasPacienteBean.medicos}" >
-        
-    </rich:comboBox>
+	
+	<h:selectOneMenu value="#{asignarCitasPacienteBean.medicoAsignado} "   >
+	<f:selectItem itemLabel="#{msg['pedirCita.paciente.pedirCita.elejirMedico']}"/>
+	<f:selectItems  value="#{asignarCitasPacienteBean.medicos}" />
+	</h:selectOneMenu>
+	
+	
 	
 	
 	
@@ -76,7 +81,8 @@
 
 		
 	<!-- Boton para asignar la cita -->	
-<h:commandButton value="#{msg['pedirCita.paciente.pedirCita.botonAsignar']}" action="#{asignarCitasPacienteBean.asignarCita()}" />
+<h:commandButton value="#{msg['pedirCita.paciente.pedirCita.botonAsignar']}"
+ action="#{asignarCitasPacienteBean.asignarCita}" />
 </h:panelGrid>
 	</div>
 	
@@ -194,7 +200,8 @@
             <h:outputText value="#{msg['pedirCita.paciente.citasPendientes.citasSinAtender']}" />
             </h1>
            
-               <rich:dataTable  id="tablaCitasSinCancelar" value="#{asignarCitasPacienteBean.consultaSinAtender}" var="consultaSinAtender">
+               <rich:dataTable  id="tablaCitasSinCancelar" value="#{asignarCitasPacienteBean.consultaSinAtender}"
+                var="consultaSinAtender">
 	<rich:column>
 	<f:facet name="header">
 	<h:outputLabel
@@ -215,7 +222,7 @@
 	value="#{msg['pedirCita.paciente.citasPendientes.cancelar']}" />
 	</f:facet>
 	<a4j:commandButton value="#{msg['pedirCita.paciente.citasPendientes.cancelar.link']}"
-				action="#{asignarCitasPacienteBean.cancelarCita()}"
+				action="#{asignarCitasPacienteBean.cancelarCita}"
 				reRender="tablaCitasSinCancelar" ajaxSingle="true"
 				process="consultaSeleccionada">
 
