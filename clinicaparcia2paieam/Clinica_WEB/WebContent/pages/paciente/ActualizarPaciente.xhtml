@@ -38,7 +38,8 @@
           	<h:inputHidden value="" />
           	
           	<h:inputHidden value="" />
-          	<h:commandButton value="#{msg['actualizarInformacion.paciente.modificar.botonActualizar']}" action="#{paciente_Bean.actualizarDatos()}" />
+          	<h:commandButton value="#{msg['actualizarInformacion.paciente.modificar.botonActualizar']}" 
+          	action="#{paciente_Bean.actualizarDatos()}" />
            
              </h:panelGrid>
              </h:form>
@@ -68,33 +69,65 @@
 				</h:form>
 			</rich:column>
 			<h:inputText value="#{paciente_Bean.nuevoTelefono}" />
-			<h:commandButton action="#{paciente_Bean.agregarTelefono()}" value="Agregar telefono" />
+					
+			<a4j:commandButton reRender="tablaTelefonos"
+			 action="#{paciente_Bean.agregarTelefono()}" value="Agregar telefono"  ></a4j:commandButton>
+		
+		
+			
+			
 			
 		</rich:dataTable>
 		<h:outputText value="Acudiente" />
-		  <rich:dataTable id="tablaTelefonos"
-			value="#{paciente_Bean.telefonos}" var="detalle">
-			<rich:column id="telefonoSeleccionado" >
+		  <rich:dataTable id="tablaAcudientes"
+			value="#{paciente_Bean.acudientes}" var="acudiente">
+			<rich:column id="acudienteSeleccionado" >
 				<f:facet name="header">
 					<h:outputLabel
 						value="#{msg['actualizarInformacion.paciente.modificar.acudientes']}" />
 				</f:facet>
 				<h:form>
 				<h:panelGrid columns="3">
-				<h:outputText value="#{detalle.numero}" />
+				<h:outputText value="#{acudiente.nombre}" />
+			
+				</h:panelGrid>
+				</h:form>
+			</rich:column>
+			<rich:column id="cedula acudiente" >
+				<f:facet name="header">
+					<h:outputLabel
+						value="Cedula acudiente:" />
+				</f:facet>
+				<h:form>
+				<h:panelGrid columns="3">
+				<h:outputText value="#{acudiente.documento}" />
+			
+				
+				</h:panelGrid>
+				</h:form>
+			</rich:column>
+			
+			<rich:column id="borrar acudiente" >
+				<f:facet name="header">
+					<h:outputLabel
+						value="Borrar" />
+				</f:facet>
+				<h:form>
+				<h:panelGrid columns="3">
 			<a4j:commandButton value="#{msg['actualizarInformacion.paciente.telefonos.eliminarTelefono']}"
-				action="#{paciente_Bean.borrarTelefono()}"
-				reRender="tablaTelefonos" ajaxSingle="true"
-				process="telefonoSeleccionado">
+				action="#{paciente_Bean.borrarAcudiente()}"
+				reRender="tablaAcudientes" ajaxSingle="true"
+				process="cedula acudiente">
 
-			<a4j:actionparam name="id" value="#{detalle.numero}"
-						assignTo="#{paciente_Bean.numeroTelefonoBorrar}" />
+			<a4j:actionparam name="id" value="#{acudiente.documento}"
+						assignTo="#{paciente_Bean.idAcudienteSeleccionado}" />
 
 </a4j:commandButton>
 				
 				</h:panelGrid>
 				</h:form>
 			</rich:column>
+			
 			<h:form>
 			<h:panelGrid columns="4">
 			<h:outputText value="#{msg['actualizarInformacion.paciente.modificar.acudientes.numeroDocumento']}" />
@@ -130,7 +163,11 @@
 	</h:selectOneMenu>
 			
 			<h:inputHidden value="" />
-			<h:commandButton action="#{paciente_Bean.agregarAcudiente()}" value="#{msg['actualizarInformacion.paciente.modificar.acudientes.btnAgregar']}" />
+			
+			<a4j:commandButton reRender="tablaAcudientes"
+			 action="#{paciente_Bean.agregarAcudiente()}" 
+			 value="#{msg['actualizarInformacion.paciente.modificar.acudientes.btnAgregar']}"  ></a4j:commandButton>
+		
 			
 			</h:panelGrid>
 			</h:form>
