@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
 import javax.persistence.NamedQuery;
 import javax.persistence.Query;
@@ -21,108 +23,126 @@ import edu.eam.clinica.jpa.enumeraciones.PresentacionEnum;
 import edu.eam.clinica.jpa.utilidades.FactoryEntityManager;
 import edu.eam.clinica.web.autorizacion.SesionFactory;
 
-public class InventarioBean  {
+public class InventarioBean {
 
-/**
- * parametros del InvetarioBean
- */
+	/**
+	 * parametros del InvetarioBean
+	 */
 	private EntityManager em;
 	private Funcionario funcionario;
+
+	@Pattern(regex = "[0-9]*", message = "solo numeros porfavor.")
 	private String codigoArticulo;
+
+	@Pattern(regex = "[0-9]*", message = "solo numeros porfavor.")
 	private String codigoBarras;
-	private Date fechaIngreso= new Date();
+
+	private Date fechaIngreso = new Date();
 	private Articulo articulo;
-	
-	@Pattern(regex = "[a-zA-Z]*", message = "solo letras.")
+
+	@Pattern(regex = "[a-zA-Z ]*", message = "Solo Letras.")
 	private String nombre;
-	private List<Articulo>articulos;
-	private ArrayList<ListarMedicamentos>listaMedicamentos;
-	private List<Inventario>filtrados;
-	
-	
-	
-	
+
+	private List<Articulo> articulos;
+	private ArrayList<ListarMedicamentos> listaMedicamentos;
+	private List<Inventario> filtrados;
+	private List<Inventario> inventarioEntrada;
+	private List<Inventario> inventarioSalidad;
+
 	/**
 	 * Constructor InventarioBean
 	 */
-	public InventarioBean(){
+	public InventarioBean() {
+
+		em = FactoryEntityManager.getEm();
+		funcionario = (Funcionario) SesionFactory.getValor("persona");
 		
-		em=FactoryEntityManager.getEm();
-		funcionario=(Funcionario)SesionFactory.getSesion();
-		listaMedicamentos= new ArrayList<ListarMedicamentos>();
+		
+		
+		
+		listaMedicamentos = new ArrayList<ListarMedicamentos>();
 	}
-	
+
 	/**
-	 * metodo que lista los medicamentos utulizando  2 consultas la primera saca todos los articulos a esta le saco un codigo y con dicho codigo hago
-	 * otra consulta que me cuenta cuantas cantidades tengo de ese articulo o medicamento
+	 * metodo que lista los medicamentos 
+	 * 
 	 * @return
 	 */
-	public List<ListarMedicamentos> getListaMedicamentos(){
+	public List<Articulo> getArticulos() {
+
+		Query query = em.createNamedQuery(Articulo.FIND_ALL);
+		return articulos = query.getResultList();
 		
-		Query query= em.createNamedQuery(Articulo.FIND_ALL);
-		articulos= query.getResultList();
 		
-		for(int i=0;i<articulos.size();i++){
-			
-			long codigo =articulos.get(i).getId();
-			String nombre= articulos.get(i).getNombre();
-			
-			Query query2= em.createNamedQuery(Inventario.FIND_ARTICULO_BY_CANTIDAD);
-			query2.setParameter(Inventario.PARAMETRO_CODIGO, codigo);
-			
-			int cantidad= (Integer) query2.getSingleResult();
-			ListarMedicamentos medicamento=new ListarMedicamentos(nombre, codigo, cantidad);
-			listaMedicamentos.add(medicamento);
-		}
-		return listaMedicamentos;
-		
+
 	}
-	/**
-	 * metodo para crear el medicamento en el inventario
-	 * utilizo el codigoarticulo que me digita el usuario y busco un articulo con el y si encuentra algo procedo 
-	 * a buscar el codigo de barra de inventario y si no encutro nada lo creo
-	 */
-	public void crearInventario(){
+
 	
-		Articulo a=em.find(Articulo.class, codigoArticulo);
-		
-		if(a!=null){
-			
-			Inventario i=em.find(Inventario.class,codigoBarras);
-			if(i==null){
-				Inventario inven= new Inventario(a, fechaIngreso, null, codigoBarras, null, funcionario,null);
+
+	/**
+	 * metodo para crear el medicamento en el inventario utilizo el
+	 * codigoarticulo que me digita el usuario y busco un articulo con el y si
+	 * encuentra algo procedo a buscar el codigo de barra de inventario y si no
+	 * encutro nada lo creo
+	 */
+	public void crearInventario() {
+
+		Articulo a = em.find(Articulo.class, Long.parseLong(codigoArticulo));
+
+		if (a != null) {
+
+			List<Inventario> i = em
+					.createNamedQuery(Inventario.CONSULTA_FIND_BY_CODIGOBARRAS)
+					.setParameter(Inventario.PARAMETRO_CODIGO, codigoBarras)
+					.getResultList();
+
+			if (i.size() == 0) {
 				em.getTransaction().begin();
+				Inventario inven = new Inventario(a, new Date(), null,
+						codigoBarras, null, funcionario, null);
+
 				em.persist(inven);
 				em.getTransaction().commit();
-			}	
-		}	
+				FacesContext.getCurrentInstance().addMessage(
+						null,
+						new FacesMessage(FacesMessage.SEVERITY_INFO,
+								"MEDICAMENTO REGISTRADO", null));
+
+			} else {
+				FacesContext.getCurrentInstance().addMessage(
+						null,
+						new FacesMessage(FacesMessage.SEVERITY_ERROR,
+								"CODIGO YA REGISTRADO", null));
+			}
+		} else {
+			FacesContext.getCurrentInstance().addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR,
+							"EL ARTICULO NO EXISTE", null));
+		}
+
 	}
 
 	/**
 	 * metodo que filtra los medicamentos por el nombre entrdas y salidas
+	 * 
 	 * @return
 	 */
-	public List<Inventario> buscarfiltrado(){
-		
-		Query query= em.createNamedQuery(Articulo.FIND_ARTICULO_BY_NOMBREARTI);
-		query.setParameter(Articulo.PARAMENTRO_NOMBREART,nombre);
-		
-		List<Articulo>articulitos=query.getResultList();
-		
-		for(int i=0;i<articulitos.size();i++){
-			long codigos=articulitos.get(i).getId();
-			Query query2= em.createNamedQuery(Inventario.CONSULTA_FIND_BY_CODIGO);
-			query2.setParameter(Inventario.PARAMETRO_CODIGO, codigos);
-			filtrados= query2.getResultList();
-		}
-		
-		return filtrados;
-	
-		
-		
+	public String buscarfiltrado() {
+
+		Query query = em.createNamedQuery(Inventario.CONSULTA_FIND_BY_ENTRADA_ARTICULO);
+		query.setParameter(Inventario.PARAMENTRO_NOMBRE, nombre);
+		inventarioEntrada = query.getResultList();
+
+		Query query2 = em.createNamedQuery(Inventario.CONSULTA_FIND_BY_SALIDA_ARTICULO);
+		query2.setParameter(Inventario.PARAMENTRO_NOMBRE, nombre);
+
+		inventarioSalidad = query2.getResultList();
+
+		return null;
+
 	}
-		
-	
+
 	public Funcionario getFuncionario() {
 		return funcionario;
 	}
@@ -155,8 +175,6 @@ public class InventarioBean  {
 		this.fechaIngreso = fechaIngreso;
 	}
 
-	
-
 	public Articulo getArticulo() {
 		return articulo;
 	}
@@ -173,9 +191,7 @@ public class InventarioBean  {
 		this.nombre = nombre;
 	}
 
-	public List<Articulo> getArticulos() {
-		return articulos;
-	}
+	
 
 	public void setArticulos(List<Articulo> articulos) {
 		this.articulos = articulos;
@@ -189,11 +205,27 @@ public class InventarioBean  {
 		this.filtrados = filtrados;
 	}
 
-	
-	
+	public List<Inventario> getInventarioEntrada() {
+		return inventarioEntrada;
+	}
 
-	
-	
-	
-	
+	public void setInventarioEntrada(List<Inventario> inventarioEntrada) {
+		this.inventarioEntrada = inventarioEntrada;
+	}
+
+	public List<Inventario> getInventarioSalidad() {
+		return inventarioSalidad;
+	}
+
+	public void setInventarioSalidad(List<Inventario> inventarioSalidad) {
+		this.inventarioSalidad = inventarioSalidad;
+	}
+	public ArrayList<ListarMedicamentos> getListaMedicamentos() {
+		return listaMedicamentos;
+	}
+
+	public void setListaMedicamentos(ArrayList<ListarMedicamentos> listaMedicamentos) {
+		this.listaMedicamentos = listaMedicamentos;
+	}
+
 }
