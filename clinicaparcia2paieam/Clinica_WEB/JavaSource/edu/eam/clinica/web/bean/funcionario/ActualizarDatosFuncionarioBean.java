@@ -13,6 +13,7 @@ import edu.eam.clinica.jpa.entidades.Funcionario;
 import edu.eam.clinica.jpa.entidades.Telefono;
 import edu.eam.clinica.jpa.enumeraciones.SexoEnum;
 import edu.eam.clinica.jpa.enumeraciones.TipoDocumentoEnum;
+import edu.eam.clinica.jpa.enumeraciones.TipoTelefonoEnum;
 import edu.eam.clinica.jpa.utilidades.FactoryEntityManager;
 import edu.eam.clinica.web.autorizacion.SesionFactory;
 import edu.eam.clinica.web.filtros.FiltroFuncionario;
@@ -72,6 +73,10 @@ public class ActualizarDatosFuncionarioBean {
 	 */
 	private Telefono telefono;
 	/**
+	 * tipo del telefono del funcionario
+	 */
+	private TipoTelefonoEnum tipoTelefono;
+	/**
 	 * Telefono a agregar del funcionario
 	 */
 	private String telefonoAgregar;
@@ -107,7 +112,23 @@ public class ActualizarDatosFuncionarioBean {
 	 */
 	public ActualizarDatosFuncionarioBean() {
 		em = FactoryEntityManager.getEm();
+		funcionario=em.find(Funcionario.class, "1234");
+		SesionFactory.agregarASesion("persona", funcionario);
+		documento = funcionario.getDocumento();
+		tipoDocumento = funcionario.getTipoDocumento();
+		primerNombre = funcionario.getPrimerNombre();
+		segundoNombre = funcionario.getSegundoNombre();
+		primerApellido = funcionario.getPrimerApellido();
+		segundoApellido = funcionario.getSegundoApellido();
+		direccion = funcionario.getDireccion();
+		ciudad = funcionario.getCiudad();
+		sexo = funcionario.getSexo();
+		eMail = funcionario.getEmail();
+		
 		funcionario = (Funcionario) SesionFactory.getValor("persona");
+		
+		
+		
 	}
 
 	/**
@@ -152,10 +173,12 @@ public class ActualizarDatosFuncionarioBean {
 		
 		em.getTransaction().begin();
 		telefono=new Telefono();
-		telefono.setPersona(funcionario);
 		telefono.setNumero(telefonoAgregar);
+		telefono.setPersona(funcionario);
+		telefono.setTipo(TipoTelefonoEnum.FIJO);
 		em.persist(telefono);
 		em.getTransaction().commit();
+		
 		FacesContext.getCurrentInstance().addMessage(null,new FacesMessage
 				(FacesMessage.SEVERITY_INFO,"Se agrego telefono al funcionario con exito",null));
 
@@ -169,7 +192,7 @@ public class ActualizarDatosFuncionarioBean {
 		
 		Query q=em.createNamedQuery(Telefono.FIND_TELEFONO_BY_NUMERO);
 		q.setParameter(Telefono.PARAMETRO_NUMERO, telefonoBorrar);
-		em.remove(q);
+		em.remove(telefonoBorrar);
 		
 		em.getTransaction().commit();
 	}
@@ -179,13 +202,17 @@ public class ActualizarDatosFuncionarioBean {
 	 */
 	public List<Telefono> getTelefonosFuncionario() {
 		
-		//buscar los telefonos por persona... hacer la consulta.
+		
 		funcionario = (Funcionario) SesionFactory.getValor("persona");
-		//busca el funcionario........
+		
+		
 		Query q=em.createNamedQuery(Telefono.FIND_TELEFONO_BY_NUMERO_Y_TIPO_DOCUMENTO);
 		q.setParameter(Telefono.PARAMETRO_NUMERO_DOCUMENTO, funcionario.getDocumento());
 		q.setParameter(Telefono.PARAMETRO_TIPO_DOCUMENTO, funcionario.getTipoDocumento());
 		telefonos=q.getResultList();
+		
+		
+		
 		return telefonos;
 	}
 	/*
