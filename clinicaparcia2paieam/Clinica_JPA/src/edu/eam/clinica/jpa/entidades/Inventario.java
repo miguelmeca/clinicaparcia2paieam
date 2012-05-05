@@ -45,7 +45,7 @@ import javax.persistence.NamedQuery;
                       query = "select inv from Inventario inv where inv.fechaSalida is  NULL and inv.articulo.nombre=:" 
                         + Inventario.PARAMENTRO_NOMBRE)  ,      
         
-   //@NamedQuery(name = Inventario.FIND_ARTICULO_BY_CANTIDAD, query = "SELECT COUNT(i) from inventario i")
+   @NamedQuery(name = Inventario.FIND_ARTICULO_BY_CANTIDAD, query = "SELECT COUNT(i) from Inventario i where i.articulo.id=:"+Inventario.PARAMETRO_CODIGO)
      
      
 })
