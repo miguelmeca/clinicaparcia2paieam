@@ -16,72 +16,89 @@
              
              <f:facet name="header">
              </f:facet>
-             <h:panelGrid columns="2">
-             <h:panelGrid columns="1">
+             <h:panelGrid columns="4">
              
              <!-- Documento del funcionacio -->
              <h:outputText value="#{msg['actualizarDatosFuncionario.documento']}"/>
-             <h:inputText value="#{actualizarDatosFuncionario.documento}"/>
+             <h:inputText value="#{actualizarDatosFuncionarioBean.documento}"/>
              
              <!-- Tipo de Documento del funcionario -->
              <h:outputText value="#{msg['actualizarDatosFuncionario.tipoDocumento']}"/>
-             <h:inputText value="#{actualizarDatosFuncionario.tipoDocumento}"/>
+             <h:inputText value="#{actualizarDatosFuncionarioBean.tipoDocumento}"/>
                         
              <!-- Primer Nombre del funcionario -->
              <h:outputText value="#{msg['actualizarDatosFuncionario.primerNombre']}"/>
-             <h:inputText value="#{actualizarDatosFuncionario.primerNombre}"/>
+             <h:inputText value="#{actualizarDatosFuncionarioBean.primerNombre}"/>
              
              <!-- Segundo Nombre del funcionario -->
              <h:outputText value="#{msg['actualizarDatosFuncionario.segundoNombre']}"/>
-             <h:inputText value="#{actualizarDatosFuncionario.segundoNombre}"/>
+             <h:inputText value="#{actualizarDatosFuncionarioBean.segundoNombre}"/>
              
              <!-- Primer apellido del funcionario -->
              <h:outputText value="#{msg['actualizarDatosFuncionario.primerApellido']}"/>
-             <h:inputText value="#{actualizarDatosFuncionario.primerApellido}"/>
+             <h:inputText value="#{actualizarDatosFuncionarioBean.primerApellido}"/>
              
              <!-- Segundo apellido del funcionario -->
              <h:outputText value="#{msg['actualizarDatosFuncionario.segundoApellido']}"/>
-             <h:inputText value="#{actualizarDatosFuncionario.segundoApellido}"/>
+             <h:inputText value="#{actualizarDatosFuncionarioBean.segundoApellido}"/>
              
              <!-- Direccion del funcionario -->
              <h:outputText value="#{msg['actualizarDatosFuncionario.direccion']}"/>
-             <h:inputText value="#{actualizarDatosFuncionario.direccion}"/>
+             <h:inputText value="#{actualizarDatosFuncionarioBean.direccion}"/>
              
              <!-- Ciudad del funcionario -->
              <h:outputText value="#{msg['actualizarDatosFuncionario.ciudad']}"/>
-             <h:inputText value="#{actualizarDatosFuncionario.cuidad}"/>
+             <h:inputText value="#{actualizarDatosFuncionarioBean.ciudad}" />
              
           	 <!-- Sexo del funcionario -->
              <h:outputText value="#{msg['actualizarDatosFuncionario.sexo']}"/>
-             <h:inputText value="#{actualizarDatosFuncionario.sexo}"/>
+             <h:inputText value="#{actualizarDatosFuncionarioBean.sexo}"/>
              
              <!-- email del funcionario -->
              <h:outputText value="#{msg['actualizarDatosFuncionario.e-Mail']}"/>
-             <h:inputText value="#{actualizarDatosFuncionario.eMail}"/>
-             
-             </h:panelGrid>
+             <h:inputText value="#{actualizarDatosFuncionarioBean.eMail}"/>
               
-             <rich:panel>
-             <!-- Lista de telefonos del funcionario -->
-             <rich:dataTable value="#{actualizarDatosFuncionario.TelefonosFuncionario}" var="telefono">
-             <rich:column>
-             <f:facet name="header">
-             
-             <h:outputText value="#{msg['actualizarDatosFuncionario.telefono']}" />
-             </f:facet>
-             <h:outputText value="#{telefono.telefono}" />
-             </rich:column>
-             </rich:dataTable>
-             
-             </rich:panel>
-             
+              <!-- Boton que manda los datos del formulario para editar los datos personales del funcionario -->
+             <h:commandButton  action="#{actualizarDatosFuncionarioBean.actualizarDatosPersonalesFuncionario}" value="#{msg['actualizarDatosFuncionario.actualizar']}"/>
              </h:panelGrid>
-             
-             <!-- Boton que manda los datos del formulario para editar los datos personales del funcionario -->
-             <h:commandButton  action="#{actualizarDatosFuncionario.actualizarDatosPersonalesFuncionario}" value="#{msg['actualizarDatosFuncionario.actualizar']}"/>
              </rich:panel>
              
              </h:form>
+             
+             <h:form>
+             <rich:panel>
+             <!-- Lista de telefonos del funcionario -->
+             <h:inputText value="#{actualizarDatosFuncionarioBean.telefono}" />
+             <a4j:commandButton value="#{msg['actualizarDatosFuncionario.agregar']}" action="{#actualizarDatosFuncionario.agregarTelefono}" reRender="tablaTelefonos"/>
+             <rich:dataTable id="tablaTelefonos" value="#{actualizarDatosFuncionarioBean.TelefonosFuncionario}" var="telefono">
+             	<rich:column>
+             		<f:facet name="header">
+             
+            		 <h:outputText value="#{msg['actualizarDatosFuncionario.telefono']}" />
+             		</f:facet>
+             		<h:outputText value="#{telefono.numero}" />
+            	 </rich:column>
+            	 <rich:column>
+            	 
+            	 	<f:facet name="header">
+            	 	<h:outputText value="#{msg['actualizarDatosFuncionario.eliminar']}" />
+            	 	</f:facet>
+            	 	
+            	 	<a4j:commandButton action="{#actualizarDatosFuncionarioBean.borrarTelefono}" reRender="tablaTelefonos">
+            	 	<a4j:actionparam name="telefonoBorrar" value="{#telefono.numero}" assignTo="{#{actualizarDatosFuncionarioBean.telefonoBorrar}}"/>
+            	 	
+            	 	</a4j:commandButton>
+            	 	
+            	 	
+            	 
+            	 </rich:column>
+             </rich:dataTable>
+             </rich:panel>
+             
+             </h:form>
+             
+             
+             
                     
         </rich:tab>
         
@@ -95,18 +112,22 @@
              </f:facet>
              <h:panelGrid columns="1">
              
-             <!-- Nuevo usuario de la cuenta del funcionario-->
+             <!-- contreña actual de la cuenta del funcionario-->
              <h:outputText value="#{msg['actualizarDatosFuncionario.antiguaContraseña']}"/>
-             <h:inputText value="#{actualizarDatosFuncionario.passViejo}"/>
+             <h:inputText value="#{actualizarDatosFuncionarioBean.passViejo}"/>
              
              <!-- Nueva contraseña de la cuenta del funcionario -->
              <h:outputText value="#{msg['actualizarDatosFuncionario.nuevaContraseña']}"/>
-             <h:inputText value="#{actualizarDatosFuncionario.passNuevo}"/>
+             <h:inputText value="#{actualizarDatosFuncionarioBean.passNuevo}"/>
+             
+             <!-- Confirmar  nuevo password de la cuenta del funcionario-->
+             <h:outputText value="#{msg['actualizarDatosFuncionario.confirmarContraseña']}"/>
+             <h:inputText value="#{actualizarDatosFuncionarioBean.passConfirmacion}"/>
              
              </h:panelGrid>
              
              <!-- Boton que manda los datos del formulario para editar los datos de la cuenta del funcionario -->
-             <h:commandButton action="#{actualizarDatosFuncionario.actualizarDatosUsuarioFuncionario}" value="#{msg['actualizarDatosFuncionario.actualizar']}"/>
+             <h:commandButton action="#{actualizarDatosFuncionarioBean.actualizarDatosUsuarioFuncionario}" value="#{msg['actualizarDatosFuncionario.actualizar']}"/>
             </rich:panel>
             </h:form>
         </rich:tab>
