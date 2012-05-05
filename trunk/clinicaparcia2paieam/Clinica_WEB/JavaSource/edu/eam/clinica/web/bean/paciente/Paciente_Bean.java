@@ -49,7 +49,10 @@ public class Paciente_Bean {
 		private String direccionAcudiente;
 		private String emailAcudiente;
 		private String sexoAcudiente;
-		
+		// datos para actualizar nueva contraseña:
+		private String contraseñaIngresada;
+		private String contraseñaIngresadaNueva;
+		private String contraseñaConfirmacionNueva;
 		public Paciente_Bean() {
 			
 			em=FactoryEntityManager.getEm();
@@ -89,11 +92,20 @@ public class Paciente_Bean {
 		}
 		
 		public String actualizarInicioSesion(){
-			User us=new User();
-			us.setPersona(persona);
-			us.setUser(usuario);
-			us.setPassword(contraseña);
-			persona.setUser(us);
+			
+			if(contraseñaIngresada.equals(contraseña)==true){
+				
+				if(contraseñaIngresadaNueva.equals(contraseñaConfirmacionNueva)==true){
+					
+					User us=paciente.getUser();
+					us.setPassword(contraseñaIngresadaNueva);
+					em.getTransaction().begin();
+					em.merge(us);
+					em.getTransaction().commit();
+				}
+				
+			}
+			
 			
 			return null;
 		}
