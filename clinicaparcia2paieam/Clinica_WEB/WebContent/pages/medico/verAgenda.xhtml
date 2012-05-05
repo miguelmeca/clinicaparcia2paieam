@@ -10,25 +10,33 @@
 	<ui:define name="cuerpo">
 		<h:form>
 			<rich:panel id="datos_Panel">
-				<a4j:outputPanel id="calendar" layout="block">
-					<h:form>
-						<h:outputText value="#{msg['verAgenda.ConsultaXM']}" />
-						<rich:calendar value="#{verAgendaBean.fecha}"
-							datePattern="#{calendarBean.pattern}"
-							showApplyButton="#{calendarBean.showApply}" cellWidth="24px"
-							cellHeight="22px" style="width:200px" />
-						<a4j:commandButton value="Listar"
-							action="#{verAgendaBean.consultasM}"
+				
+
+					<h:outputText value="#{msg['verAgenda.ConsultaXM']}" />
+					<rich:calendar value="#{verAgendaBean.fecha}"
+						showApplyButton="#{calendarBean.showApply}" cellWidth="24px"
+						cellHeight="22px" style="width:200px" />
+					
+						<a4j:commandButton value="Listar "
+							action="#{verAgendaBean.consultasFecha}"
 							reRender="tabla_Agenda_Diaria">
 						</a4j:commandButton>
-					</h:form>
-				</a4j:outputPanel>
+					
+					<br></br>
+					<br></br>
+					
+						<a4j:commandButton value="Ver Consultas De Hoy"
+							action="#{verAgendaBean.consultasDia}"
+							reRender="tabla_Agenda_Diaria">
+						</a4j:commandButton>
+					
+				
 			</rich:panel>
 
 			<rich:panel>
 
 				<rich:dataTable id="tabla_Agenda_Diaria"
-					value="#{verAgendaBean.consultasD}" var="agenda">
+					value="#{verAgendaBean.consultas}" var="agenda">
 
 					<rich:column>
 						<f:facet name="header">
