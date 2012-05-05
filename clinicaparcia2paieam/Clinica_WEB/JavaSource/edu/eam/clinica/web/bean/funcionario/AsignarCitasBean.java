@@ -3,6 +3,9 @@ package edu.eam.clinica.web.bean.funcionario;
 import java.sql.Date;
 import java.util.*;
 
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
+import javax.faces.model.SelectItem;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.swing.JOptionPane;
@@ -16,12 +19,9 @@ import edu.eam.clinica.jpa.utilidades.FactoryEntityManager;
 
 public class AsignarCitasBean {
 
-	//Atributos
-	//javadoc.....
-	private long nroConsulta;
 	private String cedulaPaciente;
 	private String docmedico;
-	private Date fechaCita;
+	private Date fechaSeleccion;
 	private MotivoConsultaEnum motivoConsulta;
 	private TipoProcedimietoEnum procedimientoConsulta;
 	private boolean unidad;
@@ -35,79 +35,126 @@ public class AsignarCitasBean {
 	}
 
 	/**
-	 * Verifica la existencia del paciente
-	 * La disponibilidad del medico
-	 * Consulta que no hayan cruses de horarios
-	 * Finalmente crea una nueva consulta
-	 * @return 
+	 * Verifica la existencia del paciente La disponibilidad del medico Consulta
+	 * que no hayan cruses de horarios Finalmente crea una nueva consulta
+	 * 
+	 * @return
 	 */
 	public String crearCrita() {
 		
+		
+		//al string de la hora seleccionada para la cita hacer split para
+		//separar las horas de los minutos
+		String[] campos = horaCita.split(":");
+		//el campo en cero guarda las horas
+		int hora = Integer.parseInt(campos[0]);
+		//el campo en 1 guarda los minutos
+		int minutos = Integer.parseInt(campos[1]);
+		
+		Calendar fechaSelect= Calendar.getInstance();
+        fechaSelect.setTime(fechaSeleccion);
+        fechaSelect.set(Calendar.HOUR, hora);
+        fechaSelect.set(Calendar.MINUTE, minutos);
+	    fechaSelect.set(Calendar.SECOND, 0);
+
+		// buscar el paciente que quiere asignar cita
 		Paciente paciente = em.find(Paciente.class, cedulaPaciente);
-		
+
+		// validar que el paciente este registrado
 		if (paciente != null) {
-			
+
+			// buscar el medico que se desea para la cita
 			Medico medico = em.find(Medico.class, docmedico);
-		
+
+			// validar que el medico si exista
 			if (medico != null) {
+			
+				// consulta para buscar por registro del medico sus consultas
+				Query query = em
+						.createNamedQuery(Consulta.FIND_CONSULTA_BY_MEDICO_AND_FECHAS);
+				query.setParameter(Consulta.PARAMETRO_REGISTRO_MEDICO,
+						medico.getRegistroMedico());
+				
+				query.setParameter(Consulta.PARAMETRO_MENOR_FECHA, fechaSelect.getTime());
+				query.setParameter(Consulta.PARAMETRO_MAYOR_FECHA, fechaSelect.getTime());
 
-				Query query = em.createNamedQuery(Consulta.FIND_CONSULTA_BY_REGISTRO_MEDICO);
-				query.setParameter(Consulta.PARAMETRO_REGISTRO_MEDICO,docmedico);
 
+				// lista para guardar las consultas encontradas
 				List<Consulta> consultasMedico = query.getResultList();
 
-				for (Consulta consulta : consultasMedico) {
-					//ojo con la comparacion de fechas...
-					if (consulta.getFechaHora().equals(fechaCita + "" + horaCita)) {//date con string?
+				//validar que tenga consultas de no tenerlas crea la cita sin dificultades
+				if (consultasMedico.size() > 0) {
 
-						//JOptionPane.showMessageDialog(null,"la cita ya fue asignada");
-						/*
-						 * lanzar mensaje global de error. indicando que la cita ya fue asignada
-						 * en ese dia en esa hora
-						 */
-					}
+							FacesContext
+									.getCurrentInstance()
+									.addMessage(
+											null,
+											new FacesMessage(
+													FacesMessage.SEVERITY_ERROR,
+													"la cita ya fue asignada con otro paciente",
+													null));
+
+
+				}else{
+					//si no hay consultas con el medico 
+					em.getTransaction().begin();
+					Consulta consultaNueva = new Consulta(fechaSelect.getTime(), paciente, medico,
+					motivoConsulta, procedimientoConsulta);
+
+					em.persist(consultaNueva);
+					em.getTransaction().commit();
 				}
-				Consulta consulta = new Consulta(nroConsulta, fechaCita,paciente, medico, motivoConsulta, procedimientoConsulta);
-				
-				em.getTransaction().begin();
-				em.persist(consulta);
-				em.getTransaction().commit();
-				
 			}
+
 		}
 		return null;
 	}
-	
+
+	public List<SelectItem> getMedicos() {
+		List<Medico> medicos = em.createNamedQuery(Medico.FIND_ALL)
+				.getResultList();
+		List<SelectItem> medicItems = new ArrayList();
+
+		for (Medico medico : medicos) {
+			SelectItem medicoItem = new SelectItem(medico.getDocumento(),
+					medico.toString());
+			medicItems.add(medicoItem);
+		}
+
+		return medicItems;
+	}
+
 	/**
-	 * Verifica que el medico exista
-	 * Realiza una consulta para obetener las citas en una fecha del mismo medico
+	 * Verifica que el medico exista Realiza una consulta para obetener las
+	 * citas en una fecha del mismo medico
+	 * 
 	 * @return
 	 */
-	public String getHorariosMedico(){
-		
-		Medico medico = em.find(Medico.class, docmedico);
-		
-		if(medico != null){
-			//ojo con esta consulta, mejor usar FIND_CONSULTA_BY_MEDICO_AND_FECHAS
-			
-			Query query = em.createNamedQuery(Consulta.FIND_CONSULTA_BY_REGISTRO_MEDICO);
-			query.setParameter(Consulta.PARAMETRO_REGISTRO_MEDICO,docmedico);
+	public List<SelectItem> getHorariosMedico() {
 
-			List<Consulta> consultasMedico = query.getResultList();
-		}else{
-			
-		}
+		Medico medico = em.find(Medico.class, docmedico);
+
+		Query query = em
+				.createNamedQuery(Consulta.FIND_CONSULTA_BY_MEDICO_AND_FECHAS);
+		query.setParameter(Consulta.PARAMETRO_REGISTRO_MEDICO, docmedico);
+
+		List<Consulta> consultasMedico = query.getResultList();
+		List<SelectItem> horasItems = new ArrayList();
+
 		
-		return null;
+		for (Consulta consul : consultasMedico) {
+			SelectItem fechoras = new SelectItem(consul.getFechaHora());
+			horasItems.add(fechoras);
+		}
+
+		return horasItems;
 	}
 	
+	
+
 	/*
 	 * Getters and setters
 	 */
-
-	public void setNroConsulta(int nroConsulta) {
-		this.nroConsulta = nroConsulta;
-	}
 
 	public String getCedulaPaciente() {
 		return cedulaPaciente;
@@ -117,20 +164,12 @@ public class AsignarCitasBean {
 		this.cedulaPaciente = cedulaPaciente;
 	}
 
-	public Date getFechaCita() {
-		return fechaCita;
+	public Date getFechaSeleccion() {
+		return fechaSeleccion;
 	}
 
-	public void setFechaCita(Date fechaCita) {
-		this.fechaCita = fechaCita;
-	}
-
-	public long getNroConsulta() {
-		return nroConsulta;
-	}
-
-	public void setNroConsulta(long nroConsulta) {
-		this.nroConsulta = nroConsulta;
+	public void setFechaSeleccion(Date fechaSeleccion) {
+		this.fechaSeleccion = fechaSeleccion;
 	}
 
 	public MotivoConsultaEnum getMotivoConsulta() {
