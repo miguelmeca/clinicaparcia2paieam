@@ -39,7 +39,7 @@
           	
           	<h:inputHidden value="" />
           	<h:commandButton value="#{msg['actualizarInformacion.paciente.modificar.botonActualizar']}" 
-          	action="#{paciente_Bean.actualizarDatos()}" />
+          	action="#{paciente_Bean.actualizarDatos}" />
            
              </h:panelGrid>
              </h:form>
@@ -56,7 +56,7 @@
 				<h:panelGrid columns="3">
 				<h:outputText value="#{detalle.numero}" />
 			<a4j:commandButton value="#{msg['actualizarInformacion.paciente.telefonos.eliminarTelefono']}"
-				action="#{paciente_Bean.borrarTelefono()}"
+				action="#{paciente_Bean.borrarTelefono}"
 				reRender="tablaTelefonos" ajaxSingle="true"
 				process="telefonoSeleccionado">
 
@@ -71,7 +71,7 @@
 			<h:inputText value="#{paciente_Bean.nuevoTelefono}" />
 					
 			<a4j:commandButton reRender="tablaTelefonos"
-			 action="#{paciente_Bean.agregarTelefono()}" value="Agregar telefono"  ></a4j:commandButton>
+			 action="#{paciente_Bean.agregarTelefono}" value="Agregar telefono"  ></a4j:commandButton>
 		
 		
 			
@@ -115,7 +115,7 @@
 				<h:form>
 				<h:panelGrid columns="3">
 			<a4j:commandButton value="#{msg['actualizarInformacion.paciente.telefonos.eliminarTelefono']}"
-				action="#{paciente_Bean.borrarAcudiente()}"
+				action="#{paciente_Bean.borrarAcudiente}"
 				reRender="tablaAcudientes" ajaxSingle="true"
 				process="cedula acudiente">
 
@@ -165,7 +165,7 @@
 			<h:inputHidden value="" />
 			
 			<a4j:commandButton reRender="tablaAcudientes"
-			 action="#{paciente_Bean.agregarAcudiente()}" 
+			 action="#{paciente_Bean.agregarAcudiente}" 
 			 value="#{msg['actualizarInformacion.paciente.modificar.acudientes.btnAgregar']}"  ></a4j:commandButton>
 		
 			
@@ -194,7 +194,8 @@
          	
            	<h:inputHidden value="" />
            	<h:inputHidden value="" />
-         	<h:commandButton value="#{msg['actualizarInformacion.paciente.modificar.inicioSesion.actualizarLogin']}" action="#{paciente_Bean.actualizarInicioSesion()}" />
+       	<h:commandButton 
+         	value="#{msg['actualizarInformacion.paciente.modificar.inicioSesion.actualizarLogin']}" action="#{paciente_Bean.actualizarInicioSesion}"   />
            
              </h:panelGrid>
              
