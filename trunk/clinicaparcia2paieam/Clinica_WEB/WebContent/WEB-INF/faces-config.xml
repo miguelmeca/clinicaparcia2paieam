@@ -41,8 +41,12 @@
   <managed-bean-class>edu.eam.clinica.web.bean.funcionario.InventarioBean</managed-bean-class>
   <managed-bean-scope>session</managed-bean-scope>
  </managed-bean>
-
-<application>
+ <managed-bean>
+  <managed-bean-name>paciente_Bean</managed-bean-name>
+  <managed-bean-class>edu.eam.clinica.web.bean.paciente.Paciente_Bean</managed-bean-class>
+  <managed-bean-scope>request</managed-bean-scope>
+ </managed-bean>
+ <application>
   <view-handler>com.sun.facelets.FaceletViewHandler</view-handler>
   <resource-bundle>
    <base-name>edu.eam.clinica.web.internacionalizacion.mensajes</base-name>
@@ -51,6 +55,5 @@
   <locale-config>
    <default-locale>es</default-locale>
   </locale-config>
- </application> 
-
+ </application>
 </faces-config>
