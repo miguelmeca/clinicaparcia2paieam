@@ -141,13 +141,22 @@
         </rich:tab>
         <rich:tab label="#{msg['actualizarInformacion.paciente.modificar.inicioSesion']}">
              <h:form>
-            <h:panelGrid columns="1" >
+            <h:panelGrid columns="4" >
             <h:outputText value="#{msg['actualizarInformacion.paciente.modificar.inicioSesion.usuario']}" />
            	<h:inputText value="#{paciente_Bean.usuario}" >
            	</h:inputText>
+           	<h:inputHidden value="" />
+           	<h:inputHidden value="" />
            	<h:outputText value="#{msg['actualizarInformacion.paciente.modificar.inicioSesion.contraseña']}" />
+           	
            	<h:inputText value="#{paciente_Bean.contraseña}" >
            	</h:inputText>
+           		<h:outputText value="#{msg['actualizarInformacion.paciente.modificar.inicioSesion.contraseñaConfirmar']}" />
+           	<h:inputText value="#{paciente_Bean.contraseña}" >
+           	</h:inputText>
+         	
+           	<h:inputHidden value="" />
+           	<h:inputHidden value="" />
          	<h:commandButton value="#{msg['actualizarInformacion.paciente.modificar.inicioSesion.actualizarLogin']}" action="#{paciente_Bean.actualizarInicioSesion()}" />
            
              </h:panelGrid>
