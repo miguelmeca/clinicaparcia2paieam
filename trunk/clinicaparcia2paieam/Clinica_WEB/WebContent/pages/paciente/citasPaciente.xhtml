@@ -128,14 +128,14 @@
    
    
     <h:outputLink value="#" id="link">
-        Ver detalle:
+        <h:outputText value="#{msg['pedirCita.paciente.historiaCitas.historiaClinica.detalleConsulta.link']}" />
         <rich:componentControl for="panel" attachTo="link" operation="show" event="onclick"/>
     </h:outputLink>
 	</rich:column>
 	<rich:column>
 	<f:facet name="header">
 	<h:outputLabel
-	value="#{msg['citasPaciente.historialMedico.verCitaDetalle']}" />
+	value="#{msg['pedirCita.paciente.historiaCitas.historiaClinica.detallePrescripcion']}" />
 	</f:facet>
 	 <rich:modalPanel id="panelRecetaMedica" width="350" height="100">
         <f:facet name="header">
@@ -181,7 +181,7 @@
  </h:panelGroup>
     </rich:modalPanel>
     <h:outputLink value="#" id="link">
-        Ver receta medica
+        <h:outputText value="#{msg['pedirCita.paciente.historiaCitas.historiaClinica.detallePrescripcion.link']}" />
         <rich:componentControl for="panelRecetaMedica" attachTo="link" operation="show" event="onclick"/>
     </h:outputLink>
 	</rich:column>
@@ -190,29 +190,31 @@
 		
         </rich:tab>
         <rich:tab label="#{ msg['pedirCita.paciente.citasPendientes']}">
-            Here is tab #3
+            <h1>
+            <h:outputText value="#{msg['pedirCita.paciente.citasPendientes.citasSinAtender']}" />
+            </h1>
            
                <rich:dataTable  id="tablaCitasSinCancelar" value="#{asignarCitasPacienteBean.consultaSinAtender}" var="consultaSinAtender">
 	<rich:column>
 	<f:facet name="header">
 	<h:outputLabel
-	value="Fecha y hora:" />
+	value="#{msg['citasPaciente.historialMedico.fechaHoraCita']}" />
 	</f:facet>
 	<h:outputText value="#{consultas.fechaHora.time}" />
 	</rich:column>
 	<rich:column>
 	<f:facet name="header">
 	<h:outputLabel
-	value="Medico responsable:" />
+	value="#{msg['pedirCita.paciente.citasPendientes.medicoResponsable']}" />
 	</f:facet>
 	<h:outputText value="#{consultas.medico.nombre}" />
 	</rich:column>
 		<rich:column id="consultaSeleccionada">
 	<f:facet name="header">
 	<h:outputLabel
-	value="Cancelar:" />
+	value="#{msg['pedirCita.paciente.citasPendientes.cancelar']}" />
 	</f:facet>
-	<a4j:commandButton value="#{msg['actualizarInformacion.paciente.telefonos.eliminarTelefono']}"
+	<a4j:commandButton value="#{msg['pedirCita.paciente.citasPendientes.cancelar.link']}"
 				action="#{asignarCitasPacienteBean.cancelarCita()}"
 				reRender="tablaCitasSinCancelar" ajaxSingle="true"
 				process="consultaSeleccionada">
