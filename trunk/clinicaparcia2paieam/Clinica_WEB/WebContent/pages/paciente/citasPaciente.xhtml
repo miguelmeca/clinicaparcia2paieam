@@ -6,238 +6,261 @@
 	xmlns:rich="http://richfaces.org/rich"
 	template="/templates/templatePaciente.xhtml"
 	xmlns:a4j="http://richfaces.org/a4j">
-	
+
 	<ui:define name="cuerpo">
-	
-	<h1>
-	<h:outputLabel value="#{ msg['pedirCita.paciente.bienvenida']}" />
-	</h1>  
-    <rich:tabPanel switchType="client">
-        <rich:tab label="#{ msg['pedirCita.paciente.pedirCita']}">
-           <h:form>
-	<div align="left">
-	<h:panelGrid columns="2">
-	
-	
-	
-	<h:inputHidden value="" />
-	
-	<h:inputHidden value="" />
-	<!-- Fecha de la cita -->
-	<h:outputLabel value="#{msg['pedirCita.paciente.pedirCita.fechaCita']} " />
-	
-	<rich:calendar value="#{asignarCitasPacienteBean.fecha}" 
-	isDayEnabled="disablementFunction" dayStyleClass="disabledClassesProv" 
-	boundaryDatesMode="scroll"/><br/><br/>
-	
-	<!-- Horario de la cita -->
-	<h:outputLabel value="#{msg['pedirCita.paciente.pedirCita.horaCita']}" />
-	<h:selectOneMenu value="#{asignarCitasPacienteBean.horaCita}" style=" width : 127px;">
-	<f:selectItem itemLabel="#{msg['pedirCita.paciente.pedirCita.elejirHora']}"/>
-	<f:selectItem itemLabel="6:30  am" itemValue="6:30"/>
-	<f:selectItem itemLabel="7:00  am" itemValue="7:00"/>
-	<f:selectItem itemLabel="7:30  am" itemValue="7:30"/>
-	<f:selectItem itemLabel="8:00  am" itemValue="8:00"/>
-	<f:selectItem itemLabel="8:30  am" itemValue="8:30"/>
-	<f:selectItem itemLabel="9:00  am" itemValue="9:00"/>
-	<f:selectItem itemLabel="9:30  am" itemValue="9:30"/>
-	<f:selectItem itemLabel="10:00 am" itemValue="10:00"/>
-	<f:selectItem itemLabel="10:30 am" itemValue="10:30"/>
-	<f:selectItem itemLabel="11:00 am" itemValue="11:00"/>
-	<f:selectItem itemLabel="11:30 am" itemValue="11:30"/>
-	<f:selectItem itemLabel="12:00 pm" itemValue="12:00"/>
-	<f:selectItem itemLabel="12:30 pm" itemValue="12:30"/>
-	<f:selectItem itemLabel="1:00  pm" itemValue="13:00"/>
-	<f:selectItem itemLabel="1:30  pm" itemValue="13:30"/>
-	<f:selectItem itemLabel="2:00  pm" itemValue="14:00"/>
-	<f:selectItem itemLabel="2:30  pm" itemValue="14:30"/>
-	<f:selectItem itemLabel="3:00  pm" itemValue="15:00"/>
-	<f:selectItem itemLabel="3:30  pm" itemValue="15:30"/>
-	<f:selectItem itemLabel="4:00  pm" itemValue="16:00"/>
-	<f:selectItem itemLabel="4:30  pm" itemValue="16:30"/>
-	<f:selectItem itemLabel="5:00  pm" itemValue="17:00"/>
-	<f:selectItem itemLabel="5:30  pm" itemValue="17:30"/>
-	<f:selectItem itemLabel="6:00  pm" itemValue="18:00"/>
-	<f:selectItem itemLabel="6:30  pm" itemValue="18:30"/>
-	<f:selectItem itemLabel="7:00  pm" itemValue="19:00"/>
-	<f:selectItem itemLabel="7:30  pm" itemValue="19:30"/>
-	<f:selectItem itemLabel="8:00  pm" itemValue="20:00"/>
-	</h:selectOneMenu><br/><br/>
-	
-	<!-- Medico que atiende -->
-	<h:outputLabel value="#{msg['pedirCita.paciente.pedirCita.medico']}" />
-	
-	<h:selectOneMenu value="#{asignarCitasPacienteBean.medicoAsignado} "   >
-	<f:selectItem itemLabel="#{msg['pedirCita.paciente.pedirCita.elejirMedico']}"/>
-	<f:selectItems  value="#{asignarCitasPacienteBean.medicos}" />
-	</h:selectOneMenu>
-	
-	
-	
-	
-	
-	<h:panelGrid>
-	
 
-		
-	<!-- Boton para asignar la cita -->	
-<h:commandButton value="#{msg['pedirCita.paciente.pedirCita.botonAsignar']}"
- action="#{asignarCitasPacienteBean.asignarCita}" />
-</h:panelGrid>
-	</div>
-	
-	</h:form>
-        </rich:tab>
-        <rich:tab label="#{ msg['pedirCita.paciente.historiaCitas']}">
-            
-            
-             
-		<rich:dataTable id="tablaConsultas" value="#{asignarCitasPacienteBean.consultasAtendias}" var="consultas">
-	<rich:column>
-	<f:facet name="header">
-	<h:outputLabel
-	value="#{msg['citasPaciente.historialMedico.fechaHoraCita']}" />
-	</f:facet>
-	<h:outputText value="#{consultas.fechaHora}" />
-	</rich:column>
-	<rich:column>
-	<f:facet name="header">
-	<h:outputLabel
-	value="#{msg['citasPaciente.historialMedico.medicoQueAtendio']}" />
-	</f:facet>
-	<h:outputText value="#{consultas.medico.nombre}" />
-	</rich:column>
-	<rich:column>
-	<f:facet name="header">
-	<h:outputLabel
-	value="#{msg['citasPaciente.historialMedico.verCitaDetalle']}" />
-	</f:facet>
-	  <rich:modalPanel id="panelDetalleCita" width="350" height="100">
-        <f:facet name="header">
-            <h:panelGroup>
-                <h:outputText value="Detalle cita"></h:outputText>
-            </h:panelGroup>
-        </f:facet>
-        <f:facet name="controls">
-             </h:panelGroup>
-        </f:facet>
-       
-       <h:inputTextarea value="#{consultas.detalleHistoriaClinica.comentario}" />
-       
-   	<h:outputLink value="#" id="hideThis">
+		<h1>
+			<h:outputLabel value="#{ msg['pedirCita.paciente.bienvenida']}" />
+		</h1>
+		<rich:tabPanel switchType="client">
+			<rich:tab label="#{ msg['pedirCita.paciente.pedirCita']}">
+				<h:form>
+					<div align="left">
+						<h:panelGrid columns="2">
+
+
+
+							<h:inputHidden value="" />
+
+							<h:inputHidden value="" />
+							<!-- Fecha de la cita -->
+							<h:outputLabel
+								value="#{msg['pedirCita.paciente.pedirCita.fechaCita']} " />
+
+							<rich:calendar value="#{asignarCitasPacienteBean.fecha}"
+								isDayEnabled="disablementFunction"
+								dayStyleClass="disabledClassesProv" boundaryDatesMode="scroll" />
+							<br />
+							<br />
+
+							<!-- Horario de la cita -->
+							<h:outputLabel
+								value="#{msg['pedirCita.paciente.pedirCita.horaCita']}" />
+							<h:selectOneMenu value="#{asignarCitasPacienteBean.horaCita}"
+								style=" width : 127px;">
+								<f:selectItem
+									itemLabel="#{msg['pedirCita.paciente.pedirCita.elejirHora']}" />
+								<f:selectItem itemLabel="6:30  am" itemValue="6:30" />
+								<f:selectItem itemLabel="7:00  am" itemValue="7:00" />
+								<f:selectItem itemLabel="7:30  am" itemValue="7:30" />
+								<f:selectItem itemLabel="8:00  am" itemValue="8:00" />
+								<f:selectItem itemLabel="8:30  am" itemValue="8:30" />
+								<f:selectItem itemLabel="9:00  am" itemValue="9:00" />
+								<f:selectItem itemLabel="9:30  am" itemValue="9:30" />
+								<f:selectItem itemLabel="10:00 am" itemValue="10:00" />
+								<f:selectItem itemLabel="10:30 am" itemValue="10:30" />
+								<f:selectItem itemLabel="11:00 am" itemValue="11:00" />
+								<f:selectItem itemLabel="11:30 am" itemValue="11:30" />
+								<f:selectItem itemLabel="12:00 pm" itemValue="12:00" />
+								<f:selectItem itemLabel="12:30 pm" itemValue="12:30" />
+								<f:selectItem itemLabel="1:00  pm" itemValue="13:00" />
+								<f:selectItem itemLabel="1:30  pm" itemValue="13:30" />
+								<f:selectItem itemLabel="2:00  pm" itemValue="14:00" />
+								<f:selectItem itemLabel="2:30  pm" itemValue="14:30" />
+								<f:selectItem itemLabel="3:00  pm" itemValue="15:00" />
+								<f:selectItem itemLabel="3:30  pm" itemValue="15:30" />
+								<f:selectItem itemLabel="4:00  pm" itemValue="16:00" />
+								<f:selectItem itemLabel="4:30  pm" itemValue="16:30" />
+								<f:selectItem itemLabel="5:00  pm" itemValue="17:00" />
+								<f:selectItem itemLabel="5:30  pm" itemValue="17:30" />
+								<f:selectItem itemLabel="6:00  pm" itemValue="18:00" />
+								<f:selectItem itemLabel="6:30  pm" itemValue="18:30" />
+								<f:selectItem itemLabel="7:00  pm" itemValue="19:00" />
+								<f:selectItem itemLabel="7:30  pm" itemValue="19:30" />
+								<f:selectItem itemLabel="8:00  pm" itemValue="20:00" />
+							</h:selectOneMenu>
+							<br />
+							<br />
+
+							<!-- Medico que atiende -->
+							<h:outputLabel
+								value="#{msg['pedirCita.paciente.pedirCita.medico']}" />
+
+							<h:selectOneMenu
+								value="#{asignarCitasPacienteBean.medicoAsignado} ">
+								<f:selectItem
+									itemLabel="#{msg['pedirCita.paciente.pedirCita.elejirMedico']}" />
+								<f:selectItems value="#{asignarCitasPacienteBean.medicos}" />
+							</h:selectOneMenu>
+
+
+
+
+
+
+
+
+
+							<!-- Boton para asignar la cita -->
+							<h:commandButton
+								value="#{msg['pedirCita.paciente.pedirCita.botonAsignar']}"
+								action="#{asignarCitasPacienteBean.asignarCita}" />
+						</h:panelGrid>
+					</div>
+
+				</h:form>
+			</rich:tab>
+			<rich:tab label="#{ msg['pedirCita.paciente.historiaCitas']}">
+
+
+
+				<rich:dataTable id="tablaConsultas"
+					value="#{asignarCitasPacienteBean.consultasAtendias}"
+					var="consultas">
+					<rich:column>
+						<f:facet name="header">
+							<h:outputLabel
+								value="#{msg['citasPaciente.historialMedico.fechaHoraCita']}" />
+						</f:facet>
+						<h:outputText value="#{consultas.fechaHora}" />
+					</rich:column>
+					<rich:column>
+						<f:facet name="header">
+							<h:outputLabel
+								value="#{msg['citasPaciente.historialMedico.medicoQueAtendio']}" />
+						</f:facet>
+						<h:outputText value="#{consultas.medico.nombre}" />
+					</rich:column>
+					<rich:column>
+						<f:facet name="header">
+							<h:outputLabel
+								value="#{msg['citasPaciente.historialMedico.verCitaDetalle']}" />
+						</f:facet>
+						<rich:modalPanel id="panelDetalleCita" width="350" height="100">
+							<f:facet name="header">
+								<h:panelGroup>
+									<h:outputText value="Detalle cita"></h:outputText>
+								</h:panelGroup>
+							</f:facet>
+							
+						
+
+							<h:inputTextarea
+								value="#{consultas.detalleHistoriaClinica.comentario}" />
+
+							<h:outputLink value="#" id="hideThis">
         Cerrar.
-        <rich:componentControl for="panel" attachTo="hideThis" operation="hide" event="onclick"/>
-    </h:outputLink>
-    </rich:modalPanel>
-   
-   
-   
-   
-    <h:outputLink value="#" id="link">
-        <h:outputText value="#{msg['pedirCita.paciente.historiaCitas.historiaClinica.detalleConsulta.link']}" />
-        <rich:componentControl for="panel" attachTo="link" operation="show" event="onclick"/>
-    </h:outputLink>
-	</rich:column>
-	<rich:column>
-	<f:facet name="header">
-	<h:outputLabel
-	value="#{msg['pedirCita.paciente.historiaCitas.historiaClinica.detallePrescripcion']}" />
-	</f:facet>
-	 <rich:modalPanel id="panelRecetaMedica" width="350" height="100">
-        <f:facet name="header">
-            <h:panelGroup>
-                <h:outputText value="Modal Panel"></h:outputText>
-            </h:panelGroup>
-        </f:facet>
-        <f:facet name="controls">
-            <h:panelGroup>
-	
-        </f:facet>
-        
-        <rich:dataTable value="#{consultas.formulanMedica.detallesFormulaMedica}" var="formulas">
-	<rich:column>
-	<f:facet name="header">
-	<h:outputLabel
-	value="Articulo:" />
-	</f:facet>
-	<h:outputText value="#{formulas.articulo.nombre}" />
-	</rich:column>
-	<rich:column>
-	<f:facet name="header">
-	<h:outputLabel
-	value="Cantidad:" />
-	</f:facet>
-	<h:outputText value="#{formulas.cantidad}" />
-	</rich:column>
-		<rich:column>
-	<f:facet name="header">
-	<h:outputLabel
-	value="Prescripción:" />
-	</f:facet>
-	<h:outputText value="#{formulas.prescripcion}" />
-	</rich:column>
-	
-	</rich:dataTable> 
-        
-       <h:inputTextarea value="#{consultas.formulanMedica.detallesFormulaMedica}" />
-        <h:outputLink value="#" id="hideLink">
+        <rich:componentControl for="panel" attachTo="hideThis"
+									operation="hide" event="onclick" />
+							</h:outputLink>
+						</rich:modalPanel>
+
+
+
+
+						<h:outputLink value="#" id="link">
+							<h:outputText
+								value="#{msg['pedirCita.paciente.historiaCitas.historiaClinica.detalleConsulta.link']}" />
+							<rich:componentControl for="panel" attachTo="link"
+								operation="show" event="onclick" />
+						</h:outputLink>
+					</rich:column>
+					<rich:column>
+						<f:facet name="header">
+							<h:outputLabel
+								value="#{msg['pedirCita.paciente.historiaCitas.historiaClinica.detallePrescripcion']}" />
+						</f:facet>
+						<rich:modalPanel id="panelRecetaMedica" width="350" height="100">
+							<f:facet name="header">
+								<h:panelGroup>
+									<h:outputText value="Modal Panel"></h:outputText>
+								</h:panelGroup>
+							</f:facet>
+							<f:facet name="controls">
+
+
+							</f:facet>
+
+							<rich:dataTable
+								value="#{consultas.formulanMedica.detallesFormulaMedica}"
+								var="formulas">
+								<rich:column>
+									<f:facet name="header">
+										<h:outputLabel value="Articulo:" />
+									</f:facet>
+									<h:outputText value="#{formulas.articulo.nombre}" />
+								</rich:column>
+								<rich:column>
+									<f:facet name="header">
+										<h:outputLabel value="Cantidad:" />
+									</f:facet>
+									<h:outputText value="#{formulas.cantidad}" />
+								</rich:column>
+								<rich:column>
+									<f:facet name="header">
+										<h:outputLabel value="Prescripción:" />
+									</f:facet>
+									<h:outputText value="#{formulas.prescripcion}" />
+								</rich:column>
+
+							</rich:dataTable>
+
+							<h:inputTextarea
+								value="#{consultas.formulanMedica.detallesFormulaMedica}" />
+							<h:outputLink value="#" id="hideLink">
         cerrar.
-        <rich:componentControl for="panelRecetaMedica" attachTo="hideLink" operation="hide" event="onclick"/>
-    </h:outputLink>               
- </h:panelGroup>
-    </rich:modalPanel>
-    <h:outputLink value="#" id="link">
-        <h:outputText value="#{msg['pedirCita.paciente.historiaCitas.historiaClinica.detallePrescripcion.link']}" />
-        <rich:componentControl for="panelRecetaMedica" attachTo="link" operation="show" event="onclick"/>
-    </h:outputLink>
-	</rich:column>
-	</rich:dataTable>
-		
-		
-        </rich:tab>
-        <rich:tab label="#{ msg['pedirCita.paciente.citasPendientes']}">
-            <h1>
-            <h:outputText value="#{msg['pedirCita.paciente.citasPendientes.citasSinAtender']}" />
-            </h1>
-           
-               <rich:dataTable  id="tablaCitasSinCancelar" value="#{asignarCitasPacienteBean.consultaSinAtender}"
-                var="consultaSinAtender">
-	<rich:column>
-	<f:facet name="header">
-	<h:outputLabel
-	value="#{msg['citasPaciente.historialMedico.fechaHoraCita']}" />
-	</f:facet>
-	<h:outputText value="#{consultas.fechaHora.time}" />
-	</rich:column>
-	<rich:column>
-	<f:facet name="header">
-	<h:outputLabel
-	value="#{msg['pedirCita.paciente.citasPendientes.medicoResponsable']}" />
-	</f:facet>
-	<h:outputText value="#{consultas.medico.nombre}" />
-	</rich:column>
-		<rich:column id="consultaSeleccionada">
-	<f:facet name="header">
-	<h:outputLabel
-	value="#{msg['pedirCita.paciente.citasPendientes.cancelar']}" />
-	</f:facet>
-	<a4j:commandButton value="#{msg['pedirCita.paciente.citasPendientes.cancelar.link']}"
-				action="#{asignarCitasPacienteBean.cancelarCita}"
-				reRender="tablaCitasSinCancelar" ajaxSingle="true"
-				process="consultaSeleccionada">
+        <rich:componentControl for="panelRecetaMedica"
+									attachTo="hideLink" operation="hide" event="onclick" />
+							</h:outputLink>
+						</rich:modalPanel>
+						
+						<h:outputLink value="#" id="link">
+							<h:outputText
+								value="#{msg['pedirCita.paciente.historiaCitas.historiaClinica.detallePrescripcion.link']}" />
+							<rich:componentControl for="panelRecetaMedica" attachTo="link"
+								operation="show" event="onclick" />
+						</h:outputLink>
+					</rich:column>
+				</rich:dataTable>
 
-			<a4j:actionparam name="id" value="#{consultas.id}"
-						assignTo="#{asignarCitasPacienteBean.idCOnsultaCancelar}" />
 
-</a4j:commandButton>
-	</rich:column>
-	
-	</rich:dataTable> 
-            
-        </rich:tab>
-    </rich:tabPanel>
-	
+			</rich:tab>
+			<rich:tab label="#{ msg['pedirCita.paciente.citasPendientes']}">
+				<h1>
+					<h:outputText
+						value="#{msg['pedirCita.paciente.citasPendientes.citasSinAtender']}" />
+				</h1>
+
+				<rich:dataTable id="tablaCitasSinCancelar"
+					value="#{asignarCitasPacienteBean.consultaSinAtender}"
+					var="consultaSinAtender">
+					<rich:column>
+						<f:facet name="header">
+							<h:outputLabel
+								value="#{msg['citasPaciente.historialMedico.fechaHoraCita']}" />
+						</f:facet>
+						<h:outputText value="#{consultas.fechaHora.time}" />
+					</rich:column>
+					<rich:column>
+						<f:facet name="header">
+							<h:outputLabel
+								value="#{msg['pedirCita.paciente.citasPendientes.medicoResponsable']}" />
+						</f:facet>
+						<h:outputText value="#{consultas.medico.nombre}" />
+					</rich:column>
+					<rich:column id="consultaSeleccionada">
+						<f:facet name="header">
+							<h:outputLabel
+								value="#{msg['pedirCita.paciente.citasPendientes.cancelar']}" />
+						</f:facet>
+						<a4j:commandButton
+							value="#{msg['pedirCita.paciente.citasPendientes.cancelar.link']}"
+							action="#{asignarCitasPacienteBean.cancelarCita}"
+							reRender="tablaCitasSinCancelar" ajaxSingle="true"
+							process="consultaSeleccionada">
+
+							<a4j:actionparam name="id" value="#{consultas.id}"
+								assignTo="#{asignarCitasPacienteBean.idCOnsultaCancelar}" />
+
+						</a4j:commandButton>
+					</rich:column>
+
+				</rich:dataTable>
+
+			</rich:tab>
+		</rich:tabPanel>
+
 	</ui:define>
-	
-	
-	</ui:composition>
+
+
+</ui:composition>
