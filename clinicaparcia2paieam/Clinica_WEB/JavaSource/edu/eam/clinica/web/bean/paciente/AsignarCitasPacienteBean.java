@@ -39,9 +39,9 @@ public class AsignarCitasPacienteBean {
 	private SelectItem medicoAsignado;
 	
 	private List<Consulta>consultasAtendias;
-	
+	private List<Consulta>consultaSinAtender;
 
-	
+	private long idCOnsultaCancelar;
 	
 	
 	public void AsignarCitasPacienteBean() {
@@ -181,10 +181,40 @@ public class AsignarCitasPacienteBean {
 
 
 
-
+ public String cancelarConsulta(){
+	 
+	 
+	 
+	 for (Consulta consultaCancelar : consultaSinAtender) {
+		if(consultaCancelar.getId()==idCOnsultaCancelar){
+			
+			consultaCancelar.setEstado(EstadoConsultaEnum.CANCELADA);
+			em.getTransaction().begin();
+			em.merge(consultaCancelar);
+			em.getTransaction().commit();
+		}
+	}
+	 return null;
+	 
+ }
 
 	public List<Consulta> getConsultasAtendias() {
+		Query query=em.createNamedQuery(Consulta.FIND_CONSULTA_BY_NUMERO_Y_TIPO_DOCUMENTO);
+		query.setParameter(Consulta.PARAMETRO_NUMERO_DOCUMENTO, paciente.getDocumento());
+		query.setParameter(Consulta.PARAMETRO_TIPO_DOCUMENTO, paciente.getTipoDocumento());
+		List<Consulta>consultas=query.getResultList();
+		
+		for (Consulta consulta : consultas) {
+			
+			if(consulta.getEstado().equals(EstadoConsultaEnum.TOMADA)==true){
+				
+				consultasAtendias.add(consulta);
+				
+			}
+		}
+		
 		return consultasAtendias;
+		
 	}
 
 
@@ -195,6 +225,61 @@ public class AsignarCitasPacienteBean {
 		this.consultasAtendias = consultasAtendias;
 	}
 
+
+
+
+
+	public List<Consulta> getConsultaSinAtender() {
+		Query query=em.createNamedQuery(Consulta.FIND_CONSULTA_BY_NUMERO_Y_TIPO_DOCUMENTO);
+		query.setParameter(Consulta.PARAMETRO_NUMERO_DOCUMENTO, paciente.getDocumento());
+		query.setParameter(Consulta.PARAMETRO_TIPO_DOCUMENTO, paciente.getTipoDocumento());
+		List<Consulta>consultas=query.getResultList();
+		
+		for (Consulta consulta : consultas) {
+			
+			if(consulta.getEstado().equals(EstadoConsultaEnum.EN_ESPERA)==true){
+				
+				consultaSinAtender.add(consulta);
+				
+			}
+		}
+		
+		return consultaSinAtender;
+		
+	}
+
+
+
+
+
+	public void setConsultaSinAtender(List<Consulta> consultaSinAtender) {
+		this.consultaSinAtender = consultaSinAtender;
+	}
+
+	public String cancelarCita(){
+		
+		
+		
+		return null;
+		
+	}
+
+
+
+
+
+	public long getIdCOnsultaCancelar() {
+		return idCOnsultaCancelar;
+	}
+
+
+
+
+
+	public void setIdCOnsultaCancelar(long idCOnsultaCancelar) {
+		this.idCOnsultaCancelar = idCOnsultaCancelar;
+	}
+	
 	
 	
 	
