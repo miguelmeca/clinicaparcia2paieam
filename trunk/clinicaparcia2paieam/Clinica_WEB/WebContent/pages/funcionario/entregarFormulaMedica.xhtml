@@ -17,23 +17,20 @@
 			</h1>
 			<rich:panel>
 
-				<h:panelGrid columns="3">
 
-					<!-- Campo para mostrar el usuario en sesion -->
-					<h:outputText value="#{msg['entregarFormulaMedica.usuario']}" />
-					<h:outputText value="#{msg['entregarFormulaMedica.cantidad']}" />
-					<h:outputText value="" />
+				<!-- Campo para buscar la formula medica y cargar los detalles en la tabla -->
+				<h:outputText value="#{msg['entregarFormulaMedica.codigoFormula']}" />
+				<h:inputText value="#{entregarFormulaMedicaBean.codFormula}"
+					id="codFormula">
 
-					<!-- Campo para buscar la formula medica y cargar los detalles en la tabla -->
-					<h:outputText value="#{msg['entregarFormulaMedica.codigoFormula']}" />
-					<h:inputText value="#{entregarFormulaMedicaBean.codFormula}" />
+				</h:inputText>
 
-					<a4j:commandButton
-						action="#{entregarFormulaMedicaBean.buscarFormulaMedica}"
-						value="#{msg['entregarFormulaMedica.buscar']}"
-						reRender="tablaMedicamentos"></a4j:commandButton>
 
-				</h:panelGrid>
+				<a4j:commandButton
+					action="#{entregarFormulaMedicaBean.buscarFormulaMedica}"
+					value="#{msg['entregarFormulaMedica.buscar']}"
+					reRender="tablaMedicamentos"></a4j:commandButton>
+
 			</rich:panel>
 			<br />
 			<br />
@@ -55,7 +52,7 @@
 						<h:outputLabel
 							value="#{msg['entregarFormulaMedica.nombreMedicamento']}" />
 					</f:facet>
-					<h:outputText value="#{detalle.articulo.primerNombre}" />
+					<h:outputText value="#{detalle.articulo.nombre}" />
 				</rich:column>
 
 				<rich:column>
@@ -65,91 +62,65 @@
 					<h:outputText value="#{detalle.cantidad}" />
 				</rich:column>
 
+
 				<rich:column>
-					<a4j:commandLink ajaxSingle="true" id="link"
-						oncomplete="#{rich:component('panelMedicamento')}.show()">
-						<h:graphicImage value="/imgs/why-choose-us.png" height="20" width="20"/>
-					</a4j:commandLink>
-					<rich:toolTip for="link"
-						value="#{msg['entregarFormulaMedica.modal']}" />
+					<a4j:commandButton id="btnPanel"
+						image="/common/img/why-choose-us.png" >
+						
+						<rich:componentControl for= "modal" 
+						attachTo="btnPanel" operation="show"
+						event="onclick"/>
+						
+						</a4j:commandButton>
+
 				</rich:column>
+
+			</rich:dataTable>
+
+			<rich:dataTable id="tablaMedicamentosEntregar"
+				value="#{entregarFormulaMedicaBean.medicamentosEntrega}"
+				var="medicamento">
+				<rich:column>
+					<h:outputLabel value="entregarFormulaMedica.idMedicamento" />
+					<h:outputText value="#{medicamento.id}" />
+				</rich:column>
+
+
+				<rich:column>
+					<h:outputLabel value="entregarFormulaMedica.nombreMedicamento" />
+					<h:outputText value="#{medicamento.nombre}" />
+				</rich:column>
+
 			</rich:dataTable>
 		</h:form>
-		<br/>
 
-		<h:form>
-			<rich:modalPanel id="panelMedicamento" autosized="true" width="200">
-				<f:facet name="header">
+
+		<rich:modalPanel id="modal">
+		<f:facet name="header">
 					<h:outputText value="#{msg['entregarFormulaMedica.texto']}"
 						style="padding-right:15px;" />
 				</f:facet>
 				<f:facet name="controls">
 					<h:panelGroup>
-						<h:graphicImage value="/imgs/close.png" styleClass="hidelink"
-							id="hidelink" />
-						<rich:componentControl for="panelMedicamento" attachTo="hidelink"
-							operation="hide" event="oncomplete" />
+						<a4j:commandButton image="/imgs/close.png" id="btnClose" > 
+						<rich:componentControl for="modal" attachTo="btnClose"
+							operation="hide" event="onclick" />
+							</a4j:commandButton>
 					</h:panelGroup>
 				</f:facet>
-				<h:form>
-					<table width="100%">
-						<tbody>
-							<tr>
+			<h:form>
+				<h:outputText value="#{msg['entregarFormulaMedica.codigoBarras']}" />
+				<h:inputText value="#{entregarFormulaMedicaBean.codigoBarras}"
+					id="codBarras">
+					<rich:beanValidator />
+				</h:inputText>
 
-								<td align="center" width="50%">
-								<h:outputLabel value="#{msg['entregarFormulaMedica.codigoBarras']}" />
-								<h:inputText value="#{entregarFormulaMedicaBean.codigoBarras}" />
-								</td>
-								<td align="center" width="50%">
-								<a4j:commandButton
-										value="#{msg['entregarFormulaMedica.validar']}"
-										ajaxSingle="true"
-										action="#{entregarFormulaMedicaBean.validarMedicamento}"
-										oncomplete="#{rich:component('panelMedicamento')}.hide();"
-										reRender="tablaMedicamentosAdd" />
-										</td>
-							</tr>
-						</tbody>
-					</table>
-				</h:form>
-			</rich:modalPanel>
-		</h:form><br/>
-		
-		<rich:dataTable id="tablaMedicamentosAdd"
-				value="#{entregarFormulaMedicaBean.detalles}" var="detalle">
+				<a4j:commandButton value="#{msg['entregarFormulaMedica.buscar']}"
+					action="#{entregarFormulaMedicaBean.validarMedicamento}"
+					reRender="tablaMedicamentosEntregar" />
+			</h:form>
+		</rich:modalPanel>
 
-				<rich:column>
-					<f:facet name="header">
-						<h:outputLabel
-							value="#{msg['entregarFormulaMedica.idMedicamento']}" />
-					</f:facet>
-					<h:outputText value="#{detalle.articulo.id}" />
-				</rich:column>
-
-				<rich:column>
-					<f:facet name="header">
-						<h:outputLabel
-							value="#{msg['entregarFormulaMedica.nombreMedicamento']}" />
-					</f:facet>
-					<h:outputText value="#{detalle.articulo.primerNombre}" />
-				</rich:column>
-
-				<rich:column>
-					<f:facet name="header">
-						<h:outputLabel value="#{msg['entregarFormulaMedica.cantidad']}" />
-					</f:facet>
-					<h:outputText value="#{detalle.cantidad}" />
-				</rich:column>
-
-				<rich:column>
-					<a4j:commandLink ajaxSingle="true" id="link"
-						oncomplete="#{rich:component('panelMedicamento')}.show()">
-						<h:graphicImage value="agregar" style="border:0" />
-					</a4j:commandLink>
-					<rich:toolTip for="link"
-						value="#{msg['entregarFormulaMedica.modal']}" />
-				</rich:column>
-			</rich:dataTable>
 	</ui:define>
 
 </ui:composition>
