@@ -16,7 +16,7 @@
              
              <f:facet name="header">
              </f:facet>
-             <h:panelGrid columns="4">
+             <h:panelGrid columns="1">
              
              <!-- Documento del funcionacio -->
              <h:outputText value="#{msg['actualizarDatosFuncionario.documento']}"/>
@@ -68,9 +68,9 @@
              <h:form>
              <rich:panel>
              <!-- Lista de telefonos del funcionario -->
-             <h:inputText value="#{actualizarDatosFuncionarioBean.telefono}" />
-             <a4j:commandButton value="#{msg['actualizarDatosFuncionario.agregar']}" action="{#actualizarDatosFuncionario.agregarTelefono}" reRender="tablaTelefonos"/>
-             <rich:dataTable id="tablaTelefonos" value="#{actualizarDatosFuncionarioBean.TelefonosFuncionario}" var="telefono">
+             <h:inputText value="#{actualizarDatosFuncionarioBean.telefonoAgregar}" />
+             <a4j:commandButton value="#{msg['actualizarDatosFuncionario.agregar']}" action="#{actualizarDatosFuncionarioBean.agregarTelefono}" reRender="tablaTelefonos"/>
+             <rich:dataTable id="tablaTelefonos" value="#{actualizarDatosFuncionarioBean.telefonosFuncionario}" var="telefono">
              	<rich:column>
              		<f:facet name="header">
              
@@ -84,8 +84,8 @@
             	 	<h:outputText value="#{msg['actualizarDatosFuncionario.eliminar']}" />
             	 	</f:facet>
             	 	
-            	 	<a4j:commandButton action="{#actualizarDatosFuncionarioBean.borrarTelefono}" reRender="tablaTelefonos">
-            	 	<a4j:actionparam name="telefonoBorrar" value="{#telefono.numero}" assignTo="{#{actualizarDatosFuncionarioBean.telefonoBorrar}}"/>
+            	 	<a4j:commandButton action="#{actualizarDatosFuncionarioBean.borrarTelefono}" reRender="tablaTelefonos">
+            	 	<a4j:actionparam name="telefonoBorrar" value="#{telefono.numero}" assignTo="#{actualizarDatosFuncionarioBean.telefonoBorrar}"/>
             	 	
             	 	</a4j:commandButton>
             	 	
