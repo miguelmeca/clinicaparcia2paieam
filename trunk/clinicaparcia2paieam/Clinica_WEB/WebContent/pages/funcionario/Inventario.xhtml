@@ -6,113 +6,155 @@
 	xmlns:rich="http://richfaces.org/rich"
 	template="/templates/templateFuncionario.xhtml"
 	xmlns:a4j="http://richfaces.org/a4j">
-	
+
 	<ui:define name="cuerpo">
-	<h:form>
-	<rich:panel id="panel">
-	<f:facet name="header">
-	<h:outputText value="Inventario" />
-	</f:facet>
-	 <rich:tabPanel>
-        <rich:tab label="#{msg['Inventario.medica']}">
-          <rich:panel id="medicamentospanel">
-          <rich:dataTable id="tablaMedicamentos" value="#{inventarioBean.ListaMedicamentos}" var="m">
-          
-        	<rich:column id="NombreMedicas">
-			<f:facet name="header">
-			<h:outputLabel value="#{msg['Inventario.nombre']}" />
-			</f:facet>
-					
-						<h:outputText id="Txtnombres" value="#{m.nombre}" />
-					</rich:column>  
-			<rich:column id="codigosMedis">
-						<f:facet name="header">
-							<h:outputLabel value="#{msg['Inventario.codigo']}" />
-						</f:facet>
-						<h:outputText id="Txtprecios" value="#{m.codigo}" />
-					</rich:column>
-					  
-					  <rich:column id="cantidades">
-					  <f:facet name="header">
-							<h:outputLabel value="#{msg['Inventario.cantidad']}" />
-						</f:facet>
-						<h:outputText id="Txtcantidades" value="#{m.cantidad}" />
-					  </rich:column>
-					  
-					  
-          
-          </rich:dataTable>        
-          </rich:panel>
-          
-        </rich:tab>
-      
-        
-        
-        <rich:tab label="#{msg['Inventario.IngresarMedicamento']}">
-        <rich:panel id="panelingresar">
-       	<f:facet name="header">
-					<h:outputText value="#{msg['Inventario.RegistrarMedicamento']}" />
+		
+		<h:form>
+			<rich:panel id="panel">
+				<f:facet name="header">
+					<h:outputText value="Inventario" />
 				</f:facet>
-       	<h:panelGrid columns="2">
-       	<h:outputText value="#{msg['Inventario.codigoBarras']}" />
-       	<h:inputText id="txtbarras" value="#{inventarioBean.codigoBarras}" />
-       	
-       	<h:outputText value="#{msg['Inventario.codigoDelArticulo']}" />
-       	<h:inputText id="txtCodigo" value="#{inventarioBean.codigoArticulo}" />       	
-       	</h:panelGrid>
-       	
-       	<a4j:commandButton value="#{msg['Inventario.crear']}"
-       	action="inventarioBean.crearInventario"
-		/>      	
-        </rich:panel>          
-        </rich:tab>
-          
-       <rich:tab label="#{msg['Inventario.entradaSalida']}">
-       <rich:panel >
-        <f:facet name="header">
-	<h:outputText value="#{msg['Inventario.entradaSalida']}" />
-	</f:facet>
-	<h:outputText value="#{msg['Inventario.nombre']}" />
-	<h:inputText value="#{inventarioBean.nombre}" />
-	<a4j:commandButton  value="#{msg['Inventario.filtro']}"  action="inventarioBean.buscarfiltrado"/>
-	<br />
-	<rich:panel>
-		<rich:dataTable id="entradaMedicamentos" value="#{inventarioBean.filtrados}" var="md">
-        
-        <rich:column>
-        <f:facet name="header">
-        <h:outputLabel value="#{msg['Inventario.fechaingreso']}" />
-        </f:facet>
-        <h:outputText value="#{md.fechaIngreso}" />
-        </rich:column>
-        <rich:column>
-        <f:facet name="header">
-        <h:outputLabel value="#{msg['Inventario.funcionarioIngreso']}" />
-        </f:facet>
-        <h:outputText value="#{md.FUNCIONARIO_INGRESO}" />
-        </rich:column>
-        <rich:column>
-        <f:facet name="header">
-        <h:outputLabel value="#{msg['Inventario.fechasalidad']}" />
-        </f:facet>
-        <h:outputText value="#{md.fechaSalida}" />
-        </rich:column>
-         <rich:column>
-        <f:facet name="header">
-        <h:outputLabel value="#{msg['Invetario.funcionariosalidad']}" />
-        </f:facet>
-        <h:outputText value="#{md.FUNCIONARIO_SALIDAD}" />
-        </rich:column>
-        </rich:dataTable>  
-        </rich:panel>
-        </rich:panel>     
-    
-        
-        </rich:tab>
-    </rich:tabPanel>
-    </rich:panel>
-    </h:form>
+				<rich:tabPanel >
+				
+					<rich:tab label="#{msg['Inventario.medica']}">
+					
+					
+						<rich:panel id="medicamentospanel">
+							<rich:dataTable id="tablaMedicamentos"  value="#{inventarioBean.articulos}"  var="m">
+
+								<rich:column id="NombreMedicas">
+									<f:facet name="header">
+										<h:outputLabel value="#{msg['Inventario.nombre']}" />
+									</f:facet>
+
+									<h:outputText id="Txtnombres" value="#{m.nombre}" />
+								</rich:column>
+								<rich:column id="codigosMedis">
+									<f:facet name="header">
+										<h:outputLabel value="#{msg['Inventario.codigo']}" />
+									</f:facet>
+									<h:outputText id="Txtprecios" value="#{m.codigo}" />
+								</rich:column>
+						<rich:column id="PrecioMedicas">
+									<f:facet name="header">
+										<h:outputLabel value="#{msg['Inventario.precio']}" />
+									</f:facet>
+
+									<h:outputText id="Txtprecio" value="#{m.precio}" />
+								</rich:column>
+								
+
+
+
+							</rich:dataTable>
+						</rich:panel>
+
+					</rich:tab>
+
+
+
+					<rich:tab label="#{msg['Inventario.IngresarMedicamento']}">
+						<rich:panel id="panelingresar">
+							<f:facet name="header">
+								<h:outputText value="#{msg['Inventario.RegistrarMedicamento']}" />
+							</f:facet>
+							<h:panelGrid columns="3">
+								<h:outputText value="#{msg['Inventario.codigoBarras']}" />
+
+								<a4j:region>
+									<h:inputText id="txtbarras"
+										value="#{inventarioBean.codigoBarras}">
+										<rich:beanValidator />
+										<a4j:support event="onkeyup" />
+									</h:inputText>
+								</a4j:region>
+								<rich:message for="txtbarras" errorClass="errors" />
+
+								<h:outputText value="#{msg['Inventario.codigoDelArticulo']}" />
+								<a4j:region>
+									<h:inputText id="txtCodigo"
+										value="#{inventarioBean.codigoArticulo}">
+										<rich:beanValidator />
+										<a4j:support event="onkeyup" />
+									</h:inputText>
+								</a4j:region>
+								<rich:message for="txtCodigo" errorClass="errors" />
+							</h:panelGrid>
+
+							<a4j:commandButton value="#{msg['Inventario.crear']}"
+								action="#{inventarioBean.crearInventario}" />
+						</rich:panel>
+					</rich:tab>
+
+					<rich:tab label="#{msg['Inventario.entradaSalida']}">
+
+						<h:outputText value="#{msg['Inventario.nombre']}" />
+						<h:inputText value="#{inventarioBean.nombre}">
+
+						</h:inputText>
+						<a4j:commandButton value="#{msg['Inventario.filtro']}"
+							action="#{inventarioBean.buscarfiltrado}" reRender="entradaMedicamentos,salidamedicamentos" />
+						<br />
+						<rich:panel>
+							<f:facet name="header">
+								<h:outputLabel value="Medicamentos entrada" />
+							</f:facet>
+							<rich:dataTable id="entradaMedicamentos"
+								value="#{inventarioBean.inventarioEntrada}" var="md">
+							
+								<rich:column>
+									<f:facet name="header">
+										<h:outputLabel value="#{msg['Inventario.fechaingreso']}" />
+									</f:facet>
+									<h:outputText value="#{md.fechaIngreso}" />
+								</rich:column>
+								<rich:column>
+									<f:facet name="header">
+										<h:outputLabel value="#{msg['Inventario.funcionarioIngreso']}" />
+									</f:facet>
+									<h:outputText value="#{md.funcionarioIngreso}" />
+								</rich:column>
+							</rich:dataTable>
+						</rich:panel>
+
+						<rich:panel>
+							<f:facet name="header">
+								<h:outputLabel value="Medicamentos de salidad" />
+							</f:facet>
+							<rich:dataTable id="salidamedicamentos"
+								value="#{inventarioBean.inventarioSalidad}" var="sa">
+								<rich:column>
+									<f:facet name="header">
+										<h:outputLabel value="#{msg['Inventario.fechasalidad']}" />
+									</f:facet>
+									<h:outputText value="#{sa.fechaSalida}" />
+								</rich:column>
+								<rich:column>
+									<f:facet name="header">
+										<h:outputLabel value="#{msg['Invetario.funcionariosalidad']}" />
+									</f:facet>
+									<h:outputText value="#{sa.funcionarioSalida}" />
+								</rich:column>
+								<rich:column>
+									<f:facet name="header">
+										<h:outputLabel value="#{msg['Inventario.motivosalidad']}" />
+									</f:facet>
+									<h:outputText value="#{sa.motivoSalida}" />
+								</rich:column>
+
+							</rich:dataTable>
+
+
+						</rich:panel>
+
+
+
+
+					</rich:tab>
+				</rich:tabPanel>
+			</rich:panel>
+		</h:form>
 	</ui:define>
-	
-	
-	</ui:composition>
+
+
+</ui:composition>
