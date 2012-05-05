@@ -40,6 +40,8 @@ public class Paciente_Bean {
 		private Telefono nuevoTelefono;
 		private int numeroTelefonoBorrar;
 		// datos ingresados para crear un nuevo acudiente:
+		private List<Acudiente>acudientes;
+		private String idAcudienteSeleccionado;
 		private String tipoDocumentoAcudiente;
 		private String documentoAcudiente;
 		private String primerNombreAcudiente;
@@ -53,6 +55,10 @@ public class Paciente_Bean {
 		private String contraseñaIngresada;
 		private String contraseñaIngresadaNueva;
 		private String contraseñaConfirmacionNueva;
+		
+		
+		
+		
 		public Paciente_Bean() {
 			
 			em=FactoryEntityManager.getEm();
@@ -75,6 +81,21 @@ public class Paciente_Bean {
 		
 		telefonos=persona.getTelefonos();
 		
+		}
+		
+		public String borrarAcudiente(){
+			
+			for (Acudiente acudiente : paciente.getAcudientes()) {
+				if(acudiente.getDocumento().equals(idAcudienteSeleccionado)==true){
+					
+					em.getTransaction().begin();
+					em.remove(acudiente);
+					em.getTransaction().commit();
+					
+				}
+			}
+			
+			return null;
 		}
 		
 		public String actualizarDatos(){
@@ -359,6 +380,54 @@ if(tipoDocumentoAcudiente.equals("Pasaporte")==true){
 
 		public void setSexoAcudiente(String sexoAcudiente) {
 			this.sexoAcudiente = sexoAcudiente;
+		}
+
+		public Paciente getPaciente() {
+			return paciente;
+		}
+
+		public void setPaciente(Paciente paciente) {
+			this.paciente = paciente;
+		}
+
+		public List<Acudiente> getAcudientes() {
+			return paciente.getAcudientes();
+		}
+
+		public void setAcudientes(List<Acudiente> acudientes) {
+			this.acudientes = acudientes;
+		}
+
+		public String getIdAcudienteSeleccionado() {
+			return idAcudienteSeleccionado;
+		}
+
+		public void setIdAcudienteSeleccionado(String idAcudienteSeleccionado) {
+			this.idAcudienteSeleccionado = idAcudienteSeleccionado;
+		}
+
+		public String getContraseñaIngresada() {
+			return contraseñaIngresada;
+		}
+
+		public void setContraseñaIngresada(String contraseñaIngresada) {
+			this.contraseñaIngresada = contraseñaIngresada;
+		}
+
+		public String getContraseñaIngresadaNueva() {
+			return contraseñaIngresadaNueva;
+		}
+
+		public void setContraseñaIngresadaNueva(String contraseñaIngresadaNueva) {
+			this.contraseñaIngresadaNueva = contraseñaIngresadaNueva;
+		}
+
+		public String getContraseñaConfirmacionNueva() {
+			return contraseñaConfirmacionNueva;
+		}
+
+		public void setContraseñaConfirmacionNueva(String contraseñaConfirmacionNueva) {
+			this.contraseñaConfirmacionNueva = contraseñaConfirmacionNueva;
 		}
 		
 		
