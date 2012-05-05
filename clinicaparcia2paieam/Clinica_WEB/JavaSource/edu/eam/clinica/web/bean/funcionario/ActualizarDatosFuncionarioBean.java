@@ -3,6 +3,8 @@ package edu.eam.clinica.web.bean.funcionario;
 import java.util.List;
 
 
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
@@ -65,7 +67,18 @@ public class ActualizarDatosFuncionarioBean {
 	 * telefonos del funcionario
 	 */
 	private List<Telefono> telefonos;
+	/**
+	 * telefono  del funcionario
+	 */
 	private Telefono telefono;
+	/**
+	 * Telefono a agregar del funcionario
+	 */
+	private String telefonoAgregar;
+	/**
+	 * telefono a eliminar el funcionario
+	 */
+	private String telefonoBorrar;
 	/*
 	 * nombre de usuario del funcionario
 	 */
@@ -78,6 +91,10 @@ public class ActualizarDatosFuncionarioBean {
 	 * Contraseña nueva para el funcionario
 	 */
 	private String passNuevo;
+	/**
+	 * contraseña para verificar si la nueva es igual a esta 
+	 */
+	private String passConfirmacion;
 	
 	
 	/*
@@ -103,18 +120,18 @@ public class ActualizarDatosFuncionarioBean {
 		
 			em.getTransaction().begin();
 			
-			/*
+			
 			funcionario.setCiudad(ciudad);
 			funcionario.setDireccion(direccion);
-			funcionario.setDocumento(documento);
+			//funcionario.setDocumento(documento);
 			funcionario.setEmail(eMail);
 			funcionario.setPrimerApellido(primerApellido);
 			funcionario.setPrimerNombre(primerNombre);
 			funcionario.setSegundoApellido(segundoApellido);
 			funcionario.setSegundoNombre(segundoNombre);
 			funcionario.setSexo(sexo);
-			funcionario.setTipoDocumento(tipoDocumento);
-			*/
+			//funcionario.setTipoDocumento(tipoDocumento);
+			
 			
 			em.merge(funcionario);
 			
@@ -123,9 +140,38 @@ public class ActualizarDatosFuncionarioBean {
 			SesionFactory.agregarASesion("funcionario", funcionario);
 			
 			//mandar un mesnaje global con el exito.
+			FacesContext.getCurrentInstance().addMessage(null,new FacesMessage(FacesMessage.SEVERITY_INFO,"El funcionario se a actualizado con exito",null));
 		
 		
 		
+	}
+	/**
+	 * metodo para agregar un telefono al funcionario
+	 */
+	public void agregarTelefono(){
+		
+		em.getTransaction().begin();
+		telefono=new Telefono();
+		telefono.setPersona(funcionario);
+		telefono.setNumero(telefonoAgregar);
+		em.persist(telefono);
+		em.getTransaction().commit();
+		FacesContext.getCurrentInstance().addMessage(null,new FacesMessage
+				(FacesMessage.SEVERITY_INFO,"Se agrego telefono al funcionario con exito",null));
+
+	}
+	
+	/**
+	 * metodo para eliminar un telefono del funcionario
+	 */
+	public void borrarTelefono(){
+		em.getTransaction().begin();
+		
+		Query q=em.createNamedQuery(Telefono.FIND_TELEFONO_BY_NUMERO);
+		q.setParameter(Telefono.PARAMETRO_NUMERO, telefonoBorrar);
+		em.remove(q);
+		
+		em.getTransaction().commit();
 	}
 	
 	/**
@@ -135,6 +181,7 @@ public class ActualizarDatosFuncionarioBean {
 		
 		//buscar los telefonos por persona... hacer la consulta.
 		funcionario = (Funcionario) SesionFactory.getValor("persona");
+		//busca el funcionario........
 		Query q=em.createNamedQuery(Telefono.FIND_TELEFONO_BY_NUMERO_Y_TIPO_DOCUMENTO);
 		q.setParameter(Telefono.PARAMETRO_NUMERO_DOCUMENTO, funcionario.getDocumento());
 		q.setParameter(Telefono.PARAMETRO_TIPO_DOCUMENTO, funcionario.getTipoDocumento());
@@ -152,24 +199,91 @@ public class ActualizarDatosFuncionarioBean {
 		
 		//se validad q el password digitado sea el mismo al anterior, para poderlo actualizar
 		if(funcionario.getPassword().equals(passViejo)){
+			if(passNuevo.equals(passConfirmacion)){
 			funcionario.setPassword(passNuevo);
 			
 			em.merge(funcionario);
 			em.getTransaction().commit();
 			SesionFactory.agregarASesion("funcionario", funcionario);
+			
+			FacesContext.getCurrentInstance().addMessage(null,new FacesMessage(FacesMessage.SEVERITY_INFO,"El password se ha actualizado con exito",null));
+
+			}else {
+				FacesContext.getCurrentInstance().addMessage(null,new FacesMessage(FacesMessage.SEVERITY_ERROR,"Las contraseñas no son iguales, intente de nuevo",null));
+
+			}
+			
+		}else{
+			FacesContext.getCurrentInstance().addMessage(null,new FacesMessage(FacesMessage.SEVERITY_ERROR,"Las contraseñas no son iguales, intente de nuevo",null));
 		}
 		
-		
-		
-		//mensaje global con el exito de la operacion.
-		
+				
 	}
 
 	/*
 	 *Getters and Setter
 	 */
+	
+	
 	public Funcionario getFuncionario() {
 		return funcionario;
+	}
+
+	public String getPassConfirmacion() {
+		return passConfirmacion;
+	}
+
+	public void setPassConfirmacion(String passConfirmacion) {
+		this.passConfirmacion = passConfirmacion;
+	}
+
+	public String getTelefonoAgregar() {
+		return telefonoAgregar;
+	}
+
+	public void setTelefonoAgregar(String telefonoAgregar) {
+		this.telefonoAgregar = telefonoAgregar;
+	}
+
+	public String getTelefonoBorrar() {
+		return telefonoBorrar;
+	}
+
+	public void setTelefonoBorrar(String telefonoBorrar) {
+		this.telefonoBorrar = telefonoBorrar;
+	}
+
+	public Telefono getTelefono() {
+		return telefono;
+	}
+
+	public void setTelefono(Telefono telefono) {
+		this.telefono = telefono;
+	}
+
+
+	public String getLogIn() {
+		return logIn;
+	}
+
+	public void setLogIn(String logIn) {
+		this.logIn = logIn;
+	}
+
+	public String getPassViejo() {
+		return passViejo;
+	}
+
+	public void setPassViejo(String passViejo) {
+		this.passViejo = passViejo;
+	}
+
+	public String getPassNuevo() {
+		return passNuevo;
+	}
+
+	public void setPassNuevo(String passNuevo) {
+		this.passNuevo = passNuevo;
 	}
 
 	public void setFuncionario(Funcionario funcionario) {

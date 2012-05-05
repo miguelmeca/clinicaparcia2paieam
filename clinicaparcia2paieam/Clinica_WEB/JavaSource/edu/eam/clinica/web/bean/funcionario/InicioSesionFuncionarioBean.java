@@ -32,16 +32,6 @@ public class InicioSesionFuncionarioBean {
 		funcionario= (Funcionario) SesionFactory.getSesion();
 	}
 	
-	public void irActualizarDatosFuncionario(){
-		
-	}
-	public void irInventario(){
-		
-	}
-	public void irAsiganrCitas(){
-		
-	}
-	
 	public String getLogIn() {
 		return logIn;
 	}
