@@ -30,18 +30,22 @@ public class ActualizarDatosMedicoBean {
 	/**
 	 * Primer nombre del medico
 	 */
+	@Pattern(regex = "[A-Za-z]*",message="Ingrese solo numeros")
 	public String primerNombre;
 	/**
 	 * Segundo nombre del medico
 	 */
+	@Pattern(regex = "[A-Za-z]*",message="Ingrese solo numeros")
 	public String segundoNombre;
 	/**
 	 * Primer apellido del medico
 	 */
+	@Pattern(regex = "[A-Za-z]*",message="Ingrese solo numeros")
 	public String primerApellido;
 	/**
 	 * segundo apellido del medico
 	 */
+	@Pattern(regex = "[A-Za-z]*",message="Ingrese solo numeros")
 	public String segundoApellido;
 	/**
 	 * Correo electronico del medico
