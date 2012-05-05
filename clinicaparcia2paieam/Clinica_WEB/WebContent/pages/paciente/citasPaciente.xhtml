@@ -65,8 +65,8 @@
 	<!-- Medico que atiende -->
 	<h:outputLabel value="#{msg['pedirCita.paciente.pedirCita.medico']}" />
 	<rich:comboBox selectFirstOnUpdate="false"
-        defaultLabel="#{msg['pedirCita.paciente.pedirCita.elejirMedico']}">
-        <f:selectItems value="#{asignarCitasPacienteBean.medicos}" />
+        defaultLabel="#{msg['pedirCita.paciente.pedirCita.elejirMedico']}" val suggestionValues="#{asignarCitasPacienteBean.medicos}" >
+        
     </rich:comboBox>
 	
 	
@@ -85,36 +85,111 @@
         <rich:tab label="#{ msg['pedirCita.paciente.historiaCitas']}">
             
             
-              <rich:dataTable id="tablaTelefonos"
-			value="#{paciente_Bean.telefonos}" var="detalle">
-			<rich:column>
-				<f:facet name="header">
-					
-				<h:outputLabel
-				value="#{msg['pedirCita.paciente.historiaCitas.mensajeTuHistoriaClinica']}" />
-				
-				</f:facet>
-				<h:form>
-				<h:panelGrid columns="3">
-				<h:outputText value="#{detalle.numero}" />
-				
-				<h:inputText value="#{detalle.numero}" />
-				
-				<a4j:commandButton  value="borrar boton" >
-				<rich:componentControl for="idModalpane" operation="Show" event="oncomplete" >
-			
-				</rich:componentControl>
-				
-				</a4j:commandButton>
-				<h:commandButton value="#{msg['actualizarInformacion.paciente.modificar.botonTelefono']}" action="" />
-				</h:panelGrid>
-				</h:form>
-			</rich:column>
-			
-		</rich:dataTable>
+             
+		<rich:dataTable id="tablaConsultas" value="#{asignarCitasPacienteBean.consultasAtendias}" var="consultas">
+	<rich:column>
+	<f:facet name="header">
+	<h:outputLabel
+	value="#{msg['citasPaciente.historialMedico.fechaHoraCita']}" />
+	</f:facet>
+	<h:outputText value="#{consultas.fechaHora}" />
+	</rich:column>
+	<rich:column>
+	<f:facet name="header">
+	<h:outputLabel
+	value="#{msg['citasPaciente.historialMedico.medicoQueAtendio']}" />
+	</f:facet>
+	<h:outputText value="#{consultas.medico.nombre}" />
+	</rich:column>
+	<rich:column>
+	<f:facet name="header">
+	<h:outputLabel
+	value="#{msg['citasPaciente.historialMedico.verCitaDetalle']}" />
+	</f:facet>
+	  <rich:modalPanel id="panelDetalleCita" width="350" height="100">
+        <f:facet name="header">
+            <h:panelGroup>
+                <h:outputText value="Detalle cita"></h:outputText>
+            </h:panelGroup>
+        </f:facet>
+        <f:facet name="controls">
+             </h:panelGroup>
+        </f:facet>
+       
+       <h:inputTextarea value="#{consultas.detalleHistoriaClinica.comentario}" />
+       
+   	<h:outputLink value="#" id="hideThis">
+        Cerrar.
+        <rich:componentControl for="panel" attachTo="hideThis" operation="hide" event="onclick"/>
+    </h:outputLink>
+    </rich:modalPanel>
+    <h:outputLink value="#" id="link">
+        Ver detalle:
+        <rich:componentControl for="panel" attachTo="link" operation="show" event="onclick"/>
+    </h:outputLink>
+	</rich:column>
+	<rich:column>
+	<f:facet name="header">
+	<h:outputLabel
+	value="#{msg['citasPaciente.historialMedico.verCitaDetalle']}" />
+	</f:facet>
+	 <rich:modalPanel id="panelRecetaMedica" width="350" height="100">
+        <f:facet name="header">
+            <h:panelGroup>
+                <h:outputText value="Modal Panel"></h:outputText>
+            </h:panelGroup>
+        </f:facet>
+        <f:facet name="controls">
+            <h:panelGroup>
+	
+        </f:facet>
+        
+        <rich:dataTable value="#{consultas.formulanMedica.detallesFormulaMedica}" var="formulas">
+	<rich:column>
+	<f:facet name="header">
+	<h:outputLabel
+	value="Articulo:" />
+	</f:facet>
+	<h:outputText value="#{formulas.articulo.nombre}" />
+	</rich:column>
+	<rich:column>
+	<f:facet name="header">
+	<h:outputLabel
+	value="Cantidad:" />
+	</f:facet>
+	<h:outputText value="#{formulas.cantidad}" />
+	</rich:column>
+		<rich:column>
+	<f:facet name="header">
+	<h:outputLabel
+	value="Prescripción:" />
+	</f:facet>
+	<h:outputText value="#{formulas.prescripcion}" />
+	</rich:column>
+	
+	</rich:dataTable> 
+        
+       <h:inputTextarea value="#{consultas.formulanMedica.detallesFormulaMedica}" />
+        <h:outputLink value="#" id="hideLink">
+        cerrar.
+        <rich:componentControl for="panelRecetaMedica" attachTo="hideLink" operation="hide" event="onclick"/>
+    </h:outputLink>               
+ </h:panelGroup>
+    </rich:modalPanel>
+    <h:outputLink value="#" id="link">
+        Ver receta medica
+        <rich:componentControl for="panelRecetaMedica" attachTo="link" operation="show" event="onclick"/>
+    </h:outputLink>
+	</rich:column>
+	</rich:dataTable>
+		
+		
         </rich:tab>
         <rich:tab label="#{ msg['pedirCita.paciente.citasPendientes']}">
             Here is tab #3
+           
+           
+            
         </rich:tab>
     </rich:tabPanel>
 	
