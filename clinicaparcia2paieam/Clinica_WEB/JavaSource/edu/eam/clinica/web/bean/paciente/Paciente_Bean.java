@@ -2,6 +2,7 @@ package edu.eam.clinica.web.bean.paciente;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -158,6 +159,8 @@ public class Paciente_Bean {
 			em.getTransaction().begin();
 			em.persist(nuevoTelefono);
 			em.close();
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage
+					(FacesMessage.SEVERITY_INFO,"telefono agregado con exito",null));
 			return null;
 			
 		}

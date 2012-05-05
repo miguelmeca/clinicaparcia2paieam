@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 import javax.persistence.EntityManager;
@@ -32,11 +33,11 @@ public class AsignarCitasPacienteBean {
 
 	private Consulta cita;
 	
-	private Calendar fecha;
-	private SelectItem horaCita;
+	private Date fecha;
+	private String horaCita;
 	
 	private List<SelectItem> medicos;
-	private SelectItem medicoAsignado;
+	private String medicoAsignado;
 	
 	private List<Consulta>consultasAtendias;
 	private List<Consulta>consultaSinAtender;
@@ -67,16 +68,32 @@ public class AsignarCitasPacienteBean {
 
 		Consulta consulta = new Consulta();
 		consulta.setEstado(EstadoConsultaEnum.EN_ESPERA);
-		String hora=horaCita.getValue()+"";
+		String hora=horaCita+"";
 		
 		String [] horaYMin=hora.split(":");
 		
-		fecha.add(Calendar.HOUR_OF_DAY,Integer.parseInt(horaYMin[0]));
-		fecha.add(Calendar.MINUTE,Integer.parseInt(horaYMin[1]));
-		consulta.setFechaHora(fecha.getTime());//fecha del rich:calendar.
+		Calendar cal= Calendar.getInstance();
+		if(fecha.equals(null)==true){
+			
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage
+					(FacesMessage.SEVERITY_ERROR,"no se ha especificado la fecha",null ));
+			
+		}
+		cal.setTime(fecha);
+		
+		cal.add(Calendar.HOUR_OF_DAY,Integer.parseInt(horaYMin[0]));
+		cal.add(Calendar.MINUTE,Integer.parseInt(horaYMin[1]));
+		consulta.setFechaHora(cal.getTime());//fecha del rich:calendar.
 		
 		Query query=	em.createNamedQuery(Medico.FIND_MEDICO_BY_NIT);
-		query.setParameter(Medico.PARAMETRO_NIT, medicoAsignado.getValue());
+		query.setParameter(Medico.PARAMETRO_NIT, medicoAsignado);
+		Medico med=(Medico) query.getSingleResult();
+		if(med.equals(null)==true){
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage
+					(FacesMessage.SEVERITY_ERROR,"no se ha especificado el medico",null ));
+		
+			
+		}
 		consulta.setMedico((Medico)query.getSingleResult());	//medico q se elijio.disponibles.	
 		consulta.setPaciente(paciente);
 		em.persist(consulta);
@@ -84,30 +101,49 @@ public class AsignarCitasPacienteBean {
 		paciente.setConsultas(consultas);
 		em.persist(paciente);
 		//em.persist(paciente);
+		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage
+				(FacesMessage.SEVERITY_INFO,"su cita se ha asignado con exito.",null ));
+	
 		return null;
 	}
 
 	public List<SelectItem> getMedicos() {
 		Query query = em.createNamedQuery(Medico.FIND_ALL);
+		
+		
 	List<Medico> medico = query.getResultList();
-		for (Iterator iterator = medico.iterator(); iterator.hasNext();) {
-			Medico medico2 = (Medico) iterator.next();
+		for (Medico medico2 : medico) {
 			
+			fecha.setSeconds(0);
 			Query query2=em.createNamedQuery(Consulta.FIND_CONSULTA_BY_MEDICO_AND_FECHAS);
 			query2.setParameter(Consulta.PARAMETRO_REGISTRO_MEDICO, medico2.getRegistroMedico());
 			query2.setParameter(Consulta.PARAMETRO_MENOR_FECHA, fecha.getTime());
 			query2.setParameter(Consulta.PARAMETRO_MAYOR_FECHA, fecha.getTime());
-			List<Consulta>consultasMedico=query2.getResultList();
-			Consulta consulta=consultasMedico.get(0);
-			if(consulta!=null){
 			
-				SelectItem itemMedico=new SelectItem(medico2.getNIT(),medico2.getNombre() );
-				medicos.add(itemMedico);
+		
+			List<Consulta>consultasMedico=query2.getResultList();
+			
+			for (Consulta consultax : consultasMedico) {
+				if(consultax==null|| consultax.getEstado().equals(EstadoConsultaEnum.CANCELADA)==true){
+				
+					SelectItem itemMedico=new SelectItem(medico2.getNIT(),medico2.getNombre() );
+					medicos.add(itemMedico);	
+				}
 			}
+			
+		
+		}
+		
+		if(medicos.size()==0){
+			
+		
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage
+						(FacesMessage.SEVERITY_WARN,"no hay medicos disponibles para esta fecha.",null ));
+			
+					   
 		}
 		return medicos;
 	}
-
 	public void setMedicos(List<SelectItem> medicos) {
 		this.medicos = medicos;
 	}
@@ -126,13 +162,13 @@ public class AsignarCitasPacienteBean {
 	
 	
 
-	public Calendar getFecha() {
+	public Date getFecha() {
 		return fecha;
 	}
 
 
 
-	public void setFecha(Calendar fecha) {
+	public void setFecha(Date fecha) {
 		this.fecha = fecha;
 	}
 
@@ -147,13 +183,13 @@ public class AsignarCitasPacienteBean {
 	}
 	
 
-	public SelectItem getHoraCita() {
+	public String getHoraCita() {
 		return horaCita;
 	}
 
 
 
-	public void setHoraCita(SelectItem horaCita) {
+	public void setHoraCita(String horaCita) {
 		this.horaCita = horaCita;
 	}
 
@@ -167,7 +203,7 @@ public class AsignarCitasPacienteBean {
 
 
 
-	public SelectItem getMedicoAsignado() {
+	public String getMedicoAsignado() {
 		return medicoAsignado;
 	}
 
@@ -175,7 +211,7 @@ public class AsignarCitasPacienteBean {
 
 
 
-	public void setMedicoAsignado(SelectItem medicoAsignado) {
+	public void setMedicoAsignado(String medicoAsignado) {
 		this.medicoAsignado = medicoAsignado;
 	}
 
@@ -184,7 +220,14 @@ public class AsignarCitasPacienteBean {
  public String cancelarConsulta(){
 	 
 	 
-	 
+	 if(consultaSinAtender.size()==0){
+		 
+		
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage
+						(FacesMessage.SEVERITY_WARN,"no hay consultas para cancelar.",null ));
+			
+					   
+	 }
 	 for (Consulta consultaCancelar : consultaSinAtender) {
 		if(consultaCancelar.getId()==idCOnsultaCancelar){
 			
@@ -192,17 +235,31 @@ public class AsignarCitasPacienteBean {
 			em.getTransaction().begin();
 			em.merge(consultaCancelar);
 			em.getTransaction().commit();
+			
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage
+						(FacesMessage.SEVERITY_INFO,"su consulta ha sido cancelada con exito.",null ));
+			
+					   
+			return null;
 		}
 	}
+	 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage
+				(FacesMessage.SEVERITY_ERROR,"elija la consulta que desea cancelar.",null ));
+	
 	 return null;
 	 
  }
 
 	public List<Consulta> getConsultasAtendias() {
+		
 		Query query=em.createNamedQuery(Consulta.FIND_CONSULTA_BY_NUMERO_Y_TIPO_DOCUMENTO);
 		query.setParameter(Consulta.PARAMETRO_NUMERO_DOCUMENTO, paciente.getDocumento());
 		query.setParameter(Consulta.PARAMETRO_TIPO_DOCUMENTO, paciente.getTipoDocumento());
 		List<Consulta>consultas=query.getResultList();
+		if(consultas.size()>0){
+			
+		
+		
 		
 		for (Consulta consulta : consultas) {
 			
@@ -212,7 +269,7 @@ public class AsignarCitasPacienteBean {
 				
 			}
 		}
-		
+		}
 		return consultasAtendias;
 		
 	}
@@ -233,6 +290,7 @@ public class AsignarCitasPacienteBean {
 		Query query=em.createNamedQuery(Consulta.FIND_CONSULTA_BY_NUMERO_Y_TIPO_DOCUMENTO);
 		query.setParameter(Consulta.PARAMETRO_NUMERO_DOCUMENTO, paciente.getDocumento());
 		query.setParameter(Consulta.PARAMETRO_TIPO_DOCUMENTO, paciente.getTipoDocumento());
+		
 		List<Consulta>consultas=query.getResultList();
 		
 		for (Consulta consulta : consultas) {
@@ -257,10 +315,29 @@ public class AsignarCitasPacienteBean {
 	}
 
 	public String cancelarCita(){
+		Consulta consultaCancelar=em.find(Consulta.class, idCOnsultaCancelar);
+		if(consultaCancelar.equals(null)==false){
 		
-		
+			consultaCancelar.setEstado(EstadoConsultaEnum.CANCELADA);
+			em.getTransaction().begin();
+			em.merge(consultaCancelar);
+			em.getTransaction().commit();
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage
+			(FacesMessage.SEVERITY_INFO,"la cita se ha cancelado con exito.",null ));
 		
 		return null;
+	
+			
+				   
+		}
+		else{
+			
+			
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage
+			(FacesMessage.SEVERITY_ERROR,"no hay consultas para cancelar.",null ));
+			return null;
+					   
+		}
 		
 	}
 
