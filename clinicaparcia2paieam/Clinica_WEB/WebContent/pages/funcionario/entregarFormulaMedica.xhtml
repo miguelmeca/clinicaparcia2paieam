@@ -9,116 +9,17 @@
 
 
 	<ui:define name="cuerpo">
-	<!-- Mensajes Globales -->
-	<rich:messages globalOnly="true"/>
-	<!-- Formulario para buscar la formula medica de un paciente -->
+    
+	<!-- Formulario para buscar la formula medica -->
 	<h:form>
-		<h:panelGrid columns="3">
-			<!-- Mostrar el usuario en sesion -->
-				<h:outputLabel value="#{msg['entregarFormulaMedica.usuario']}" />
-				<h:outputText
-					value="#{funcionarioBean.primerNombre}" />
-				<h:outputLabel value="" />
-				
-				<!-- Codigo de la formula medica -->
-				<h:outputLabel value="#{msg['entregarFormulaMedica.codigoFormula']}" />
-				<h:inputText value="#{entregarFormulaMedicaBean.codFormula}" />
-				<!-- Boton para buscar la formula medica y actualizar la tablaMedicamentos -->
-				<a4j:commandButton
-					action="#{entregarFormulaMedicaBean.buscarFormulaMedica}"
-					reRender="tablaMedicamentos"
-					value="#{msg['entregarFormulaMedica.buscar']}">
-				</a4j:commandButton>
-		
-		</h:panelGrid>
-	</h:form>
-<!-- Fin del Formulario para buscar la formula -->
-
-
-        <!-- Tabla para listar los medicamentos que se encontraron en la formula medica -->
-		<rich:dataTable id="tablaMedicamentos"
-			value="#{entregarFormulaMedicaBean.detalles}" var="detalle">
-			<!-- Columna para mostrar el nombre del medicamento -->
-			<rich:column>
-				<f:facet name="header">
-					<h:outputLabel
-						value="#{msg['entregarFormulaMedica.nombreMedicamento']}" />
-				</f:facet>
-				<h:outputText value="#{articuloBean.nombre}" />
-			</rich:column>
-			
-			<!-- Enlace -imagen para mostrar el modalPanel para ingresar el codigo de barras -->
-			<rich:column>
-                    <a4j:commandLink ajaxSingle="true" id="linkCodBarras"
-                        oncomplete="#{rich:component('modalCodBarras')}.show()">
-                        <h:graphicImage value="/imgs/why-choose-us.png" style="border:0" />
-                        <f:setPropertyActionListener value="#{row}"
-                            target="#{MedicamentoBean.codigoBarras}" />
-                    </a4j:commandLink>
-                    <rich:toolTip for="linkCodBarras" value="#{msg['entregarFormulaMedica.ingresar']}" />
-			</rich:column>
-			
-		</rich:dataTable>
-		<!-- -Fin de la tablaMedicamentos -->
-		
-		<!-- ModalPanel para ingresar el codigo de barras -->
-		<rich:modalPanel id="modalCodBarras">
-		<!-- texto que indica al usuario lo que debe hacer en el modalPanel -->
-		 <f:facet name="header">
-            <h:outputText value="#{msg['entregarFormulaMedica.texto']}"
-                style="padding-right:15px;" />
-        </f:facet>
-        <!-- controls ubica la imagen close.png en la parte derecha superior -->
-           <f:facet name="controls">
-            <h:panelGroup>
-            <!-- imagen para cerrar -->
-                <h:graphicImage value="/imgs/close.png"
-                    styleClass="hidelink" id="ocultar" />
-                <!-- la funcion de la imagen es ocultar el modalPanel -->
-                <rich:componentControl for="modalCodBarras" attachTo="ocultar"
-                    operation="hide" event="onclick" />
-            </h:panelGroup>
-        </f:facet>
-        
-        <h:panelGrid columns="2">
-        <!-- etiqueta que indica el texto que debe ir en el input -->
-        <h:outputLabel value="#{msg['entregarFormulaMedica.codigoBarras']}" />
-        <!-- Aqui se ingresa por el funcionario el codigo de barras del medicamento -->
-        <h:inputText value="#{MedicamentoBean.codigoBarras}" />
-        </h:panelGrid>
-        
-        <!-- Formulario para enviar la opcion elegida por el funcionario (Aceptar/Cancelar) -->
-		<h:form>
-        
-         <table width="100%" id="table">
-                <tbody>
-                    <tr>
-                    <!-- columna con la opcion de aceptar -->
-                        <td align="center" width="50%">
-                        <!-- Boton para elegir la opcion de aceptar -->
-                        <a4j:commandButton value="#{msg['entregarFormulaMedica.aceptar']}"
-                            ajaxSingle="true" action="#{MedicamentoBean.codigoBarras}"
-                            oncomplete="#{rich:component('modalCodBarras')}.hide();"
-                            reRender="tablaMedicamentos" /></td>
-                        
-                        
-                        <!-- columna con la opcion de cancelar -->
-                        <td align="center" width="50%">
-                        <!-- Boton con la opcion de cancelar -->
-                        <a4j:commandButton
-                            value="#{msg['entregarFormulaMedica.cancelar']}"
-                            onclick="#{rich:component('modalCodBarras')}.hide();return false;" />
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-		
-		</h:form>
-		<!-- fin del formulario -->
-		
-		</rich:modalPanel>
-		<!-- fin del modalPanel -->
+	<h:panelGrid columns="2">
 	
+	<!-- Campo para mostrar el usuario en sesion -->
+	<h:outputLabel value="#{msg['entregarFormulaMedica.usuario']}" />
+	<h:outputText value="#{entregarFormulaMedicaBean.funcionario.primerNombre}" />
+	<!-- Campo para buscar la formula medica y cargar los detalles en la tabla -->
+	</h:panelGrid>
+	</h:form>
 	</ui:define>
 	
 </ui:composition>
