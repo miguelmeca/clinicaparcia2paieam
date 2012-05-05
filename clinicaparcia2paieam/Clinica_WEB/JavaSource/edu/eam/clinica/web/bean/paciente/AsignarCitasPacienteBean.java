@@ -45,7 +45,7 @@ public class AsignarCitasPacienteBean {
 	private long idCOnsultaCancelar;
 	
 	
-	public void AsignarCitasPacienteBean() {
+	public  AsignarCitasPacienteBean() {
 
 		em = FactoryEntityManager.getEm();
 
@@ -138,10 +138,13 @@ public class AsignarCitasPacienteBean {
 			
 		
 				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage
-						(FacesMessage.SEVERITY_WARN,"no hay medicos disponibles para esta fecha.",null ));
+				(FacesMessage.SEVERITY_WARN,"no hay medicos disponibles para esta fecha.",null ));
 			
 					   
 		}
+		
+		SelectItem seleccionarDefecto=new SelectItem("0000", "elija fecha y hora");
+		medicos.add(seleccionarDefecto);
 		return medicos;
 	}
 	public void setMedicos(List<SelectItem> medicos) {
