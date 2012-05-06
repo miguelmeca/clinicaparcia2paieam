@@ -25,42 +25,42 @@ public class AsignarCitasBean {
 	 * Guarda la fecha que se desea buscar
 	 */
 	private Date fechaBuscar;
-	
+
 	/**
 	 * contiene la cedula del paciente
 	 */
 	private String cedulaPaciente;
-	
+
 	/**
 	 * Documento de identificacion del medico
 	 */
 	private String docmedico;
-	
+
 	/**
 	 * nit del medico
 	 */
 	private String nitmedico;
-	
+
 	/**
 	 * Guarda fechas a buscar
 	 */
 	private Date fechaSeleccion;
-	
+
 	/**
 	 * enumeracion de los motivos de las consultas
 	 */
 	private MotivoConsultaEnum motivoConsulta;
-	
+
 	/**
-	 * Enumeracion de los diferentes tipos de procedimiento a realizar en una consulta
+	 * Enumeracion de los diferentes tipos de procedimiento a realizar en una
+	 * consulta
 	 */
 	private TipoProcedimietoEnum procedimientoConsulta;
-	
+
 	/**
 	 * enumeracion de los diferentes tipos de documentos existentes
 	 */
 	private TipoDocumentoEnum tipoDocumento;
-	
 
 	public void setTipoDocumento(TipoDocumentoEnum tipoDocumento) {
 		this.tipoDocumento = tipoDocumento;
@@ -70,32 +70,79 @@ public class AsignarCitasBean {
 	 * campo por defecto en la bd = null
 	 */
 	private boolean unidad;
-	
+
 	/**
-	 * guarda en stringo la hora seleccionada por un funcionario desde la aplicacion
+	 * guarda en stringo la hora seleccionada por un funcionario desde la
+	 * aplicacion
 	 */
 	private String horaCita;
-	
+
 	/**
 	 * contiene el nombre del medico
 	 */
 	private String nombreMedico;
-	
+
 	/**
 	 * obtiene todos los registros de medicos para ser mostrados en una tabla
 	 */
 	List<Consulta> consultasMedico;
-	
+
 	/**
 	 * guarda todas las consultas de un paciente.
 	 */
 	List<Consulta> consulPacienteCita;
-	
-	
+
+	/**
+	 * ATRIBUTOS PARA EDITAR LA CONSULTA DE UN PACIENTE
+	 */
+
+	private long id;
+	private Date fecha;
+	private Paciente paciente;
+	private Medico medico;
+	private MotivoConsultaEnum motivo;
+	private TipoProcedimietoEnum procedimiento;
+	private String tiempo;
+
 	private EntityManager em;
 
 	public AsignarCitasBean() {
 		em = FactoryEntityManager.getEm();
+	}
+
+	/**
+	 * metodo para mostrar los atributos de la consulta de un paciente en el
+	 * modalPanel para editar
+	 * 
+	 * @return regla de navegacion: null
+	 */
+	public String verConsulta() {
+		Consulta con = em.find(Consulta.class, id);
+		fecha = con.getFechaHora();
+		paciente = con.getPaciente();
+		medico = con.getMedico();
+		motivo = con.getMotivo();
+		procedimiento = con.getProcedimiento();
+
+		return null;
+	}
+
+	/**
+	 * metodo para editar la consulta de un paciente
+	 * @return reglanavegacion:null
+	 */
+	public String editarConsulta() {
+
+		Calendar c = Calendar.getInstance();
+		c.setTime(fecha);
+		String[] campostiempo = tiempo.split(":");
+		int hora = Integer.parseInt(campostiempo[0]);
+		int mins = Integer.parseInt(campostiempo[1]);
+		c.set(Calendar.HOUR, hora);
+		c.set(Calendar.MINUTE, mins);
+		c.set(Calendar.SECOND, 0);
+
+		return null;
 	}
 
 	/**
@@ -165,7 +212,8 @@ public class AsignarCitasBean {
 
 					Consulta consultaNueva = new Consulta(
 							fechaSelect.getTime(), paciente, medico,
-							MotivoConsultaEnum.PRIMERA_VEZ,TipoProcedimietoEnum.EXAMEN);
+							MotivoConsultaEnum.PRIMERA_VEZ,
+							TipoProcedimietoEnum.EXAMEN);
 
 					em.persist(consultaNueva);
 					em.getTransaction().commit();
@@ -181,11 +229,10 @@ public class AsignarCitasBean {
 		return null;
 	}
 
-	
 	/**
 	 * lista todos los motivos de una cita
-	 * @return
-	 * listado de motivos
+	 * 
+	 * @return listado de motivos
 	 */
 	public List<SelectItem> getMotivosConsulta() {
 
@@ -202,8 +249,8 @@ public class AsignarCitasBean {
 
 	/**
 	 * lista los todos los posibles procedimientos de una cita
-	 * @return
-	 * listado de procedimientos
+	 * 
+	 * @return listado de procedimientos
 	 */
 	public List<SelectItem> getTipoProcedimiento() {
 
@@ -218,8 +265,8 @@ public class AsignarCitasBean {
 
 	/**
 	 * lista todos los tipos de documentos existentes
-	 * @return
-	 * listado de documentos de indentificacion
+	 * 
+	 * @return listado de documentos de indentificacion
 	 */
 	public List<SelectItem> getTipoDocumento() {
 
@@ -231,19 +278,21 @@ public class AsignarCitasBean {
 
 		return lista;
 	}
-	
+
 	/**
-	 * lista todos los medicos disponibles para atender una cita 
-	 * @return
-	 * listado de medicos con sus respectivos registros
+	 * lista todos los medicos disponibles para atender una cita
+	 * 
+	 * @return listado de medicos con sus respectivos registros
 	 */
 	public List<SelectItem> getMedicos() {
 
-		List<Medico> medicos = em.createNamedQuery(Medico.FIND_ALL).getResultList();
+		List<Medico> medicos = em.createNamedQuery(Medico.FIND_ALL)
+				.getResultList();
 		List<SelectItem> medicItems = new ArrayList();
 
 		for (Medico medico : medicos) {
-			SelectItem medicoItem = new SelectItem(medico.getDocumento(),medico.getNombre());
+			SelectItem medicoItem = new SelectItem(medico.getDocumento(),
+					medico.getNombre());
 			medicItems.add(medicoItem);
 		}
 
@@ -257,47 +306,60 @@ public class AsignarCitasBean {
 	 * @return
 	 */
 	public String mostrarHorariosMedico() {
-		
-		Calendar mayorfecha=Calendar.getInstance();
+
+		Calendar mayorfecha = Calendar.getInstance();
 		mayorfecha.setTime(fechaBuscar);
 		mayorfecha.set(Calendar.HOUR, 20);
 		mayorfecha.set(Calendar.MINUTE, 0);
-			
-		Calendar menorfecha=Calendar.getInstance();
+
+		Calendar menorfecha = Calendar.getInstance();
 		menorfecha.setTime(fechaBuscar);
 		menorfecha.set(Calendar.HOUR, 6);
 		menorfecha.set(Calendar.MINUTE, 0);
-		
-		Query query = em.createNamedQuery(Consulta.FIND_CONSULTA_BY_MEDICO_AND_FECHAS);
+
+		Query query = em
+				.createNamedQuery(Consulta.FIND_CONSULTA_BY_MEDICO_AND_FECHAS);
 		query.setParameter(Consulta.PARAMETRO_REGISTRO_MEDICO, nitmedico);
-		query.setParameter(Consulta.PARAMETRO_MAYOR_FECHA,mayorfecha.getTime());
-		query.setParameter(Consulta.PARAMETRO_MENOR_FECHA,menorfecha.getTime());
+		query.setParameter(Consulta.PARAMETRO_MAYOR_FECHA, mayorfecha.getTime());
+		query.setParameter(Consulta.PARAMETRO_MENOR_FECHA, menorfecha.getTime());
 
 		consultasMedico = query.getResultList();
-		
-		if(consultasMedico.size()==0){
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"El medico no tiene consultas en esta fecha", null));
+
+		if (consultasMedico.size() == 0) {
+			FacesContext
+					.getCurrentInstance()
+					.addMessage(
+							null,
+							new FacesMessage(
+									FacesMessage.SEVERITY_ERROR,
+									"El medico no tiene consultas en esta fecha",
+									null));
 		}
 
 		return null;
 	}
-	
-/**
- * lista las citas de un paciente ingresado con la cedula
- * @return List<Consulta>:consultas encontradas
- * 
- */
-	public String listarCitasPaciente(){
-		
-		Query quero = em.createNamedQuery(Consulta.FIND_CONSULTA_BY_NUMERO_Y_TIPO_DOCUMENTO);
+
+	/**
+	 * lista las citas de un paciente ingresado con la cedula
+	 * 
+	 * @return List<Consulta>:consultas encontradas
+	 * 
+	 */
+	public String listarCitasPaciente() {
+
+		Query quero = em
+				.createNamedQuery(Consulta.FIND_CONSULTA_BY_NUMERO_Y_TIPO_DOCUMENTO);
 		quero.setParameter(Consulta.PARAMETRO_NUMERO_DOCUMENTO, cedulaPaciente);
 		quero.setParameter(Consulta.PARAMETRO_TIPO_DOCUMENTO, tipoDocumento);
 		consulPacienteCita = quero.getResultList();
-		
-		if(consulPacienteCita.size() == 0){
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "El paciente no tiene citas", null));
+
+		if (consulPacienteCita.size() == 0) {
+			FacesContext.getCurrentInstance().addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR,
+							"El paciente no tiene citas", null));
 		}
-		
+
 		return null;
 	}
 
@@ -308,7 +370,6 @@ public class AsignarCitasBean {
 	public String getCedulaPaciente() {
 		return cedulaPaciente;
 	}
-
 
 	public void setCedulaPaciente(String cedulaPaciente) {
 		this.cedulaPaciente = cedulaPaciente;
@@ -409,6 +470,6 @@ public class AsignarCitasBean {
 
 	public void setConsulPacienteCita(List<Consulta> consulPacienteCita) {
 		this.consulPacienteCita = consulPacienteCita;
-	}	
+	}
 
 }
