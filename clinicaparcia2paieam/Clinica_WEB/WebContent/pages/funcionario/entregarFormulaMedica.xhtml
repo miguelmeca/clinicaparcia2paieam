@@ -131,12 +131,14 @@
 				<h:outputText value="#{msg['entregarFormulaMedica.codigoBarras']}" />
 				<h:inputText value="#{entregarFormulaMedicaBean.codigoBarras}"
 					id="codBarras">
-					<rich:beanValidator />
 				</h:inputText>
+				<br/>
+				<h:outputText value="#{msg['entregarFormulaMedica.motivo']}" />
+				<h:inputTextarea value="#{entregarFormulaMedicaBean.motivoSalida}" />
 
-				<a4j:commandButton value="#{msg['entregarFormulaMedica.buscar']}"
+				<a4j:commandButton value="#{msg['entregarFormulaMedica.agregar']}"
 					action="#{entregarFormulaMedicaBean.validarMedicamento}"
-					reRender="tablaMedicamentosEntregar" />
+					reRender="tablaMedicamentosEntregar,tablaMedicamentos" />
 			</h:form>
 		</rich:modalPanel>
 
