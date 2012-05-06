@@ -57,18 +57,40 @@ public class AsignarCitasBean {
 	private TipoProcedimietoEnum procedimientoConsulta;
 	
 	/**
-	 * enumeracion de los diferentes tipos esx
+	 * enumeracion de los diferentes tipos de documentos existentes
 	 */
 	private TipoDocumentoEnum tipoDocumento;
+	
+
 	public void setTipoDocumento(TipoDocumentoEnum tipoDocumento) {
 		this.tipoDocumento = tipoDocumento;
 	}
 
+	/**
+	 * campo por defecto en la bd = null
+	 */
 	private boolean unidad;
+	
+	/**
+	 * guarda en stringo la hora seleccionada por un funcionario desde la aplicacion
+	 */
 	private String horaCita;
+	
+	/**
+	 * contiene el nombre del medico
+	 */
 	private String nombreMedico;
+	
+	/**
+	 * obtiene todos los registros de medicos para ser mostrados en una tabla
+	 */
 	List<Consulta> consultasMedico;
+	
+	/**
+	 * guarda todas las consultas de un paciente.
+	 */
 	List<Consulta> consulPacienteCita;
+	
 	
 	private EntityManager em;
 
@@ -159,6 +181,11 @@ public class AsignarCitasBean {
 		return null;
 	}
 
+	
+	/**
+	 * 
+	 * @return
+	 */
 	public List<SelectItem> getMotivosConsulta() {
 
 		List<SelectItem> lista = new ArrayList();
