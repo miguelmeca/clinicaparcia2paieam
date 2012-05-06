@@ -205,6 +205,19 @@ public class EntregarFormulaMedicaBean {
 		return null;
 	}
 
+	public String guardarFormula(){
+		
+		for (Inventario inventario : salidasInventario) {
+			em.getTransaction().begin();
+			em.merge(inventario);
+			em.getTransaction().commit();		
+		}
+		
+		FacesContext.getCurrentInstance().addMessage(null,new FacesMessage(FacesMessage.SEVERITY_INFO,"Se guardo con exito :)",null));
+		
+		return null;
+	}
+	
 	public long getCodFormula() {
 		return codFormula;
 	}
