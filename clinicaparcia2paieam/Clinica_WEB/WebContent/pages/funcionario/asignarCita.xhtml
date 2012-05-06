@@ -49,6 +49,8 @@
 	<rich:tabPanel headerAlignment="left" switchType="client">
 	
 	<rich:tab label="#{msg['asignarCita.generarCitas']}  ">
+	
+	
 	<h:form>
 	<div align="left">
 	
@@ -58,6 +60,9 @@
 	
 	<!-- Medico que atiende -->
 	<h:outputLabel value="#{msg['asignarCita.medicoQueAtiende']}" /><br/><br/>
+	<h:selectOneMenu value="#{asignarCitasBean.nitmedico}">
+	<f:selectItems  value="#{asignarCitasBean.medicos}"/>
+	</h:selectOneMenu>
 	
 	<!-- Fecha de la cita -->
 	<h:outputLabel value="#{msg['asignarCita.fechaDeLaCita']}" />
@@ -65,7 +70,7 @@
 	
 	<!-- Horario de la cita -->
 	<h:outputLabel value="#{msg['asignarCita.horaDeLaCita']}" />
-	<h:selectOneMenu value="horaCita">
+	<h:selectOneMenu value="#{asignarCitasBean.horaCita}">
 	<f:selectItem itemLabel="Seleccionar Hora"/>
 	<f:selectItem itemLabel="6:30 am" itemValue="6:30"/>
 	<f:selectItem itemLabel="7:00 am" itemValue="7:00"/>
@@ -96,42 +101,50 @@
 	<f:selectItem itemLabel="7:30 pm" itemValue="19:30"/>
 	<f:selectItem itemLabel="8:00 pm" itemValue="20:00"/>
 	</h:selectOneMenu><br/><br/>
-	
-	<!-- Estado inicial de la cita -->
-	<h:outputLabel value="#{msg['asignarCita.estadoDeLaCita']}  " />
-	<h:selectOneMenu value="estadoCita">
-	<f:selectItem itemLabel="Seleccionar estado"/>
-	<f:selectItem itemLabel="En Espera" itemValue="EN_ESPERA"/>
-	<f:selectItem itemLabel="Tomada" itemValue="TOMADA"/>
-	<f:selectItem itemLabel="Cancelada" itemValue="CANCELADA"/>
-	</h:selectOneMenu><br/><br/>
-	
-	<h:panelGrid columns="2" >
-	<h:panelGrid>
-	
-	<!-- Descripcion del motivo de la consulta -->
-	<h:outputLabel value="#{msg['asignarCita.motivoDeLaConsulta']}" />
-	<h:inputTextarea value="" />
-	
-	</h:panelGrid>
-	<h:panelGrid>
-	
-	<!-- Descripcion del procedimiento que se llevara en la cita -->
-	<h:outputLabel value="#{msg['asignarCita.procedimientoDeLaCita']}" />
-	<h:inputTextarea value="" />
-	</h:panelGrid>
-	
-	</h:panelGrid>
-	<br/><br/>
 		
 	<!-- Boton para asignar la cita -->	
-	<a4j:commandButton value="#{msg['asignarCita.asignarNuevaCita']}"></a4j:commandButton>	
+	<a4j:commandButton action="#{asignarCitasBean.crearCita}"  
+	value="#{msg['asignarCita.asignarNuevaCita']}" ></a4j:commandButton>	
+	
 	</div>
 	</h:form>
 	</rich:tab>
 	
+	
+	
 	<rich:tab label="#{msg['asignarCita.horariosMedicos']}">
+
 	<h:form>
+	
+	<h:outputLabel value="#{msg['asignarCita.medico']}" /><br/><br/>
+	<h:selectOneMenu value="#{asignarCitasBean.nitmedico}">
+	<f:selectItems  value="#{asignarCitasBean.medicos}"/>
+	</h:selectOneMenu>
+	
+	
+	<h:outputLabel value="#{msg['asignarCita.fechaBuscar']}" />
+	<rich:calendar isDayEnabled="disablementFunction" dayStyleClass="disabledClassesProv" boundaryDatesMode="scroll" value="#{asignarCitasBean.fechaBuscar}"/><br/><br/>
+	
+	<a4j:commandButton action="#{asignarCitasBean.mostrarHorariosMedico}" value="#{msg['asignarCita.mostrarTabla']}" reRender="tabla"></a4j:commandButton>
+	
+	<rich:dataTable id="tabla" value="#{asignarCitasBean.consultasMedico}" var="horario">
+	
+	<rich:column>
+	<f:facet name="header"><h:outputLabel value="#{msg['asignarCita.idConsulta']}"/></f:facet>
+	<h:outputText value="#{horario.id}"/>
+	</rich:column>
+	
+	<rich:column>
+	<f:facet name="header"><h:outputLabel value="#{msg['asignarCita.fechaConsulta']}"/></f:facet>
+	<h:outputText value="#{horario.fechaHora}"/>
+	</rich:column>
+	
+	<rich:column>
+	<f:facet name="header"><h:outputLabel value="#{msg['asignarCita.pacienteConsulta']}"/></f:facet>
+	<h:outputText value="#{horario.paciente.nombre}"/>
+	</rich:column>
+	
+	</rich:dataTable>
 	
 	</h:form> 
 	</rich:tab>
@@ -139,6 +152,35 @@
 	
 	<rich:tab label="#{msg['asignarCita.citasPacientes']}">
 	<h:form>
+	<h:outputLabel value="#{msg['asignarCita.cedulaDelPaciente']}" />
+	<h:inputText value="#{asignarCitasBean.cedulaPaciente}" /><br/><br/>
+	
+	<h:selectOneMenu value="#{asignarCitasBean.tipoDocumento}">
+	<f:selectItems value="#{asignarCitasBean.tipoProcedimiento}"/>
+	</h:selectOneMenu>
+	
+	<a4j:commandButton value="#{msg['asignarCita.verCitasDelPaciente']}" action="#{asignarCitasBean.eliminarCita}" reRender="tablaCitas"></a4j:commandButton><br/><br/>	
+	
+	<h:outputLabel value="#{msg['asignarCita.citasDelPaciente']}" /><br/>
+	
+	<rich:dataTable id="tablaCitas" value="#{asignarCitasBean.consulPacienteCita}" var="citas">
+	
+	<rich:column>
+	<f:facet name="header"><h:outputLabel value="#{msg['asignarCita.idDeLaCita']}" /></f:facet>
+	<h:outputText value="#{citas.id}" />
+	</rich:column>
+
+	<rich:column>
+	<f:facet name="header"><h:outputLabel value="#{msg['asignarCita.fechaYHoraDeLaCita']}" /></f:facet>
+	<h:outputText value="#{citas.fechaHora}" />
+	</rich:column>
+	
+	<rich:column>
+	<f:facet name="header"><h:outputLabel value="#{msg['asignarCita.medicoAsignado']}" /></f:facet>
+	<h:outputText value="#{citas.medico.nombre}" />
+	</rich:column>
+	
+	</rich:dataTable>
 	
 	</h:form>
 	</rich:tab>
