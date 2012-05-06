@@ -65,49 +65,68 @@
 
 				<rich:column>
 					<a4j:commandButton id="btnPanel"
-						image="/common/img/why-choose-us.png" >
-						
-						<rich:componentControl for= "modal" 
-						attachTo="btnPanel" operation="show"
-						event="onclick"/>
-						
-						</a4j:commandButton>
+						image="/common/img/why-choose-us.png">
+
+						<rich:componentControl for="modal" attachTo="btnPanel"
+							operation="show" event="onclick" />
+
+					</a4j:commandButton>
 
 				</rich:column>
 
 			</rich:dataTable>
+			<br />
+			<br/>
+			<br />
+
+
+			<h1>
+				<h:outputLabel value="#{msg['entregarFormulaMedica.canasta']}" />
+			</h1>
 
 			<rich:dataTable id="tablaMedicamentosEntregar"
 				value="#{entregarFormulaMedicaBean.medicamentosEntrega}"
 				var="medicamento">
 				<rich:column>
-					<h:outputLabel value="entregarFormulaMedica.idMedicamento" />
+					<f:facet name="header">
+						<h:outputLabel value="entregarFormulaMedica.idMedicamento" />
+					</f:facet>
 					<h:outputText value="#{medicamento.id}" />
 				</rich:column>
 
 
 				<rich:column>
-					<h:outputLabel value="entregarFormulaMedica.nombreMedicamento" />
+					<f:facet name="header">
+						<h:outputLabel value="entregarFormulaMedica.nombreMedicamento" />
+					</f:facet>
 					<h:outputText value="#{medicamento.nombre}" />
 				</rich:column>
 
 			</rich:dataTable>
+
+			<br />
+			<br />
+
+			<a4j:commandButton
+				action="#{entregarFormulaMedicaBean.guardarFormula}"
+				value="#{msg['entregarFormulaMedica.guardar']}"></a4j:commandButton>
+
 		</h:form>
 
 
 		<rich:modalPanel id="modal">
-		<f:facet name="header">
-					<h:outputText value="#{msg['entregarFormulaMedica.texto']}"
-						style="padding-right:15px;" />
-				</f:facet>
-				<f:facet name="controls">
-					<h:panelGroup>
-						<a4j:commandButton image="/imgs/close.png" id="btnClose" > 
+			<f:facet name="header">
+				<h:outputText value="#{msg['entregarFormulaMedica.texto']}"
+					style="padding-right:15px;" />
+			</f:facet>
+			<f:facet name="controls">
+				<h:panelGroup>
+					<a4j:commandButton image="/imgs/close.png" id="btnClose">
 						<rich:componentControl for="modal" attachTo="btnClose"
 							operation="hide" event="onclick" />
-							</a4j:commandButton>
-					</h:panelGroup>
-				</f:facet>
+					</a4j:commandButton>
+				</h:panelGroup>
+			</f:facet>
 			<h:form>
 				<h:outputText value="#{msg['entregarFormulaMedica.codigoBarras']}" />
 				<h:inputText value="#{entregarFormulaMedicaBean.codigoBarras}"
