@@ -25,7 +25,7 @@
 
 				</h:inputText>
 
-
+				<!-- boton para buscar la formula medica y actualizar la tabla con los medicamentos -->
 				<a4j:commandButton
 					action="#{entregarFormulaMedicaBean.buscarFormulaMedica}"
 					value="#{msg['entregarFormulaMedica.buscar']}"
@@ -35,10 +35,10 @@
 			<br />
 			<br />
 
-
+			<!-- tabla para listar los medicamentos de los detalles de la formula medica encontrada -->
 			<rich:dataTable id="tablaMedicamentos"
 				value="#{entregarFormulaMedicaBean.detalles}" var="detalle">
-
+				<!-- columna para mostrar el id del medicamento -->
 				<rich:column>
 					<f:facet name="header">
 						<h:outputLabel
@@ -46,7 +46,7 @@
 					</f:facet>
 					<h:outputText value="#{detalle.articulo.id}" />
 				</rich:column>
-
+				<!-- columna para mostrar el nombre del medicamento -->
 				<rich:column>
 					<f:facet name="header">
 						<h:outputLabel
@@ -54,7 +54,7 @@
 					</f:facet>
 					<h:outputText value="#{detalle.articulo.nombre}" />
 				</rich:column>
-
+				<!-- columna para mostrar la cantidad a entregar del medicamento -->
 				<rich:column>
 					<f:facet name="header">
 						<h:outputLabel value="#{msg['entregarFormulaMedica.cantidad']}" />
@@ -62,7 +62,7 @@
 					<h:outputText value="#{detalle.cantidad}" />
 				</rich:column>
 
-
+				<!-- columna que contiene el enlace que abre el modalPanel para el ingreso del codigo de barras y demas -->
 				<rich:column>
 					<a4j:commandButton id="btnPanel"
 						image="/common/img/why-choose-us.png">
@@ -76,17 +76,19 @@
 
 			</rich:dataTable>
 			<br />
-			<br/>
+			<br />
 			<br />
 
 
 			<h1>
 				<h:outputLabel value="#{msg['entregarFormulaMedica.canasta']}" />
 			</h1>
-
+			<!-- tabla para listar los medicamentos que se pueden entregar -->
 			<rich:dataTable id="tablaMedicamentosEntregar"
 				value="#{entregarFormulaMedicaBean.medicamentosEntrega}"
 				var="medicamento">
+
+				<!-- columna para mostrar el id del medicamento -->
 				<rich:column>
 					<f:facet name="header">
 						<h:outputLabel value="entregarFormulaMedica.idMedicamento" />
@@ -94,7 +96,7 @@
 					<h:outputText value="#{medicamento.id}" />
 				</rich:column>
 
-
+				<!-- columna para mostrar el nombre del medicametno -->
 				<rich:column>
 					<f:facet name="header">
 						<h:outputLabel value="entregarFormulaMedica.nombreMedicamento" />
@@ -107,18 +109,21 @@
 			<br />
 			<br />
 
+			<!-- Boton para guardar las salidas de inventario al terminar de agregar los medicamentos a la canasta -->
 			<a4j:commandButton
 				action="#{entregarFormulaMedicaBean.guardarFormula}"
 				value="#{msg['entregarFormulaMedica.guardar']}"></a4j:commandButton>
 
 		</h:form>
 
-
+		<!-- ModalPanel para ingresar el codigo de barras y el motivo de la salida del medicamento -->
 		<rich:modalPanel id="modal">
 			<f:facet name="header">
 				<h:outputText value="#{msg['entregarFormulaMedica.texto']}"
 					style="padding-right:15px;" />
 			</f:facet>
+
+			<!-- barra control donde va la imagen que cierra el modalPanel -->
 			<f:facet name="controls">
 				<h:panelGroup>
 					<a4j:commandButton image="/imgs/close.png" id="btnClose">
@@ -128,14 +133,19 @@
 				</h:panelGroup>
 			</f:facet>
 			<h:form>
+
+				<!-- input para digitar el codigo de barras del medicamento -->
 				<h:outputText value="#{msg['entregarFormulaMedica.codigoBarras']}" />
 				<h:inputText value="#{entregarFormulaMedicaBean.codigoBarras}"
 					id="codBarras">
 				</h:inputText>
-				<br/>
+				<br />
+
+				<!-- Textarea para digitar el motivo de la salida del medicamento -->
 				<h:outputText value="#{msg['entregarFormulaMedica.motivo']}" />
 				<h:inputTextarea value="#{entregarFormulaMedicaBean.motivoSalida}" />
 
+				<!-- Boton para validar el medicamento y agregarlo a la canasta -->
 				<a4j:commandButton value="#{msg['entregarFormulaMedica.agregar']}"
 					action="#{entregarFormulaMedicaBean.validarMedicamento}"
 					reRender="tablaMedicamentosEntregar,tablaMedicamentos" />
