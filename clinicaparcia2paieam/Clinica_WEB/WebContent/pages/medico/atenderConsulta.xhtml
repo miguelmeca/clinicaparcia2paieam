@@ -6,47 +6,479 @@
 	xmlns:rich="http://richfaces.org/rich"
 	template="/templates/templateMedico.xhtml"
 	xmlns:a4j="http://richfaces.org/a4j">
-	
+
 	<ui:define name="cuerpo">
-	
-	<rich:tabPanel switchType="ajax" style=" height : 47px;">
-        <rich:tab label="#{msg['atenderConsulta.informacion']}">
-            
-            <h:panelGrid columns="4">
-            
-            <h:outputText value="#{atenderConsultaBean.primerNombre}" />
-            <h:outputText value="#{atenderConsultaBean.segundoNombre}" />
-            
-            <h:outputText value="#{atenderConsultaBean.primerApellido}" />
-            <h:outputText value="#{atenderConsultaBean.segundoApellido}" />
-            
-            </h:panelGrid>
-            <h:panelGrid columns="2">
-            <h:outputText value="#{msg['atenderConsulta.eps]}" />
-            <h:outputText value="#{atenderConsultaBean.eps}" />
-            
-            <h:outputText value="#{msg['atenderConsulta.ocupacion}]}" />
-            <h:outputText value="#{atenderConsultaBean.ocupacion}" />
-            
-            <h:outputText value="#{msg['atenderConsulta.fechaN}]}" />
-            <h:outputText value="#{atenderConsultaBean.fechaNacimiento}" />
-            </h:panelGrid>
-            
-            
-        </rich:tab>
-        <rich:tab label="#{msg['atenderConsulta.prescripcion']}" >
-           
-        </rich:tab>
-        <rich:tab label="#{msg['atenderConsulta.remision']}">
-         
-        </rich:tab>
-        <rich:tab label="#{msg['atenderConsulta.historia']}">
-         
-        </rich:tab>
-    </rich:tabPanel>
-	
-	
+
+
+		<rich:tabPanel switchType="ajax" style=" height : 47px;">
+			<rich:tab label="#{msg['atenderConsulta.informacion']}">
+				<h:form>
+					<h:panelGrid columns="4">
+
+						<h:outputText value="#{atenderConsultaBean.primerNombre}" />
+						<h:outputText value="#{atenderConsultaBean.segundoNombre}" />
+
+						<h:outputText value="#{atenderConsultaBean.primerApellido}" />
+						<h:outputText value="#{atenderConsultaBean.segundoApellido}" />
+
+					</h:panelGrid>
+					<h:panelGrid columns="2">
+						<h:outputText value="#{msg['atenderConsulta.eps']}" />
+						<h:outputText value="#{atenderConsultaBean.eps}" />
+
+						<h:outputText value="#{msg['atenderConsulta.ocupacion']}" />
+						<h:outputText value="#{atenderConsultaBean.ocupacion}" />
+
+						<h:outputText value="#{msg['atenderConsulta.fechaN']}" />
+						<h:outputText value="#{atenderConsultaBean.fechaNacimiento}" />
+					</h:panelGrid>
+
+					<br />
+					<br />
+					<br />
+					<br />
+
+					<a4j:commandButton value="#{msg['atenderConsulta.agregarE']}"
+						action="#">
+
+						<rich:componentControl for="panelMedicamentos" operation="show"
+							event="oncomplete" />
+
+					</a4j:commandButton>
+					<br />
+					<br />
+					<!-- nos son netamente medicamentos sino detalles para poder skar tooo -->
+					<rich:dataTable id="tabla_Principal_medicamentos"
+						value="#{atenderConsultaBean.medicamentosPaciente}"
+						var="detalle">
+
+						<rich:column>
+							<f:facet name="header">
+								<h:outputText
+									value="#{msg['atenderConsulta.medicamentoCodigo']}" />
+							</f:facet>
+							<h:outputText id="codigoM" value="#{detalle.articulo.id}" />
+						</rich:column>
+
+
+						<rich:column>
+							<f:facet name="header">
+								<h:outputText
+									value="#{msg['atenderConsulta.medicamentoNombre']}" />
+							</f:facet>
+							<h:outputText value="#{detalle.articulo.nombre}" />
+						</rich:column>
+
+						
+						
+						<rich:column>
+							<f:facet name="header">
+								<h:outputText value="#{msg['atenderConsulta.prescripcion']}" />
+							</f:facet>
+							<h:outputText value="#{detalle.prescripcion}" />
+						</rich:column>
+                        
+						<rich:column>
+
+							<f:facet name="header">
+								<h:outputText value="#{msg['atenderConsulta.acciones']}" />
+							</f:facet>
+							<a4j:commandButton value="#{msg['atenderConsulta.eliminar']}"
+								action="#{atenderConsultaBean.eliminarMedicamento}"
+								reRender="tabla_Principal_medicamentos" ajaxSingle="true"
+								process="codigoM">
+
+								<a4j:actionparam name="id" value="#{detalle.id}"
+									assignTo="#{atenderConsultaBean.codigoMedicamento}" />
+
+							</a4j:commandButton>
+
+
+						</rich:column>
+					</rich:dataTable>
+				</h:form>
+			</rich:tab>
+
+
+
+
+
+
+
+
+			<rich:tab label="#{msg['atenderConsulta.prescripcion']}">
+				<h:form>
+					<a4j:commandButton value="#{msg['atenderConsulta.agregarPres']}"
+						action="#">
+
+						<rich:componentControl for="panelProcedimientos" operation="show"
+							event="oncomplete" />
+
+					</a4j:commandButton>
+					<br />
+					<br />
+					<rich:dataTable id="tabla_Principal_Procedimientos"
+						value="#{atenderConsultaBean.procedimientos}"
+						var="detalleP">
+
+						<rich:column>
+							<f:facet name="header">
+								<h:outputText value="#{msg['atenderConsulta.codigoProce']}" />
+							</f:facet>
+							<h:outputText id="codigoP" value="#{detalleP.procedimiento.id}" />
+						</rich:column>
+
+
+						<rich:column>
+							<f:facet name="header">
+								<h:outputText value="#{msg['atenderConsulta.nombreProce']}" />
+							</f:facet>
+							<h:outputText value="#{detalleP.procedimiento.nombre}" />
+						</rich:column>
+
+						<rich:column>
+							<f:facet name="header">
+								<h:outputText value="#{msg['atenderConsulta.precioProce']}" />
+							</f:facet>
+							<h:outputText value="#{detalleP.procedimiento.precio}" />
+						</rich:column>
+
+						<rich:column>
+
+							<f:facet name="header">
+								<h:outputText value="#{msg['atenderConsulta.acciones']}" />
+							</f:facet>
+							<a4j:commandButton value="#{msg['atenderConsulta.eliminar']}"
+								action="#{atenderConsultaBean.eliminarProcedimiento}"
+								reRender="tabla_Principal_Procedimientos" ajaxSingle="true"
+								process="codigoP">
+
+								<a4j:actionparam name="id" value="#{detalleP.procedimiento.id}"
+									assignTo="#{atenderConsultaBean.codigoProcedimiento}" />
+
+							</a4j:commandButton>
+
+
+						</rich:column>
+					</rich:dataTable>
+				</h:form>
+			</rich:tab>
+
+
+
+
+
+
+
+
+
+
+			<rich:tab label="#{msg['atenderConsulta.remision']}">
+				<h:form>
+					<a4j:commandButton value="#{msg['atenderConsulta.remision']}"
+						action="#">
+
+						<rich:componentControl for="panelRemisiones" operation="show"
+							event="oncomplete" />
+
+					</a4j:commandButton>
+					<br />
+					<br />
+					<rich:dataTable id="tabla_Principal_Remisiones"
+						value="#{atenderConsultaBean.remisionesPaciente}" var="remision">
+
+						<rich:column>
+							<f:facet name="header">
+								<h:outputText value="#{msg['atenderConsulta.codRemision']}" />
+							</f:facet>
+							<h:outputText id="codigoE"
+								value="#{remision.especialidad.codigo}" />
+						</rich:column>
+
+						<rich:column>
+							<f:facet name="header">
+								<h:outputText value="#{msg['atenderConsulta.especialista']}" />
+							</f:facet>
+							<h:outputText value="#{remision.especialidad.nombre}" />
+						</rich:column>
+
+						<rich:column>
+							<f:facet name="header">
+								<h:outputText
+									value="#{msg['atenderConsulta.observacionRemision']}" />
+							</f:facet>
+							<h:outputText value="#{remision.observacion}" />
+						</rich:column>
+
+
+					</rich:dataTable>
+				</h:form>
+			</rich:tab>
+
+
+
+
+			<rich:tab label="#{msg['atenderConsulta.historia']}">
+				<h:form>
+
+					<h:outputText value="#{msg['atenderConsulta.evolucion']}" />
+					<h:inputTextarea value="#{atenderConsultaBean.evolucion}" />
+					<!-- value-->
+					<br />
+					<br />
+					<a4j:commandButton value="#{msg['atenderConsulta.historiaC']}"
+						action="#{atenderConsultaBean.irHistoriaClinica}" />
+
+				</h:form>
+			</rich:tab>
+		</rich:tabPanel>
+
+		<a4j:commandButton value="#{msg['atenderConsulta.guardar']}"
+			action="#{atenderConsultaBean.guardarTodo}" />
+
+
+		<!-- estos son los form para los panel model -->
+		<!-- el primero es el panel model para buscar producto por nombre-->
+
+		<rich:modalPanel id="panelMedicamentos" width="550">
+			
+			<f:facet name="controls">
+            <h:panelGroup>
+                <h:graphicImage value="/common/img/close.png" id="hidelink2"
+                    />
+                <rich:componentControl for="panelMedicamentos" attachTo="hidelink2"
+                    operation="hide" event="onclick" />
+            </h:panelGroup>
+        </f:facet>
+							<h:form>
+				<h:panelGrid columns="3">
+					<h:outputText value="#{msg['atenderConsulta.medicamento']}" />
+					<h:inputText id="txNombre"
+						value="#{atenderConsultaBean.nombreMedicamento}">
+						<rich:beanValidator />
+					</h:inputText>
+					<rich:message for="txNombre" />
+
+				</h:panelGrid>
+
+				<a4j:commandButton value="#{msg['atenderConsulta.buscar']}"
+					action="#{atenderConsultaBean.buscarMedicamentos}"
+					process="txNombre" reRender="tabla_Medicamentos" />
+				<br />
+				<br />
+				<rich:panel>
+
+					<rich:dataTable id="tabla_Medicamentos"
+						value="#{atenderConsultaBean.medicamentos}" var="Medicamento">
+
+						<rich:column>
+							<f:facet name="header">
+								<h:outputText
+									value="#{msg['atenderConsulta.medicamentoCodigo']}" />
+							</f:facet>
+							<h:outputText id="codigoM" value="#{Medicamento.codigo}" />
+						</rich:column>
+
+
+						<rich:column>
+							<f:facet name="header">
+								<h:outputText
+									value="#{msg['atenderConsulta.medicamentoNombre']}" />
+							</f:facet>
+							<h:outputText value="#{Medicamento.nombre}" />
+						</rich:column>
+
+						<rich:column>
+							<f:facet name="header">
+								<h:outputText
+									value="#{msg['atenderConsulta.medicamentoConsentrasion']}" />
+							</f:facet>
+							<h:outputText value="#{Medicamento.consentracion}" />
+						</rich:column>
+						<rich:column>
+
+							<f:facet name="header">
+								<h:outputText value="#{msg['atenderConsulta.acciones']}" />
+							</f:facet>
+							<a4j:commandButton value="#{msg['atenderConsulta.seleccionar']}"
+								action="#{atenderConsultaBean.agregarMediacmento}"
+								ajaxSingle="true" process="codigoM">
+
+								<a4j:actionparam name="id" value="#{Medicamento.id}"
+									assignTo="#{atenderConsultaBean.codigoMedicamento}" />
+
+								<rich:componentControl for="panelMedicamentos" operation="hide"
+									event="onclick" />
+
+								<rich:componentControl for="panel_prescrpcion" operation="show"
+									event="oncomplete" />
+
+
+							</a4j:commandButton>
+
+
+						</rich:column>
+					</rich:dataTable>
+
+				</rich:panel>
+			</h:form>
+		</rich:modalPanel>
+
+
+
+		<!-- este es el segundo modal panel que se abre cunado el primer modal panel se cierra
+         contiene un area de texto donde el medico debera escribir la prescrpcion -->
+		
+
+			<rich:modalPanel id="panel_prescrpcion">
+			<f:facet name="controls">
+            <h:panelGroup>
+                <h:graphicImage value="/common/img/close.png" id="hidelink3"
+                    />
+                <rich:componentControl for="panel_prescrpcion" attachTo="hidelink3"
+                    operation="hide" event="onclick" />
+            </h:panelGroup>
+        </f:facet>
+			<h:form>
+				<h:outputText value="#{msg['atenderConsulta.prescripcion']}" />
+				<h:inputTextarea value="#{atenderConsultaBean.prescrpcion}" />
+				<br />
+				<h:outputText value="#{msg['atenderConsulta.recomendacion']}" />
+				<h:inputTextarea value="#{atenderConsultaBean.recomendacion}" />
+
+				<a4j:commandButton value="#{msg['atenderConsulta.acceptar']}"
+					action="#{atenderConsultaBean.agregarMediacmentoToLista}"
+					reRender="tabla_Principal_medicamentos">
+
+					<rich:componentControl for="panel_prescrpcion" operation="hide"
+						event="oncomplete" />
+
+				</a4j:commandButton>
+				</h:form>
+			</rich:modalPanel>
+		
+
+		<!-- este es el modal panel para hacer la remision -->
+
+
+		<rich:modalPanel id="panelRemisiones">
+		<f:facet name="controls">
+            <h:panelGroup>
+                <h:graphicImage value="/common/img/close.png" id="hidelink4"
+                    />
+                <rich:componentControl for="panelRemisiones" attachTo="hidelink4"
+                    operation="hide" event="onclick" />
+            </h:panelGroup>
+        </f:facet>
+			<h:form>
+				<h:outputText value="#{msg['atenderConsulta.especialidades']}" />
+
+				<h:selectOneMenu value="#{atenderConsultaBean.idEspecialidad}">
+					<f:selectItems value="#{atenderConsultaBean.especialidades}" />
+				</h:selectOneMenu>
+
+				<h:outputText value="#{msg['atenderConuslta.comentario']}" />
+				<h:inputTextarea value="#{atenderConsultaBean.comentarioRemision}" />
+
+				<a4j:commandButton value="#{msg['atenderConsulta.agregarE']}"
+					action="#{atenderConsultaBean.agregarRemisiones}"
+					reRender="tabla_Principal_Remisiones">
+
+
+					<rich:componentControl for="panelRemisiones" operation="hide"
+						event="onclick" />
+
+				</a4j:commandButton>
+			</h:form>
+		</rich:modalPanel>
+
+
+		<!-- este es el modal panel para la prescripcion -->
+
+		
+			<rich:modalPanel id="panelProcedimientos" width="550">
+			<f:facet name="controls">
+            <h:panelGroup>
+                <h:graphicImage value="/common/img/close.png" id="hidelink5"
+                    />
+                <rich:componentControl for="panelProcedimientos" attachTo="hidelink5"
+                    operation="hide" event="onclick" />
+            </h:panelGroup>
+        </f:facet>
+<h:form>
+				<h:panelGrid columns="3">
+					<h:outputText value="#{msg['atenderConsulta.nombreE']}" />
+					<h:inputText id="txNombre"
+						value="#{atenderConsultaBean.nombreProcedimiento}">
+						<rich:beanValidator />
+					</h:inputText>
+					<rich:message for="txNombre" />
+
+				</h:panelGrid>
+
+				<a4j:commandButton value="#{msg['atenderConsulta.buscarE']}"
+					action="#{atenderConsultaBean.buscarProcedimientos}"
+					reRender="tabla_Procedimeintos" />
+				<br />
+				<br />
+				<rich:panel>
+
+					<rich:dataTable id="tabla_Procedimeintos"
+						value="#{atenderConsultaBean.procedimientos}" var="detalleO">
+
+						<rich:column>
+							<f:facet name="header">
+								<h:outputText
+									value="#{msg['atenderConsulta.procedimientoCodigo']}" />
+							</f:facet>
+							<h:outputText id="codigoP" value="#{detalleO.procedimiento.id}" />
+						</rich:column>
+
+
+						<rich:column>
+							<f:facet name="header">
+								<h:outputText
+									value="#{msg['atenderConsulta.procedimeintoNombre']}" />
+							</f:facet>
+							<h:outputText value="#{detalleO.procedimiento.nombre}" />
+						</rich:column>
+
+						<rich:column>
+							<f:facet name="header">
+								<h:outputText
+									value="#{msg['atenderConsulta.procedimientoCosto']}" />
+							</f:facet>
+							<h:outputText value="#{detalleO.procedimiento.precio}" />
+						</rich:column>
+						<rich:column>
+
+							<f:facet name="header">
+								<h:outputText value="#{msg['atenderConsulta.acciones']}" />
+							</f:facet>
+							<a4j:commandButton value="#{msg['atenderConsulta.seleccionar']}"
+								action="#{atenderConsultaBean.agregarProcedimiento}"
+								reRender="tabla_Principal_Procedimientos" ajaxSingle="true"
+								process="codigoP">
+
+								<a4j:actionparam name="id" value="#{detalleO.procedimiento.id}"
+									assignTo="#{atenderConsultaBean.codigoProcedimiento}" />
+
+								<rich:componentControl for="panelProcedimientos"
+									operation="hide" event="oncomplete" />
+
+
+							</a4j:commandButton>
+
+
+						</rich:column>
+					</rich:dataTable>
+
+				</rich:panel>
+				</h:form>
+			</rich:modalPanel>
+		
+
 	</ui:define>
-	
-	
-	</ui:composition>
+
+
+</ui:composition>
