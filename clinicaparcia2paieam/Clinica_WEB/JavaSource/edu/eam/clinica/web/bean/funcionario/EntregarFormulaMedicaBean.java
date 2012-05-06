@@ -69,7 +69,9 @@ public class EntregarFormulaMedicaBean {
 	 */
 	List<Inventario> salidasInventario;
 	
-	
+	/**
+	 * CONSTRUCTOR
+	 */
 	public EntregarFormulaMedicaBean(){
 		em=FactoryEntityManager.getEm();
 	    funcionario=(Funcionario) sf.getValor("persona");	
@@ -110,6 +112,9 @@ public class EntregarFormulaMedicaBean {
 			
 		}else{
 			
+			/*
+			 * mensaje global para indicar que la formula no fue encontrada
+			 */
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "La Formula No pudo se encontrada", null));
 		}
 		
@@ -140,7 +145,9 @@ public class EntregarFormulaMedicaBean {
 	      */
 	     int cantidadArticulo=0;
 	     
-	     
+	     /*
+	      * recorrer los detalles para sacar la cantidad del articulo que se debe entregar
+	      */
 	     for (DetalleFormulaMedica detalle : detalles) {
 			
 	    	 if(codigoBarras.equals(detalle.getArticulo().getCodigo())){
@@ -192,6 +199,10 @@ public class EntregarFormulaMedicaBean {
 		    			 
 		    			 medicamentosEntrega.add(medicamentoAEntregar.getArticulo());
 		    			 
+		    			 /*
+		    			  * eliminar los detalles para deshabilitarlos en la interfaz
+		    			  * no aparecen en la tabla detalles
+		    			  */
 		    			 for (int j=0;j<detalles.size();j++) {
 							
 		    				 DetalleFormulaMedica detalle=detalles.get(j);
@@ -200,31 +211,58 @@ public class EntregarFormulaMedicaBean {
 		    				 }
 						}
 		    			 
+		    			 /*
+		    			  * agregar las salidas que se deben crear cuando se guarde
+		    			  */
 		    			 salidasInventario.add(medicamentoAEntregar);
 		    			 
+		    			 /*
+		    			  * mensaje de exito cuando se pudo agregar el medicamento a la canasta
+		    			  */
 		    			 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"El medicamento esta en la canasta :)", null));
 	    			 }
 	    			
 				}
 	    	 
 	     }else{
+	    	 /*
+	    	  * mensaje de error para cuando no se puede agregar el medicamento a la canasta
+	    	  */
 	    	 FacesContext.getCurrentInstance().addMessage(null,new FacesMessage(FacesMessage.SEVERITY_ERROR,"la formula no puede ser entregada por falta de medicamentos",null));
 	     }
 		return null;
 	}
 
+	/**
+	 * metodo para guardar las salidas de inventario
+	 * @return regla de navegacion
+	 */
 	public String guardarFormula(){
 		
+		/*
+		 * recorrer las reglas guardadas cuando se valido el medicamento
+		 */
 		for (Inventario inventario : salidasInventario) {
+			/*
+			 * editarlas en la BD
+			 */
 			em.getTransaction().begin();
 			em.merge(inventario);
 			em.getTransaction().commit();		
 		}
 		
+		/*
+		 * lanzar mensaje informando que todo se ha creado con exito
+		 */
 		FacesContext.getCurrentInstance().addMessage(null,new FacesMessage(FacesMessage.SEVERITY_INFO,"Se guardo con exito :)",null));
 		
 		return null;
 	}
+	
+	/**
+	 * Getters and Setters
+	 */
+	
 	
 	public long getCodFormula() {
 		return codFormula;
