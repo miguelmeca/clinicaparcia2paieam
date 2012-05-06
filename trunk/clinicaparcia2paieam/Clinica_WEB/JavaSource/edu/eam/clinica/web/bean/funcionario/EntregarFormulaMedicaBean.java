@@ -1,5 +1,6 @@
 package edu.eam.clinica.web.bean.funcionario;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -63,11 +64,18 @@ public class EntregarFormulaMedicaBean {
 	 */
 	private String motivoSalida;
 	
+	/**
+	 * lista para guardar las salidas de inventario que se van a crear al guardar
+	 */
+	List<Inventario> salidasInventario;
 	
 	
 	public EntregarFormulaMedicaBean(){
 		em=FactoryEntityManager.getEm();
 	    funcionario=(Funcionario) sf.getValor("persona");	
+	    funcionario=em.find(Funcionario.class, "2");
+	    medicamentosEntrega=new ArrayList();
+	    salidasInventario=new ArrayList();
 	}
 	
 	/**
