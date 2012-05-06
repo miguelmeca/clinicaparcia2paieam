@@ -16,14 +16,23 @@
 				<rich:dataTable>
 					<rich:columnGroup>
 						<rich:column>
-							<h:outputText 
+							<h:outputText
 								value="#{msg['actualizarDatosMedico.primerNombre']}" />
 						</rich:column>
 						<rich:column>
-							<h:inputText value="#{actualizarDatosMedico.primerApellido}" />
+
+							<a4j:region>
+								<h:inputText value="#{actualizarDatosMedico.primerNombre}"
+									id="txtNombreUno">
+									<a4j:support event="onkeyup" />
+									<rich:beanValidator />
+								</h:inputText>
+							</a4j:region>
+							<rich:message for="txtNombreUno" />
+
 						</rich:column>
 						<rich:column>
-							
+
 						</rich:column>
 					</rich:columnGroup>
 
@@ -33,10 +42,19 @@
 								value="#{msg['actualizarDatosMedico.segundoNombre']}" />
 						</rich:column>
 						<rich:column>
-							<h:inputText value="#{actualizarDatosMedico.segundoNombre}" />
+							
+							<a4j:region>
+								<h:inputText value="#{actualizarDatosMedico.segundoNombre}"
+									id="txtNombreDos">
+									<a4j:support event="onkeyup" />
+									<rich:beanValidator />
+								</h:inputText>
+							</a4j:region>
+							<rich:message for="txtNombreDos" />
+
 						</rich:column>
 						<rich:column>
-							
+
 						</rich:column>
 					</rich:columnGroup>
 
@@ -46,10 +64,19 @@
 								value="#{msg['actualizarDatosMedico.primerApellido']}" />
 						</rich:column>
 						<rich:column>
-							<h:inputText value="#{actualizarDatosMedico.primerApellido}" />
+							
+							<a4j:region>
+								<h:inputText value="#{actualizarDatosMedico.primerApellido}"
+									id="txtApellidoUno">
+									<a4j:support event="onkeyup" />
+									<rich:beanValidator />
+								</h:inputText>
+							</a4j:region>
+							<rich:message for="txtApellidoUno" />
+
 						</rich:column>
 						<rich:column>
-							
+
 						</rich:column>
 					</rich:columnGroup>
 
@@ -59,10 +86,19 @@
 								value="#{msg['actualizarDatosMedico.segundoApellido']}" />
 						</rich:column>
 						<rich:column>
-							<h:inputText value="#{actualizarDatosMedico.segundoApellido}" />
+							
+							<a4j:region>
+								<h:inputText value="#{actualizarDatosMedico.segundoApellido}"
+									id="txtApellidoDos">
+									<a4j:support event="onkeyup" />
+									<rich:beanValidator />
+								</h:inputText>
+							</a4j:region>
+							<rich:message for="txtApellidoDos" />
+
 						</rich:column>
 						<rich:column>
-							
+
 						</rich:column>
 					</rich:columnGroup>
 
@@ -71,10 +107,19 @@
 							<h:outputText value="#{msg['actualizarDatosMedico.direccion']}" />
 						</rich:column>
 						<rich:column>
-							<h:inputText value="#{actualizarDatosMedico.direccion}" />
+							
+							<a4j:region>
+								<h:inputText value="#{actualizarDatosMedico.direccion}"
+									id="txtDireccion">
+									<a4j:support event="onkeyup" />
+									<rich:beanValidator />
+								</h:inputText>
+							</a4j:region>
+							<rich:message for="txtDireccion" />
+
 						</rich:column>
 						<rich:column>
-							
+
 						</rich:column>
 					</rich:columnGroup>
 
@@ -83,10 +128,19 @@
 							<h:outputText value="#{msg['actualizarDatosMedico.email']}" />
 						</rich:column>
 						<rich:column>
-							<h:inputText value="#{actualizarDatosMedico.correo}" />
+							
+							<a4j:region>
+								<h:inputText value="#{actualizarDatosMedico.correo}"
+									id="txtCorreo">
+									<a4j:support event="onkeyup" />
+									<rich:beanValidator />
+								</h:inputText>
+							</a4j:region>
+							<rich:message for="txtCorreo" />
+
 						</rich:column>
 						<rich:column>
-							
+
 						</rich:column>
 					</rich:columnGroup>
 
@@ -95,12 +149,9 @@
 							<h:outputText value="#{msg['actualizarDatosMedico.telefonos']}" />
 						</rich:column>
 						<rich:column>
-						<!-- 	<rich:comboBox selectFirstOnUpdate="false"
-								defaultLabel="Enter some value" >
-								<f:selectItems value="#{actualizarDatosMedico.telefonos}" />
-							</rich:comboBox> -->
 
-							<rich:dataTable id="tablaTelefonos"value="#{actualizarDatosMedico.telefonos}" var="tel">
+							<rich:dataTable id="tablaTelefonos"
+								value="#{actualizarDatosMedico.telefonos}" var="tel">
 								<rich:column>
 									<f:facet name="header">
 										<h:outputText value="telefono" />
@@ -112,33 +163,36 @@
 										<h:outputText value="Accion" />
 									</f:facet>
 									<a4j:commandLink value="editar" action="editPanel">
-										<a4j:actionparam name="telefono" value="tel.numero" assignTo="#{actualizarDatosMedico.numTelefono}"/>
+										<a4j:actionparam name="telefono" value="tel.numero"
+											assignTo="#{actualizarDatosMedico.numTelefono}" />
 									</a4j:commandLink>
 								</rich:column>
 							</rich:dataTable>
 
 
 						</rich:column>
-					
+
 					</rich:columnGroup>
-					
+
 					<br />
-					<a4j:commandButton value="#{msg['actualizarDatosMedico.Editar']}" action="#{actualizarDatosMedicoBean.actualizarDatos}"></a4j:commandButton>
+					<a4j:commandButton value="#{msg['actualizarDatosMedico.Editar']}"
+						action="#{actualizarDatosMedicoBean.actualizarDatos}"></a4j:commandButton>
 
 				</rich:dataTable>
 
 				<!-- MODAL PANEL para editar algun telefono del usuario -->
 				<rich:modalPanel id="editPanel" autosized="true" width="450">
-					
+
 					<h:form>
 						<h:panelGrid columns="1">
-							
+
 							<h:outputText value="#{actualizarDatosMedico.numTelefono}" />
-							
+
 							<h:inputText value="#{actualizarDatosMedico.nuevoTelefono}" />
-							
-							<a4j:commandButton value="#{msg['actualizarDatosMedico.Editar']}" action="#{actualizarDatosMedicoBean.actualizarTelefono}" />
-							
+
+							<a4j:commandButton value="#{msg['actualizarDatosMedico.Editar']}"
+								action="#{actualizarDatosMedicoBean.actualizarTelefono}" />
+
 						</h:panelGrid>
 					</h:form>
 				</rich:modalPanel>
@@ -149,7 +203,7 @@
 				<!-- formulario para actualizar la contraseña -->
 				<rich:dataTable>
 					<h:form>
-					
+
 						<rich:columnGroup>
 							<rich:column>
 								<h:outputText
@@ -159,7 +213,7 @@
 								<h:inputText value="#{actualizarDatosMedicoBean.pass}" />
 							</rich:column>
 						</rich:columnGroup>
-					
+
 						<rich:columnGroup>
 							<rich:column>
 								<h:outputText
@@ -179,14 +233,16 @@
 								<h:inputText value="#{actualizarDatosMedicoBean.confirmarPass}" />
 							</rich:column>
 						</rich:columnGroup>
-						
+
 						<rich:columnGroup>
 							<rich:column>
-								<h:commandButton action="#{actualizarDatosMedicoBean.cambiarPassword}" value="#{msg['actualizarDatosMedico.Editar']}" />
+								<h:commandButton
+									action="#{actualizarDatosMedicoBean.cambiarPassword}"
+									value="#{msg['actualizarDatosMedico.Editar']}" />
 							</rich:column>
 						</rich:columnGroup>
-						
-						
+
+
 					</h:form>
 				</rich:dataTable>
 		</rich:tabPanel>
