@@ -192,6 +192,14 @@ public class EntregarFormulaMedicaBean {
 		    			 
 		    			 medicamentosEntrega.add(medicamentoAEntregar.getArticulo());
 		    			 
+		    			 for (int j=0;j<detalles.size();j++) {
+							
+		    				 DetalleFormulaMedica detalle=detalles.get(j);
+		    				 if(detalle.getArticulo().getCodigo().equals(medicamentoAEntregar.getArticulo().getCodigo())){
+		    					 detalles.remove(j);
+		    				 }
+						}
+		    			 
 		    			 salidasInventario.add(medicamentoAEntregar);
 		    			 
 		    			 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"El medicamento esta en la canasta :)", null));
