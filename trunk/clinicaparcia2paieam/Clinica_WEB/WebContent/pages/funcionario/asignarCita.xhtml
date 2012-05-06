@@ -180,13 +180,44 @@
 	<h:outputText value="#{citas.medico.nombre}" />
 	</rich:column>
 	
+	 <rich:column>
+        <a4j:commandButton id="btnPanel"
+         image="/common/img/editarcrearlamor.png">//esta la montas tu
+         
+         <rich:componentControl for="modalPanel" attachTo="btnPanel"
+          operation="show" event="onclick" />
+          
+          <a4j:actionparam name="cedulaPaciente" value="#{citas.paciente.nombre}" assignTo="#{asignarCitasBean.cedulaPaciente}" />
+        </a4j:commandButton>
+
+       </rich:column>
+	
 	</rich:dataTable>
 	
 	</h:form>
 	</rich:tab>
 	
 	</rich:tabPanel>
-	</rich:simpleTogglePanel>															
+	</rich:simpleTogglePanel>
+	
+	 <h:form>
+   <rich:modalPanel id="modalPanel">
+
+
+
+
+    <f:facet name="controls">
+     <h:panelGroup>
+      <a4j:commandButton image="/imgs/close.png" id="btnClose">
+       <rich:componentControl for="modal" attachTo="btnClose"
+        operation="hide" event="onclick" />
+      </a4j:commandButton>
+     </h:panelGroup>
+    </f:facet>
+
+
+   </rich:modalPanel>
+  </h:form>															
 	</ui:define>
 	
 	</ui:composition>
