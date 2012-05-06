@@ -116,6 +116,7 @@ public class EntregarFormulaMedicaBean {
 		return null;
 	}
 	
+
 	/**
 	 * metodo para verificar si el medicamento tiene stock en el inventario de la clinica
 	 * @return
@@ -146,13 +147,7 @@ public class EntregarFormulaMedicaBean {
 	    		 cantidadArticulo=detalle.getCantidad();
 	    	 }
 		}
-	     
-	     /*
-	      * validar si el articulo en el inventario fue encontrado
-	      */
-	     
-	     if(articuloInventario.size()>0){
-	    
+
 	    	 /*
 	    	  * preguntar si la cantidad es menor o igual a la cantidad que hay en el inventario
 	    	  */
@@ -162,34 +157,50 @@ public class EntregarFormulaMedicaBean {
 	    		  * crear salidas del inventario para la cantidad de medicamentos que se van
 	    		  * a entregar al paciente
 	    		  */
-	    		 for (int i=0; i<= cantidadArticulo;i++) {
-	    			 
-	    			 /*
-	    			  * la fecha de actual para modificar la fecha de salida del inventario
-	    			  */
-	    			 Calendar hoy=Calendar.getInstance();
+	    		 for (int i=0; i<= cantidadArticulo-1;i++) {
 	    			 /*
 	    			  * sacar el inventario de la lista de inventarios encontrada anteriormente
 	    			  */
+	    			 
 	    			 Inventario medicamentoAEntregar=articuloInventario.get(i);
 	    			 
 	    			 /*
-	    			  * cambiar la hora de la salida 
+	    			  * validar si el codigo del articulo del inventario es el mismo
+	    			  * que se ingreso en la variable codigoBarras
 	    			  */
-	    			 medicamentoAEntregar.setFechaSalida(hoy.getTime());
-	    			 /*
-	    			  * guardar el funcionario que va a entregar el medicamento
-	    			  */
-	    			 medicamentoAEntregar.setFuncionarioSalida(funcionario);
-	    			 /*
-	    			  * guardar el motivo por el cual se da salida a ese medicamento
-	    			  */
-	    			 medicamentoAEntregar.setMotivoSalida(motivoSalida);
-	    			 
-	    			 medicamentosEntrega.add(medicamentoAEntregar.getArticulo());
-	    			 
+	    			 if(medicamentoAEntregar.getArticulo().getCodigo().equals(codigoBarras)){
+	    				
+	    				 
+	    				 /*
+		    			  * la fecha de actual para modificar la fecha de salida del inventario
+		    			  */
+		    			 Calendar hoy=Calendar.getInstance();
+		    			
+		    			 
+		    			 /*
+		    			  * cambiar la hora de la salida 
+		    			  */
+		    			 medicamentoAEntregar.setFechaSalida(hoy.getTime());
+		    			 /*
+		    			  * guardar el funcionario que va a entregar el medicamento
+		    			  */
+		    			 medicamentoAEntregar.setFuncionarioSalida(funcionario);
+		    			 /*
+		    			  * guardar el motivo por el cual se da salida a ese medicamento
+		    			  */
+		    			 medicamentoAEntregar.setMotivoSalida(motivoSalida);
+		    			 
+		    			 medicamentosEntrega.add(medicamentoAEntregar.getArticulo());
+		    			 
+		    			 salidasInventario.add(medicamentoAEntregar);
+		    			 
+		    			 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"El medicamento esta en la canasta :)", null));
+	    			 }
+	    			
 				}
-	    	 }
+	    	 
+	     }else{
+	    	 FacesContext.getCurrentInstance().addMessage(null,new FacesMessage(FacesMessage.SEVERITY_ERROR,"la formula no puede ser entregada por falta de medicamentos",null));
 	     }
 		return null;
 	}
