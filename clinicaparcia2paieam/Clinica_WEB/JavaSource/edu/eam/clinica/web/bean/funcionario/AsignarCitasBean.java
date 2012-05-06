@@ -183,8 +183,9 @@ public class AsignarCitasBean {
 
 	
 	/**
-	 * 
+	 * lista todos los motivos de una cita
 	 * @return
+	 * listado de motivos
 	 */
 	public List<SelectItem> getMotivosConsulta() {
 
@@ -199,6 +200,11 @@ public class AsignarCitasBean {
 		return lista;
 	}
 
+	/**
+	 * lista los todos los posibles procedimientos de una cita
+	 * @return
+	 * listado de procedimientos
+	 */
 	public List<SelectItem> getTipoProcedimiento() {
 
 		List<SelectItem> lista = new ArrayList();
@@ -210,6 +216,11 @@ public class AsignarCitasBean {
 		return lista;
 	}
 
+	/**
+	 * lista todos los tipos de documentos existentes
+	 * @return
+	 * listado de documentos de indentificacion
+	 */
 	public List<SelectItem> getTipoDocumento() {
 
 		List<SelectItem> lista = new ArrayList();
@@ -221,6 +232,11 @@ public class AsignarCitasBean {
 		return lista;
 	}
 	
+	/**
+	 * lista todos los medicos disponibles para atender una cita 
+	 * @return
+	 * listado de medicos con sus respectivos registros
+	 */
 	public List<SelectItem> getMedicos() {
 
 		List<Medico> medicos = em.createNamedQuery(Medico.FIND_ALL).getResultList();
@@ -266,7 +282,12 @@ public class AsignarCitasBean {
 		return null;
 	}
 	
-	public String eliminarCita(){
+/**
+ * lista las citas de un paciente ingresado con la cedula
+ * @return List<Consulta>:consultas encontradas
+ * 
+ */
+	public String listarCitasPaciente(){
 		
 		Query quero = em.createNamedQuery(Consulta.FIND_CONSULTA_BY_NUMERO_Y_TIPO_DOCUMENTO);
 		quero.setParameter(Consulta.PARAMETRO_NUMERO_DOCUMENTO, cedulaPaciente);
@@ -280,7 +301,7 @@ public class AsignarCitasBean {
 		return null;
 	}
 
-	/*
+	/**
 	 * Getters and setters
 	 */
 
