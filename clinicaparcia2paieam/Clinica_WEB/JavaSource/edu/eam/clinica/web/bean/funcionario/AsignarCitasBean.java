@@ -96,14 +96,44 @@ public class AsignarCitasBean {
 	 * ATRIBUTOS PARA EDITAR LA CONSULTA DE UN PACIENTE
 	 */
 
+	/**
+	 * id de la cita a editar
+	 */
 	private long id;
+	
+	/**
+	 * La nueva fecha q tendra la consulta 
+	 */
 	private Date fecha;
-	private Paciente paciente;
-	private Medico medico;
+	
+	/**
+	 * documento del paciente de la consulta
+	 */
+	private String pacientedoc;
+	
+	/**
+	 * documento del medico que atiende la consulta
+	 */
+	private String medicodoc;
+	
+	/**
+	 * motivo de la consulta
+	 */
 	private MotivoConsultaEnum motivo;
+	
+	/**
+	 * procedimiento que se realizara en la consulta
+	 */
 	private TipoProcedimietoEnum procedimiento;
+	
+	/**
+	 * cadena con las horas y minutos 
+	 */
 	private String tiempo;
 
+	/**
+	 * EntityManager para hacer uso de la persistencia
+	 */
 	private EntityManager em;
 
 	public AsignarCitasBean() {
@@ -119,8 +149,8 @@ public class AsignarCitasBean {
 	public String verConsulta() {
 		Consulta con = em.find(Consulta.class, id);
 		fecha = con.getFechaHora();
-		paciente = con.getPaciente();
-		medico = con.getMedico();
+		pacientedoc = con.getPaciente().getDocumento();
+		medicodoc = con.getMedico().getDocumento();
 		motivo = con.getMotivo();
 		procedimiento = con.getProcedimiento();
 
@@ -141,6 +171,15 @@ public class AsignarCitasBean {
 		c.set(Calendar.HOUR, hora);
 		c.set(Calendar.MINUTE, mins);
 		c.set(Calendar.SECOND, 0);
+		
+		Paciente paciente=em.find(Paciente.class, pacientedoc);
+		Medico medico=em.find(Medico.class, medicodoc);
+		
+		Consulta editada=new Consulta(c.getTime(), paciente, medico, motivo, procedimiento);
+		
+		em.getTransaction().begin();
+		em.merge(editada);
+		em.getTransaction().commit();
 
 		return null;
 	}
@@ -472,4 +511,60 @@ public class AsignarCitasBean {
 		this.consulPacienteCita = consulPacienteCita;
 	}
 
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	public Date getFecha() {
+		return fecha;
+	}
+
+	public void setFecha(Date fecha) {
+		this.fecha = fecha;
+	}
+
+	public String getPacientedoc() {
+		return pacientedoc;
+	}
+
+	public void setPacientedoc(String pacientedoc) {
+		this.pacientedoc = pacientedoc;
+	}
+
+	public String getMedicodoc() {
+		return medicodoc;
+	}
+
+	public void setMedicodoc(String medicodoc) {
+		this.medicodoc = medicodoc;
+	}
+
+	public MotivoConsultaEnum getMotivo() {
+		return motivo;
+	}
+
+	public void setMotivo(MotivoConsultaEnum motivo) {
+		this.motivo = motivo;
+	}
+
+	public TipoProcedimietoEnum getProcedimiento() {
+		return procedimiento;
+	}
+
+	public void setProcedimiento(TipoProcedimietoEnum procedimiento) {
+		this.procedimiento = procedimiento;
+	}
+
+	public String getTiempo() {
+		return tiempo;
+	}
+
+	public void setTiempo(String tiempo) {
+		this.tiempo = tiempo;
+	}
+	
 }
