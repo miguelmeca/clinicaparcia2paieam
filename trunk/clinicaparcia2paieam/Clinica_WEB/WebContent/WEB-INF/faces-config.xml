@@ -11,14 +11,9 @@
    <value/>
   </managed-property>
  </managed-bean>
- <!--  <managed-bean> 
-   <managed-bean-name>atenderConsultaBean</managed-bean-name> 
-   <managed-bean-class>edu.eam.clinica.web.bean.medico.AtenderConsultaBean</managed-bean-class> 
-   <managed-bean-scope>session</managed-bean-scope> 
-  </managed-bean> -->
  <managed-bean>
-  <managed-bean-name>verAgendaBean</managed-bean-name>
-  <managed-bean-class>edu.eam.clinica.web.bean.medico.VerAgendaBean</managed-bean-class>
+  <managed-bean-name>paciente_Bean</managed-bean-name>
+  <managed-bean-class>edu.eam.clinica.web.bean.paciente.Paciente_Bean</managed-bean-class>
   <managed-bean-scope>request</managed-bean-scope>
  </managed-bean>
  <managed-bean>
@@ -27,9 +22,19 @@
   <managed-bean-scope>request</managed-bean-scope>
  </managed-bean>
  <managed-bean>
-  <managed-bean-name>paciente_Bean</managed-bean-name>
-  <managed-bean-class>edu.eam.clinica.web.bean.paciente.Paciente_Bean</managed-bean-class>
-  <managed-bean-scope>request</managed-bean-scope>
+  <managed-bean-name>loginBean</managed-bean-name>
+  <managed-bean-class>edu.eam.clinica.web.autorizacion.LoginBean</managed-bean-class>
+  <managed-bean-scope>session</managed-bean-scope>
+ </managed-bean>
+ <managed-bean>
+  <managed-bean-name>atenderConsultaBean</managed-bean-name>
+  <managed-bean-class>edu.eam.clinica.web.bean.medico.AtenderConsultaBean</managed-bean-class>
+  <managed-bean-scope>session</managed-bean-scope>
+ </managed-bean>
+ <managed-bean>
+  <managed-bean-name>entregarFormulaMedicaBean</managed-bean-name>
+  <managed-bean-class>edu.eam.clinica.web.bean.funcionario.EntregarFormulaMedicaBean</managed-bean-class>
+  <managed-bean-scope>session</managed-bean-scope>
  </managed-bean>
  <managed-bean>
   <managed-bean-name>actualizarDatosFuncionarioBean</managed-bean-name>
@@ -37,30 +42,21 @@
   <managed-bean-scope>session</managed-bean-scope>
  </managed-bean>
  <managed-bean>
-  <managed-bean-name>inicioSesionFuncionarioBean</managed-bean-name>
-  <managed-bean-class>edu.eam.clinica.web.bean.funcionario.InicioSesionFuncionarioBean</managed-bean-class>
+  <managed-bean-name>asignarCitasBean</managed-bean-name>
+  <managed-bean-class>edu.eam.clinica.web.bean.funcionario.AsignarCitasBean</managed-bean-class>
   <managed-bean-scope>request</managed-bean-scope>
  </managed-bean>
- <navigation-rule>
-  <from-view-id>*</from-view-id>
-  <navigation-case>
-   <from-outcome>verAgenda</from-outcome>
-   <to-view-id>/pages/medico/verAgenda.xhtml</to-view-id>
-  </navigation-case>
-  <navigation-case>
-   <from-outcome>actualizarDatosMedico</from-outcome>
-   <to-view-id>/pages/medico/actualizarDatosMedico.xhtml</to-view-id>
-  </navigation-case>
- </navigation-rule>
- <navigation-rule>
-  <from-view-id>/pages/medico/verAgenda.xhtml</from-view-id>
-  <navigation-case>
-   <from-outcome>atenderConsulta</from-outcome>
-   <to-view-id>/pages/medico/atenderConsulta.xhtml</to-view-id>
-  </navigation-case>
- </navigation-rule>
+ <managed-bean>
+  <managed-bean-name>inventarioBean</managed-bean-name>
+  <managed-bean-class>edu.eam.clinica.web.bean.funcionario.InventarioBean</managed-bean-class>
+  <managed-bean-scope>session</managed-bean-scope>
+ </managed-bean>
  <navigation-rule>
   <from-view-id>/pages/paciente/inicioPaciente.xhtml</from-view-id>
+  <navigation-case>
+   <from-outcome>citasPaciente</from-outcome>
+   <to-view-id>/pages/paciente/citasPaciente.xhtml</to-view-id>
+  </navigation-case>
   <navigation-case>
    <from-outcome>historiaClinica</from-outcome>
    <to-view-id>/pages/paciente/historiaClinica.xhtml</to-view-id>
@@ -69,12 +65,8 @@
    <from-outcome>ActualizarPaciente</from-outcome>
    <to-view-id>/pages/paciente/ActualizarPaciente.xhtml</to-view-id>
   </navigation-case>
-  <navigation-case>
-   <from-outcome>citasPaciente</from-outcome>
-   <to-view-id>/pages/paciente/citasPaciente.xhtml</to-view-id>
-  </navigation-case>
  </navigation-rule>
- <navigation-rule>
+  <navigation-rule>
   <from-view-id>/pages/funcionario/inicioFuncionario.xhtml</from-view-id>
   <navigation-case>
    <from-outcome>Inventario</from-outcome>
