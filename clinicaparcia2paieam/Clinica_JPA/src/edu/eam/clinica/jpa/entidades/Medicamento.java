@@ -12,6 +12,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 
@@ -23,13 +24,25 @@ import edu.eam.clinica.jpa.enumeraciones.PresentacionEnum;
  *
  */
 @Entity
+/**
+ * @ciza93@gmail.com cree esta query para buscar lso medicamentos por nombre y por ende dos constantes
+ */
+@NamedQuery(name=Medicamento.FIND_MEDICAMENTO_BY_NOMBRE,query="select med from Medicamento med where med.nombre LIKE :"+Medicamento.PARAMENTRO_NOMBRE)
+
 public class Medicamento extends Articulo {
 
 	/**
 	 * Constante de serialización.
 	 */
 	private static final long serialVersionUID = 1L;
-	
+	/**
+	 * Constante para el parametro nombre.
+	 */
+	public static final String PARAMENTRO_NOMBRE="nombre";
+	/**
+	 * Constante para la named query de buscar medicamento por nombre.
+	 */
+	public static final String FIND_MEDICAMENTO_BY_NOMBRE="Medicamento.findMedicamentoByNombre";
 	/**
 	 * Grupo terapeutico del medicamento.
 	 */
