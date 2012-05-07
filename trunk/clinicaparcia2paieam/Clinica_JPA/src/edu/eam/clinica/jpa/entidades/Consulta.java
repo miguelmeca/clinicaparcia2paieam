@@ -41,7 +41,7 @@ import javax.persistence.OneToMany;
     @NamedQuery(name = Consulta.FIND_CONSULTA_BY_REGISTRO_MEDICO, query = "select con from Consulta con where con.medico.registroMedico=:" + Consulta.PARAMETRO_REGISTRO_MEDICO),
     @NamedQuery(name = Consulta.FIND_CONSULA_BY_TIPO_PROCEDIMIENTO, query = "select con from Consulta con where con.procedimiento=:" + Consulta.PARAMETRO_TIPO_PROCEDIMIENTO),
     @NamedQuery(name = Consulta.FIND_CONSULTA_BY_ESTADO_ACTIVO, query = "select con from Consulta con "),//TODO
-    @NamedQuery(name = Consulta.FIND_CONSULTA_BY_MEDICO_AND_FECHAS, query = "select con from Consulta con where con.medico.registroMedico=:" + Consulta.PARAMETRO_REGISTRO_MEDICO + " and con.fechaHora between :" + Consulta.PARAMETRO_MENOR_FECHA + " and :" + Consulta.PARAMETRO_MAYOR_FECHA),
+    @NamedQuery(name = Consulta.FIND_CONSULTA_BY_MEDICO_AND_FECHAS, query = "select con from Consulta con where con.medico.documento=:" + Consulta.PARAMETRO_REGISTRO_MEDICO + " and con.fechaHora between :" + Consulta.PARAMETRO_MENOR_FECHA + " and :" + Consulta.PARAMETRO_MAYOR_FECHA),
     @NamedQuery(name = Consulta.FIND_ALL, query = "select con from Consulta con")
 })
 public class Consulta implements Serializable {
@@ -179,10 +179,9 @@ public class Consulta implements Serializable {
      * @param motivo
      * @param procedimiento
      */
-    public Consulta(long id, Date fechaHora, Paciente paciente, Medico medico,
+    public Consulta(Date fechaHora, Paciente paciente, Medico medico,
             MotivoConsultaEnum motivo, TipoProcedimietoEnum procedimiento) {
         super();
-        this.id = id;
         this.fechaHora = fechaHora;
         this.paciente = paciente;
         this.medico = medico;
