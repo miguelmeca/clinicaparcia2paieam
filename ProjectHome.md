@@ -1,0 +1,1 @@
+En este examen se evaluaran los conceptos y habilidades necesarias para desarrollar aplicaciones usando JEE5.
